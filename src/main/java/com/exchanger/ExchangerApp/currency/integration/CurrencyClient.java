@@ -1,15 +1,16 @@
-package com.API;
+package com.exchanger.ExchangerApp.currency.integration;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-@FeignClient(name = "Currency", url = "${feign.url}")
+@FeignClient(name = "currency")
 public interface CurrencyClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "{table}")
-    List<Currency> getByTable(@PathVariable("table") String table);
+    List<CurrenciesResponse> getByTable(@PathVariable("table") String table);
 
     @RequestMapping(method = RequestMethod.GET, value = "{table}/last/{topCount}")
-    List<Currency> getByTableAndCounts(@PathVariable("table") String table, @PathVariable("topCount") int topCount);
+    List<CurrenciesResponse> getByTableAndCounts(@PathVariable("table") String table, @PathVariable("topCount") int topCount);
 }

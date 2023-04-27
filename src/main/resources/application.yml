@@ -3,8 +3,8 @@ spring:
     openfeign:
       client:
         config:
-          feignName:
+          currency:
             url: http://api.nbp.pl/api/exchangerates/tables/
             connectTimeout: 5000
             readTimeout: 5000
-            loggerLevel: basic
+            loggerLevel: full
