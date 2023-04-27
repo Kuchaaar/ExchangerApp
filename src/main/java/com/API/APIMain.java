@@ -6,9 +6,10 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 import java.util.List;
 
-@FeignClient(url = "${feign.url}", configuration = Config.yml)
+@FeignClient(url = "${feign.url}")
 public class APIMain {
 
+    public String url = "http://api.nbp.pl/api/exchangerates/tables/";
     public Retrofit retrofit() {
         return new Retrofit.Builder()
                 .baseUrl(url).addConverterFactory(SimpleXmlConverterFactory.create())
