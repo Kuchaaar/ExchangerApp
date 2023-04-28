@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.exchanger.ExchangerApp.ExchangerApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.116 s - in com.exchanger.ExchangerApp.ExchangerApplicationTests

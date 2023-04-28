@@ -18,8 +18,8 @@ public class CurrencyDao {
                 currency.currency(),
                 currency.code(),
                 currency.mid()
-        });
+        });// https://www.baeldung.com/spring-jdbc-batch-inserts
     }
-
+// https://www.baeldung.com/spring-jdbc-batch-inserts
 
 }

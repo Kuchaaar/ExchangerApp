@@ -1,9 +1,0 @@
-com\exchanger\ExchangerApp\currency\integration\CurrencyClient.class
-com\exchanger\ExchangerApp\currency\integration\Currency.class
-com\exchanger\ExchangerApp\currency\jdbc\CurrencyDao.class
-com\exchanger\ExchangerApp\ExchangerApplication.class
-com\exchanger\ExchangerApp\currency\integration\CurrencyRepo.class
-com\exchanger\ExchangerApp\currency\domain\CurrencyFetcher.class
-com\exchanger\ExchangerApp\currency\integration\CurrenciesResponse.class
-com\exchanger\ExchangerApp\currency\jdbc\Config.class
-com\exchanger\ExchangerApp\Runner.class
