@@ -7,16 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
+
 public class Repo {
     private final Map<String, Currency> currencyMap = new HashMap<>();
-    public Map<String, Currency> saveAll(List<CurrenciesResponse> list) {
-        Map<String, Currency> currencyMap = new HashMap<>();
-        for (CurrenciesResponse currenciesResponse : list) {
-            List<Currency> currencyList = currenciesResponse.rates();
-            for (Currency currency : currencyList) {
-                currencyMap.put(currency.code(), currency);
-            }
-        }
-        return currencyMap;
+    public void saveAll(List<CurrenciesResponse> list) {
+        list.stream()
+                .map(CurrenciesResponse::rates)
+                .flatMap(Collection::stream)
+                .forEach(currency -> currencyMap.put(currency.code(), currency));
     }
 }
