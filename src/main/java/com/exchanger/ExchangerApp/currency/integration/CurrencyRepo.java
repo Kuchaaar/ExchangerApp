@@ -1,15 +1,10 @@
-package com.exchanger.ExchangerApp.currency;
-
-import com.exchanger.ExchangerApp.currency.integration.CurrenciesResponse;
-import com.exchanger.ExchangerApp.currency.integration.Currency;
-
+package com.exchanger.ExchangerApp.currency.integration;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
-
-public class Repo {
+public class CurrencyRepo {
     private final Map<String, Currency> currencyMap = new HashMap<>();
     public void saveAll(List<CurrenciesResponse> list) {
         list.stream()
