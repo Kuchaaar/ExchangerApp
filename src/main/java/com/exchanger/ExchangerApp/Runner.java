@@ -1,8 +1,7 @@
 package com.exchanger.ExchangerApp;
 
 import com.exchanger.ExchangerApp.currency.domain.CurrencyFetcher;
-import com.exchanger.ExchangerApp.currency.jdbc.Config;
-import com.exchanger.ExchangerApp.currency.jdbc.CurrencyDao;
+import com.exchanger.ExchangerApp.currency.persistance.Config;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -11,9 +10,11 @@ import org.springframework.stereotype.Component;
 public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 
     private final CurrencyFetcher currencyFetcher;
+    private final Config config;
 
-    public Runner(CurrencyFetcher currencyFetcher) {
+    public Runner(CurrencyFetcher currencyFetcher, Config config) {
         this.currencyFetcher = currencyFetcher;
+        this.config = config;
     }
 
 
