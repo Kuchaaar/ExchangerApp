@@ -9,10 +9,10 @@ spring:
             readTimeout: 5000
             loggerLevel: full
   datasource:
-    url: 'jdbc:mysql://127.0.0.1:3307/exchanger'
-    username: 'root'
+    url: jdbc:mysql://127.0.0.1:3307/exchanger
+    username: root
     password:
     driver-class-name: 'com.mysql.cj.jdbc.Driver'
-  batch:
-    jdbc:
-      initialize-schema: always
+  sql:
+    init:
+      mode: always

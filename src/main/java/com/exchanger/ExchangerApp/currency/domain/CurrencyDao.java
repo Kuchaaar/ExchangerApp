@@ -18,7 +18,5 @@ public class CurrencyDao {
                 currency.code(),
                 currency.mid()
         });//jdbc named query, batchupdate, inversion of control
-        //nie odpala sie schema.sql poczytać
-        //
     }
 }
