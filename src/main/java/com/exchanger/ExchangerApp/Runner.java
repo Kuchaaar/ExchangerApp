@@ -1,5 +1,4 @@
 package com.exchanger.ExchangerApp;
-
 import com.exchanger.ExchangerApp.currency.domain.CurrencyFetcher;
 import com.exchanger.ExchangerApp.currency.integration.CurrencyClient;
 import com.exchanger.ExchangerApp.currency.integration.CurrencyRepo;
@@ -24,6 +23,6 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         currencyFetcher.showAll();
-        currencyRepo.saveAll(currencyClient.getByTable("a"));
+        currencyRepo.saveAll(currencyClient.getByTable("a")); //nie działa jak jest wiecej niz 1 ;c
     }
 }
