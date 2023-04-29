@@ -11,7 +11,7 @@ spring:
   datasource:
     url: 'jdbc:mysql://127.0.0.1:3307/exchanger'
     username: 'root'
-    password: 
+    password:
     driver-class-name: 'com.mysql.cj.jdbc.Driver'
   batch:
     jdbc:
