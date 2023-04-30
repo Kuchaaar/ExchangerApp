@@ -14,7 +14,7 @@ public class CurrencyFetcher {
     }
 
     public void showAll() {
-        currencyClient.getByTable("a").forEach(System.out::println);
+        currencyClient.getByTable("a",3).forEach(System.out::println);
     }
 }
 

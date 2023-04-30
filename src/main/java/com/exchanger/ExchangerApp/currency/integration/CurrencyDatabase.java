@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class CurrencyDatabase implements CurrencyMap {
@@ -30,15 +31,26 @@ public class CurrencyDatabase implements CurrencyMap {
         jdbcTemplate.batchUpdate(insertIntoSql,
                 new BatchPreparedStatementSetter() {
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        List<Currency> currencies = new ArrayList<>(currencyRepo.currencyMap.values());
-                        Currency currency = currencies.get(i);
-                        ps.setString(1, currency.currency());
-                        ps.setString(2, currency.code());
-                        ps.setDouble(3, currency.mid());
+                        int index = 0;
+                        for (Map.Entry<String, List<Currency>> entry : currencyRepo.currencyMap.entrySet()) {
+                            String code = entry.getKey();
+                            List<Currency> currencies = entry.getValue();
+                            for (Currency currency : currencies) {
+                                ps.setString(1, currency.currency());
+                                ps.setString(2, code);
+                                ps.setDouble(3, currency.mid());
+                                ps.addBatch();
+                                index++;
+                            }
+                        }
                     }
 
                     public int getBatchSize() {
-                        return currencyRepo.currencyMap.size();
+                        int count = 0;
+                        for (List<Currency> currencies : currencyRepo.currencyMap.values()) {
+                            count += currencies.size();
+                        }
+                        return count;
                     }
                 });
     }

@@ -37,12 +37,11 @@ public class ExchangerApplicationTests {
 				))
 		);
 		currencyRepo.saveAll(list);
-
 		assertEquals(4, currencyRepo.currencyMap.size());
-		assertEquals("USD", currencyRepo.currencyMap.get("USD").code());
-		assertEquals("GBP", currencyRepo.currencyMap.get("GBP").code());
-		assertEquals(0.83, currencyRepo.currencyMap.get("EUR").mid(), 0.001);
-		assertEquals(109.12, currencyRepo.currencyMap.get("JPY").mid(), 0.001);
+		assertEquals("USD", currencyRepo.currencyMap.get("USD").get(0).code());
+		assertEquals("GBP", currencyRepo.currencyMap.get("GBP").get(0).code());
+		assertEquals(0.83, currencyRepo.currencyMap.get("EUR").get(0).mid(), 0.001);
+		assertEquals(109.12, currencyRepo.currencyMap.get("JPY").get(0).mid(), 0.001);
 	}
 
 }

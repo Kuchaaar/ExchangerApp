@@ -7,5 +7,6 @@ com\exchanger\ExchangerApp\ExchangerApplication.class
 com\exchanger\ExchangerApp\currency\domain\CurrencyFetcher.class
 com\exchanger\ExchangerApp\currency\integration\CurrenciesResponse.class
 com\exchanger\ExchangerApp\Runner.class
+com\exchanger\ExchangerApp\currency\domain\CurrencyExcel$1.class
 com\exchanger\ExchangerApp\currency\integration\CurrencyRepo.class
 com\exchanger\ExchangerApp\currency\integration\CurrencyDatabase.class

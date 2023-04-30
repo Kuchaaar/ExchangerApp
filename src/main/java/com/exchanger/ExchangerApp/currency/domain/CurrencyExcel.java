@@ -43,7 +43,7 @@ public class CurrencyExcel {
             }
         });
 
-        try (FileOutputStream out = new FileOutputStream(new File("patchname\\excel.xlsx"))) {
+        try (FileOutputStream out = new FileOutputStream(new File("excel.xlsx"))) {
             workbook.write(out);
         } catch (IOException e) {
             throw new RuntimeException(e);
