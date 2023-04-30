@@ -35,7 +35,7 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
         currencyRepo.saveAll(currencyClient.getByTable("a",3)); //nie działa jak jest wiecej niz 1 ;c
 
         currencyDatabase.saveAll(currencyClient.getByTable("a",3));
-        currencyExcel.writeToExcel();
+        //currencyExcel.writeToExcel();
 
     }
 }

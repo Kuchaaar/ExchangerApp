@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class CurrencyDatabase implements CurrencyMap {
@@ -30,27 +31,18 @@ public class CurrencyDatabase implements CurrencyMap {
     public void saveAll(List<CurrenciesResponse> list) {
         jdbcTemplate.batchUpdate(insertIntoSql,
                 new BatchPreparedStatementSetter() {
+                    List<Currency> currencies = new ArrayList<>(currencyRepo.currencyMap.values().stream().
+                            flatMap(List::stream)
+                            .collect(Collectors.toList()));
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        int index = 0;
-                        for (Map.Entry<String, List<Currency>> entry : currencyRepo.currencyMap.entrySet()) {
-                            String code = entry.getKey();
-                            List<Currency> currencies = entry.getValue();
-                            for (Currency currency : currencies) {
-                                ps.setString(1, currency.currency());
-                                ps.setString(2, code);
-                                ps.setDouble(3, currency.mid());
-                                ps.addBatch();
-                                index++;
-                            }
-                        }
+                        Currency currency = currencies.get(i);
+                        ps.setString(1, currency.currency());
+                        ps.setString(2, currency.code());
+                        ps.setDouble(3, currency.mid());
                     }
 
                     public int getBatchSize() {
-                        int count = 0;
-                        for (List<Currency> currencies : currencyRepo.currencyMap.values()) {
-                            count += currencies.size();
-                        }
-                        return count;
+                        return currencies.size();
                     }
                 });
     }
