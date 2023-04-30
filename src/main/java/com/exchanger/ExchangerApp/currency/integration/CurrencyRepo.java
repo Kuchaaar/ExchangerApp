@@ -6,16 +6,8 @@ import javax.sql.DataSource;
 import java.util.*;
 @Component
 public class CurrencyRepo implements CurrencyMap {
-    private final Map<String, Currency> currencyMap = new HashMap<>();
-    private final DataSource dataSource;
-    private final JdbcTemplate jdbcTemplate ;
-    private static final String insertIntoSql = "INSERT INTO Currency (currency,code,mid) VALUES (?,?,?)";
-
-    public CurrencyRepo(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
+    public final Map<String, Currency> currencyMap = new HashMap<>();
+    @Override
     public void saveAll(List<CurrenciesResponse> list) {
         list.stream()
                 .map(CurrenciesResponse::rates)
