@@ -3,7 +3,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 @Component
 public class CurrencyRepo implements CurrencyMap {
-    public final Map<String, Currency> currencyMap = new HashMap<>();
+    public final Map<String, Currency>  currencyMap = new HashMap<>();
     @Override
     public void saveAll(List<CurrenciesResponse> list) {
         list.stream()

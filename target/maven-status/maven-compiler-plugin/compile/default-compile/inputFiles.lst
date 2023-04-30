@@ -2,8 +2,9 @@ C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\Exchange
 C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\integration\CurrencyClient.java
 C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\integration\Currency.java
 C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\domain\CurrencyFetcher.java
-C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\domain\CurrencyDao.java
+C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\domain\CurrencyExcel.java
+C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\integration\CurrencyMap.java
 C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\Runner.java
 C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\integration\CurrenciesResponse.java
+C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\integration\CurrencyDatabase.java
 C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\integration\CurrencyRepo.java
-C:\Users\kuba_\OneDrive\Pulpit\ExchangerApp\src\main\java\com\exchanger\ExchangerApp\currency\persistance\Config.java
