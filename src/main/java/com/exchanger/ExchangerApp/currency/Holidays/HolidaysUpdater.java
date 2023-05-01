@@ -18,10 +18,10 @@ public class HolidaysUpdater {
     }
     public void update() {
         List<HolidaysResponse> holidaysResponses = fetchHolidaysResponse();
-        HolidaysRepository.saveHolidays(holidaysResponses);
+        holidaysRepository.saveHolidays(holidaysResponses);
     }
 
     private List<HolidaysResponse> fetchHolidaysResponse() {
-        return HolidaysClient.getHolidays(2023);
+        return holidaysClient.getHolidays(2023);
     }
 }
