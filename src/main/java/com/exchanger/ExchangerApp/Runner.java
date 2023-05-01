@@ -32,5 +32,7 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
         inMemoryDatabaseUpdater.update();
         CurrencyReader databaseCurrencyReader = new CurrencyReader(databaseCurrencyRepository);
         CurrencyReader inMemoryCurrencyReader = new CurrencyReader(inMemoryCurrencyRepository);
+        System.out.println(inMemoryCurrencyReader.findAll() );
+
     }
 }

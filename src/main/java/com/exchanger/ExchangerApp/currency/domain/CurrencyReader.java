@@ -1,11 +1,14 @@
 package com.exchanger.ExchangerApp.currency.domain;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+@Component
 public class CurrencyReader {
     private final CurrencyRepository currencyRepository;
 
-    public CurrencyReader(CurrencyRepository currencyRepository) {
+    public CurrencyReader(@Qualifier("InMemoryCurrencyRepository") CurrencyRepository currencyRepository) {
         this.currencyRepository = currencyRepository;
     }
 

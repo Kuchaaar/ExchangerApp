@@ -3,6 +3,7 @@ package com.exchanger.ExchangerApp.currency.peristence;
 import com.exchanger.ExchangerApp.currency.domain.Currency;
 import com.exchanger.ExchangerApp.currency.domain.CurrencyRepository;
 import com.exchanger.ExchangerApp.currency.integration.CurrencyResponse;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Qualifier("InMemoryCurrencyRepository")
 public class InMemoryCurrencyRepository implements CurrencyRepository {
     private final Map<String, Currency> currencyMap = new HashMap<>();
 

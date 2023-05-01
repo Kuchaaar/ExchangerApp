@@ -3,6 +3,7 @@ package com.exchanger.ExchangerApp.currency.peristence;
 import com.exchanger.ExchangerApp.currency.domain.Currency;
 import com.exchanger.ExchangerApp.currency.domain.CurrencyRepository;
 import com.exchanger.ExchangerApp.currency.integration.CurrencyResponse;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
+@Qualifier("DatabaseCurrencyRepository")
 public class DatabaseCurrencyRepository implements CurrencyRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;

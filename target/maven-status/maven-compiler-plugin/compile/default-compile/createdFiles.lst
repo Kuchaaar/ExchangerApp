@@ -1,4 +1,5 @@
 com\exchanger\ExchangerApp\currency\integration\CurrencyClient.class
+com\exchanger\ExchangerApp\currency\domain\CurrencyShedule.class
 com\exchanger\ExchangerApp\ExchangerApplication.class
 com\exchanger\ExchangerApp\currency\domain\Currency.class
 com\exchanger\ExchangerApp\currency\peristence\DatabaseCurrencyRepository.class
