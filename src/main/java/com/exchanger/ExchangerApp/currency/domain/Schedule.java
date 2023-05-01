@@ -5,7 +5,6 @@ import com.exchanger.ExchangerApp.currency.peristence.DatabaseCurrencyRepository
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.context.annotation.Bean;
 
 public class Schedule implements Job {
     private final CurrencyClient currencyClient;
