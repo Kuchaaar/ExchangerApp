@@ -2,6 +2,7 @@ package com.exchanger.ExchangerApp.currency.peristence;
 
 import com.exchanger.ExchangerApp.currency.domain.Currency;
 import com.exchanger.ExchangerApp.currency.domain.CurrencyRepository;
+import com.exchanger.ExchangerApp.currency.integration.CurrenciesResponse;
 import com.exchanger.ExchangerApp.currency.integration.CurrencyResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -18,7 +19,8 @@ import java.util.List;
 public class DatabaseCurrencyRepository implements CurrencyRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private static final String UPDATE_CURRENCY_QUERY = "INSERT INTO Currency (currency,code,mid) VALUES (:currency,:code,:mid)";
+    private static final String UPDATE_CURRENCY_QUERY =
+            "INSERT INTO Currency (currency,code,mid,date) VALUES (:currency,:code,:mid,:date)";
 
     private static final String FIND_ALL_CURRENCY_QUERY = "SELECT currency, code, mid from Currency";
 
@@ -44,7 +46,8 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
         return new Currency(
                 rs.getString("currency"),
                 rs.getString("code"),
-                rs.getDouble("mid")
+                rs.getDouble("mid"),
+                rs.getString("date")
         );
     }
 }

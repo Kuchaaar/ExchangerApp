@@ -34,7 +34,7 @@ public class DatabaseHolidaysRepository implements HolidaysRepository{
     }
     private HolidaysResponse mapToHolidays(ResultSet rs) throws SQLException {
         return new HolidaysResponse(
-                rs.getDate("date"),
+                rs.getString("date"),
                 rs.getString("name")
         );
     }

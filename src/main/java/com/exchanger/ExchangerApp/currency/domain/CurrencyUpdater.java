@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 @Component
@@ -35,8 +36,17 @@ public class CurrencyUpdater {
 
     private List<CurrencyResponse> fetchCurrenciesResponse() {
         return currencyClient.getByTable("a").stream()
-                .map(CurrenciesResponse::rates)
-                .flatMap(Collection::stream)
+                .flatMap(currenciesResponse -> {
+                    List<CurrencyResponse> ratesWithEffectiveDate = new ArrayList<>();
+                    String effectiveDate = currenciesResponse.effectiveDate();
+                    for (CurrencyResponse rate : currenciesResponse.rates()) {
+                        ratesWithEffectiveDate.add(new CurrencyResponse(rate.currency(),
+                                rate.code(),
+                                rate.mid(),
+                                effectiveDate));
+                    }
+                    return ratesWithEffectiveDate.stream();
+                })
                 .toList();
     }
 }
