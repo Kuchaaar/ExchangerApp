@@ -2,6 +2,8 @@ package com.exchanger.ExchangerApp.currency.domain;
 
 import com.exchanger.ExchangerApp.currency.integration.CurrencyResponse;
 
+import java.util.Date;
+
 public record Currency(String currency, String code, double mid) {
 
     public static Currency from(CurrencyResponse currencyResponse) {

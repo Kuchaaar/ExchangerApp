@@ -21,3 +21,6 @@ spring:
   sql:
     init:
       mode: always
+currency:
+  repository:
+    type: memory

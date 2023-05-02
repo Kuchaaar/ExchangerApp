@@ -3,6 +3,7 @@ package com.exchanger.ExchangerApp;
 import com.exchanger.ExchangerApp.currency.Holidays.*;
 import com.exchanger.ExchangerApp.currency.domain.CurrencyReader;
 import com.exchanger.ExchangerApp.currency.domain.CurrencyUpdater;
+import com.exchanger.ExchangerApp.currency.domain.Sheduled;
 import com.exchanger.ExchangerApp.currency.domain.ShedulerTest;
 import com.exchanger.ExchangerApp.currency.integration.CurrencyClient;
 import com.exchanger.ExchangerApp.currency.peristence.DatabaseCurrencyRepository;
@@ -27,19 +28,22 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
     private final InMemoryHolidaysRepository inMemoryHolidaysRepository;
     private final DatabaseHolidaysRepository databaseHolidaysRepository;
     private final LocalDate currentDate = LocalDate.now();
+    private final Sheduled sheduled;
     @Bean
-    public ShedulerTest myScheduler(@Qualifier("InMemoryHolidaysRepository") HolidaysRepository holidaysRepository) {
-        return new ShedulerTest(holidaysRepository);
+    public ShedulerTest myScheduler(InMemoryHolidaysRepository inMemoryHolidaysRepository,
+                                    Sheduled sheduled,HolidaysClient holidaysClient) {
+        return new ShedulerTest(inMemoryHolidaysRepository,sheduled,holidaysClient);
     }
     public Runner(CurrencyClient currencyClient,
                   InMemoryCurrencyRepository inMemoryCurrencyRepository,
-                  DatabaseCurrencyRepository databaseCurrencyRepository, HolidaysClient holidaysClient, InMemoryHolidaysRepository inMemoryHolidaysRepository, DatabaseHolidaysRepository databaseHolidaysRepository) {
+                  DatabaseCurrencyRepository databaseCurrencyRepository, HolidaysClient holidaysClient, InMemoryHolidaysRepository inMemoryHolidaysRepository, DatabaseHolidaysRepository databaseHolidaysRepository, Sheduled sheduled) {
         this.currencyClient = currencyClient;
         this.inMemoryCurrencyRepository = inMemoryCurrencyRepository;
         this.databaseCurrencyRepository = databaseCurrencyRepository;
         this.holidaysClient = holidaysClient;
         this.inMemoryHolidaysRepository = inMemoryHolidaysRepository;
         this.databaseHolidaysRepository = databaseHolidaysRepository;
+        this.sheduled = sheduled;
     }
 
     @Override
@@ -58,6 +62,7 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
         HolidaysReader databaseHolidaysReader = new HolidaysReader(databaseHolidaysRepository);
         HolidaysReader inMemoryHolidaysReader = new HolidaysReader(inMemoryHolidaysRepository);
         System.out.println(inMemoryHolidaysReader.findHolidays());
+        System.out.println(currencyClient.getByTable("a"));
 
 
     }
