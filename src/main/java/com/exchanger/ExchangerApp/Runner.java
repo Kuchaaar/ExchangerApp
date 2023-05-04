@@ -66,7 +66,7 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 //        HolidaysReader inMemoryHolidaysReader = new HolidaysReader(inMemoryHolidaysRepository);
 //        System.out.println(inMemoryHolidaysReader.findHolidays());
 //        System.out.println(currencyClient.getByTable("a"));
-        mainClass.ExtractData("b");
+        mainClass.ExtractData("a",3);
 
 
 

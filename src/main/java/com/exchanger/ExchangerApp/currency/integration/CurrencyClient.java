@@ -12,6 +12,6 @@ public interface CurrencyClient {
     @RequestMapping(method = RequestMethod.GET, value = "{table}")
     List<CurrenciesResponse> getByTable(@PathVariable("table") String table);
 
-    @RequestMapping(method = RequestMethod.GET, value = "{table}/last/{topCount}")
+    @RequestMapping(method = RequestMethod.GET, value = "{table}/last/{topCount}/")
     List<CurrenciesResponse> getByTable(@PathVariable("table") String table, @PathVariable("topCount") int topCount);
 }
