@@ -15,7 +15,8 @@ public class Sheduled {
     }
     public void SheduledUpdate(){
         CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, databaseCurrencyRepository);
-        databaseUpdater.update();
+        databaseUpdater.update("a");
+        databaseUpdater.update("b");
     }
 
 }

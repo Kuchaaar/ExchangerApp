@@ -42,7 +42,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
         return jdbcTemplate.query(FIND_ALL_CURRENCY_QUERY, (rs, rowNum) -> mapToCurrency(rs));
     }
 
-    private Currency mapToCurrency(ResultSet rs) throws SQLException {
+    public Currency mapToCurrency(ResultSet rs) throws SQLException {
         return new Currency(
                 rs.getString("currency"),
                 rs.getString("code"),

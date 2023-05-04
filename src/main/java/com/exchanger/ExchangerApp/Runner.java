@@ -26,6 +26,7 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
     private final LocalDate currentDate = LocalDate.now();
     private final Sheduled sheduled;
     private final DateChecker dateChecker;
+    private final MainClass mainClass;
     @Bean
     public CurrencySheduler myScheduler(InMemoryHolidaysRepository inMemoryHolidaysRepository,
                                         Sheduled sheduled, HolidaysClient holidaysClient, DateChecker dateChecker) {
@@ -33,7 +34,10 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
     }
     public Runner(CurrencyClient currencyClient,
                   InMemoryCurrencyRepository inMemoryCurrencyRepository,
-                  DatabaseCurrencyRepository databaseCurrencyRepository, HolidaysClient holidaysClient, InMemoryHolidaysRepository inMemoryHolidaysRepository, DatabaseHolidaysRepository databaseHolidaysRepository, Sheduled sheduled, DateChecker dateChecker) {
+                  DatabaseCurrencyRepository databaseCurrencyRepository, HolidaysClient holidaysClient,
+                  InMemoryHolidaysRepository inMemoryHolidaysRepository,
+                  DatabaseHolidaysRepository databaseHolidaysRepository,
+                  Sheduled sheduled, DateChecker dateChecker, MainClass mainClass) {
         this.currencyClient = currencyClient;
         this.inMemoryCurrencyRepository = inMemoryCurrencyRepository;
         this.databaseCurrencyRepository = databaseCurrencyRepository;
@@ -42,14 +46,15 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
         this.databaseHolidaysRepository = databaseHolidaysRepository;
         this.sheduled = sheduled;
         this.dateChecker = dateChecker;
+        this.mainClass = mainClass;
     }
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, databaseCurrencyRepository);
         CurrencyUpdater inMemoryDatabaseUpdater = new CurrencyUpdater(currencyClient, inMemoryCurrencyRepository);
-//        databaseUpdater.update();
-//        inMemoryDatabaseUpdater.update();
+//        databaseUpdater.update("a");
+//        inMemoryDatabaseUpdater.update("a");
 //        CurrencyReader databaseCurrencyReader = new CurrencyReader(databaseCurrencyRepository);
 //        CurrencyReader inMemoryCurrencyReader = new CurrencyReader(inMemoryCurrencyRepository);
 //        System.out.println(inMemoryCurrencyReader.findAll() );
@@ -61,8 +66,8 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 //        HolidaysReader inMemoryHolidaysReader = new HolidaysReader(inMemoryHolidaysRepository);
 //        System.out.println(inMemoryHolidaysReader.findHolidays());
 //        System.out.println(currencyClient.getByTable("a"));
-        System.out.println(dateChecker.ifInDatabase(3));
-        System.out.println(dateChecker.ifInDatabase());
+        mainClass.ExtractData("b");
+
 
 
     }
