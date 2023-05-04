@@ -22,7 +22,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     private static final String UPDATE_CURRENCY_QUERY =
             "INSERT INTO Currency (currency,code,mid,date) VALUES (:currency,:code,:mid,:date)";
 
-    private static final String FIND_ALL_CURRENCY_QUERY = "SELECT currency, code, mid from Currency";
+    private static final String FIND_ALL_CURRENCY_QUERY = "SELECT currency, code, mid,date from Currency";
 
     public DatabaseCurrencyRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = namedParameterJdbcTemplate;

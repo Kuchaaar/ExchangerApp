@@ -48,19 +48,21 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
     public void onApplicationEvent(ApplicationReadyEvent event) {
         CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, databaseCurrencyRepository);
         CurrencyUpdater inMemoryDatabaseUpdater = new CurrencyUpdater(currencyClient, inMemoryCurrencyRepository);
-        databaseUpdater.update();
-        inMemoryDatabaseUpdater.update();
-        CurrencyReader databaseCurrencyReader = new CurrencyReader(databaseCurrencyRepository);
-        CurrencyReader inMemoryCurrencyReader = new CurrencyReader(inMemoryCurrencyRepository);
-        System.out.println(inMemoryCurrencyReader.findAll() );
-        HolidaysUpdater databaseHolidaysUpdater = new HolidaysUpdater(holidaysClient,databaseHolidaysRepository);
-        HolidaysUpdater inMemoryHolidaysUpdater = new HolidaysUpdater(holidaysClient,inMemoryHolidaysRepository);
-        databaseHolidaysUpdater.update();
-        inMemoryHolidaysUpdater.update();
-        HolidaysReader databaseHolidaysReader = new HolidaysReader(databaseHolidaysRepository);
-        HolidaysReader inMemoryHolidaysReader = new HolidaysReader(inMemoryHolidaysRepository);
-        System.out.println(inMemoryHolidaysReader.findHolidays());
-        System.out.println(currencyClient.getByTable("a"));
+//        databaseUpdater.update();
+//        inMemoryDatabaseUpdater.update();
+//        CurrencyReader databaseCurrencyReader = new CurrencyReader(databaseCurrencyRepository);
+//        CurrencyReader inMemoryCurrencyReader = new CurrencyReader(inMemoryCurrencyRepository);
+//        System.out.println(inMemoryCurrencyReader.findAll() );
+//        HolidaysUpdater databaseHolidaysUpdater = new HolidaysUpdater(holidaysClient,databaseHolidaysRepository);
+//        HolidaysUpdater inMemoryHolidaysUpdater = new HolidaysUpdater(holidaysClient,inMemoryHolidaysRepository);
+//        databaseHolidaysUpdater.update();
+//        inMemoryHolidaysUpdater.update();
+//        HolidaysReader databaseHolidaysReader = new HolidaysReader(databaseHolidaysRepository);
+//        HolidaysReader inMemoryHolidaysReader = new HolidaysReader(inMemoryHolidaysRepository);
+//        System.out.println(inMemoryHolidaysReader.findHolidays());
+//        System.out.println(currencyClient.getByTable("a"));
+        System.out.println(dateChecker.ifInDatabase(3));
+        System.out.println(dateChecker.ifInDatabase());
 
 
     }
