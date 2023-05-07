@@ -26,7 +26,7 @@ private final DateChecker dateChecker;
         this.holidaysClient = holidaysClient;
         this.dateChecker = dateChecker;
     }
-//    @Scheduled(fixedRate = 1000000000)//cron = "0 0 22 ? * MON-FRI"
+    @Scheduled(fixedRate = 1000000000)//cron = "0 0 22 ? * MON-FRI"
     public void run(){
         LocalDate now = LocalDate.now();
         if(now.getDayOfWeek().getValue()>= 1 && now.getDayOfWeek().getValue()<=5 && !isHoliday(now) && !dateChecker.ifInDatabase()){

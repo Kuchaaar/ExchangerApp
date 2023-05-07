@@ -11,7 +11,7 @@ import java.util.List;
 public class HolidaysReader {
     private final HolidaysRepository holidaysRepository;
 
-    public HolidaysReader(@Qualifier("InMemoryHolidaysRepository") HolidaysRepository holidaysRepository) {
+    public HolidaysReader(HolidaysRepository holidaysRepository) {
         this.holidaysRepository = holidaysRepository;
     }
     public List<HolidaysResponse> findHolidays() {

@@ -12,11 +12,6 @@ import java.util.List;
 public class CurrencyReader {
     private final CurrencyRepository currencyRepository;
 
-    @Bean
-    public DatabaseCurrencyRepository databaseCurrencyRepository(NamedParameterJdbcTemplate jdbcTemplate){
-        return new DatabaseCurrencyRepository(jdbcTemplate);
-    }
-
     public CurrencyReader(CurrencyRepository currencyRepository) {
         this.currencyRepository = currencyRepository;
     }

@@ -2,11 +2,10 @@ package com.exchanger.ExchangerApp;
 
 import com.exchanger.ExchangerApp.currency.domain.currency.*;
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysReader;
+import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysRepository;
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysUpdater;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyClient;
 import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysClient;
-import com.exchanger.ExchangerApp.currency.peristence.currency.DatabaseCurrencyRepository;
-import com.exchanger.ExchangerApp.currency.peristence.currency.InMemoryCurrencyRepository;
 import com.exchanger.ExchangerApp.currency.peristence.holidays.DatabaseHolidaysRepository;
 import com.exchanger.ExchangerApp.currency.peristence.holidays.InMemoryHolidaysRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -22,11 +21,9 @@ import java.time.LocalDate;
 public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 
     private final CurrencyClient currencyClient;
-    private final InMemoryCurrencyRepository inMemoryCurrencyRepository;
-    private final DatabaseCurrencyRepository databaseCurrencyRepository;
+    private final CurrencyRepository currencyRepository;
     private final HolidaysClient holidaysClient;
-    private final InMemoryHolidaysRepository inMemoryHolidaysRepository;
-    private final DatabaseHolidaysRepository databaseHolidaysRepository;
+    private final HolidaysRepository holidaysRepository;
     private final LocalDate currentDate = LocalDate.now();
     private final Sheduled sheduled;
     private final DateChecker dateChecker;
@@ -37,17 +34,12 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
         return new CurrencySheduler(inMemoryHolidaysRepository,sheduled,holidaysClient,dateChecker);
     }
     public Runner(CurrencyClient currencyClient,
-                  InMemoryCurrencyRepository inMemoryCurrencyRepository,
-                  DatabaseCurrencyRepository databaseCurrencyRepository, HolidaysClient holidaysClient,
-                  InMemoryHolidaysRepository inMemoryHolidaysRepository,
-                  DatabaseHolidaysRepository databaseHolidaysRepository,
-                  Sheduled sheduled, DateChecker dateChecker, MainClass mainClass) {
+                  CurrencyRepository currencyRepository, HolidaysClient holidaysClient,
+                  HolidaysRepository holidaysRepository, Sheduled sheduled, DateChecker dateChecker, MainClass mainClass) {
         this.currencyClient = currencyClient;
-        this.inMemoryCurrencyRepository = inMemoryCurrencyRepository;
-        this.databaseCurrencyRepository = databaseCurrencyRepository;
+        this.currencyRepository = currencyRepository;
         this.holidaysClient = holidaysClient;
-        this.inMemoryHolidaysRepository = inMemoryHolidaysRepository;
-        this.databaseHolidaysRepository = databaseHolidaysRepository;
+        this.holidaysRepository = holidaysRepository;
         this.sheduled = sheduled;
         this.dateChecker = dateChecker;
         this.mainClass = mainClass;
@@ -55,19 +47,19 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, databaseCurrencyRepository);
-        CurrencyUpdater inMemoryDatabaseUpdater = new CurrencyUpdater(currencyClient, inMemoryCurrencyRepository);
+        CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
+        CurrencyUpdater inMemoryDatabaseUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
         databaseUpdater.update("a");
         inMemoryDatabaseUpdater.update("a");
-        CurrencyReader databaseCurrencyReader = new CurrencyReader(databaseCurrencyRepository);
-        CurrencyReader inMemoryCurrencyReader = new CurrencyReader(inMemoryCurrencyRepository);
+        CurrencyReader databaseCurrencyReader = new CurrencyReader(currencyRepository);
+        CurrencyReader inMemoryCurrencyReader = new CurrencyReader(currencyRepository);
         System.out.println(inMemoryCurrencyReader.findAll() );
-        HolidaysUpdater databaseHolidaysUpdater = new HolidaysUpdater(holidaysClient,databaseHolidaysRepository);
-        HolidaysUpdater inMemoryHolidaysUpdater = new HolidaysUpdater(holidaysClient,inMemoryHolidaysRepository);
+        HolidaysUpdater databaseHolidaysUpdater = new HolidaysUpdater(holidaysClient,holidaysRepository);
+        HolidaysUpdater inMemoryHolidaysUpdater = new HolidaysUpdater(holidaysClient,holidaysRepository);
         databaseHolidaysUpdater.update();
         inMemoryHolidaysUpdater.update();
-        HolidaysReader databaseHolidaysReader = new HolidaysReader(databaseHolidaysRepository);
-        HolidaysReader inMemoryHolidaysReader = new HolidaysReader(inMemoryHolidaysRepository);
+        HolidaysReader databaseHolidaysReader = new HolidaysReader(holidaysRepository);
+        HolidaysReader inMemoryHolidaysReader = new HolidaysReader(holidaysRepository);
         System.out.println(inMemoryHolidaysReader.findHolidays());
         System.out.println(currencyClient.getByTable("a"));
 //        mainClass.ExtractData("a",3);

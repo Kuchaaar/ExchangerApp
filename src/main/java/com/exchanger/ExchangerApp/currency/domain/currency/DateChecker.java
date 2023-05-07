@@ -12,23 +12,20 @@ import java.util.Map;
 
 @Component
 public class DateChecker {
-    private final DatabaseCurrencyRepository databaseCurrencyRepository;
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final String DATA_CURRENCY_QUERY = "SELECT date from Currency WHERE date = :date";
+    private static final String COUNT_CURRENCY_BY_DATE_QUERY = "SELECT count(date) FROM Currency where date = :date";
 
-    public DateChecker(DatabaseCurrencyRepository databaseCurrencyRepository, NamedParameterJdbcTemplate jdbcTemplate) {
-        this.databaseCurrencyRepository = databaseCurrencyRepository;
+    public DateChecker(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public boolean ifInDatabase(){
         LocalDate localDate = LocalDate.now();
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = localDate.format(formatter);
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("date", formattedDate);
-        List<Map<String, Object>> result = jdbcTemplate.queryForList(DATA_CURRENCY_QUERY, paramMap);
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(COUNT_CURRENCY_BY_DATE_QUERY, paramMap);
         if (result.isEmpty()) {
             return false;
         } else {
@@ -42,7 +39,7 @@ public class DateChecker {
             String formattedDate1 = localDate1.format(formatter);
             Map<String, Object> paramMap = new HashMap<>();
             paramMap.put("date",formattedDate1);
-            List<Map<String, Object>> result = jdbcTemplate.queryForList(DATA_CURRENCY_QUERY, paramMap);
+            List<Map<String, Object>> result = jdbcTemplate.queryForList(COUNT_CURRENCY_BY_DATE_QUERY, paramMap);
             if (result.isEmpty()) {
                 return false;
             }

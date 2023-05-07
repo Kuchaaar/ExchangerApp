@@ -1,12 +1,6 @@
 package com.exchanger.ExchangerApp.currency.domain.currency;
 
-import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyReader;
-import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyReader2;
-import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyUpdater;
-import com.exchanger.ExchangerApp.currency.domain.currency.DateChecker;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyClient;
-import com.exchanger.ExchangerApp.currency.peristence.currency.DatabaseCurrencyRepository;
-import com.exchanger.ExchangerApp.currency.peristence.currency.InMemoryCurrencyRepository;
 import org.springframework.stereotype.Component;
 
 
@@ -14,21 +8,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class MainClass {
     private DateChecker dateChecker;
-    private DatabaseCurrencyRepository databaseCurrencyRepository;
-    private InMemoryCurrencyRepository inMemoryCurrencyRepository;
+    private CurrencyRepository currencyRepository;
     private CurrencyClient currencyClient;
     private CurrencyReader2 currencyReader2;
 
-    private CurrencyReader databaseCurrencyReader = new CurrencyReader(databaseCurrencyRepository);
-    private CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, databaseCurrencyRepository);
-    private CurrencyUpdater inMemoryDatabaseUpdater = new CurrencyUpdater(currencyClient, inMemoryCurrencyRepository);
+    private CurrencyReader databaseCurrencyReader = new CurrencyReader(currencyRepository);
+    private CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
+    private CurrencyUpdater inMemoryDatabaseUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
 
-    public MainClass(DateChecker dateChecker, DatabaseCurrencyRepository databaseCurrencyRepository,
-                     InMemoryCurrencyRepository inMemoryCurrencyRepository, CurrencyClient currencyClient,
+    public MainClass(DateChecker dateChecker, CurrencyRepository currencyRepository,
+                     CurrencyClient currencyClient,
                      CurrencyReader2 currencyReader2) {
         this.dateChecker = dateChecker;
-        this.databaseCurrencyRepository = databaseCurrencyRepository;
-        this.inMemoryCurrencyRepository = inMemoryCurrencyRepository;
+        this.currencyRepository = currencyRepository;
         this.currencyClient = currencyClient;
         this.currencyReader2 = currencyReader2;
     }

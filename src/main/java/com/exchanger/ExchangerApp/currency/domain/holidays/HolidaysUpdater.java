@@ -11,7 +11,7 @@ public class HolidaysUpdater {
     private final HolidaysRepository holidaysRepository;
 
     public HolidaysUpdater(HolidaysClient holidaysClient,
-                           @Qualifier("DatabaseHolidaysRepository") HolidaysRepository holidaysRepository) {
+                           HolidaysRepository holidaysRepository) {
         this.holidaysClient = holidaysClient;
         this.holidaysRepository = holidaysRepository;
     }
