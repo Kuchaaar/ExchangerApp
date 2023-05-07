@@ -1,10 +1,9 @@
-package com.exchanger.ExchangerApp.currency.Holidays;
+package com.exchanger.ExchangerApp.currency.domain.holidays;
 
-import com.exchanger.ExchangerApp.currency.integration.CurrenciesResponse;
-import com.exchanger.ExchangerApp.currency.integration.CurrencyResponse;
+import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysClient;
+import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.util.Collection;
 import java.util.List;
 
 public class HolidaysUpdater {

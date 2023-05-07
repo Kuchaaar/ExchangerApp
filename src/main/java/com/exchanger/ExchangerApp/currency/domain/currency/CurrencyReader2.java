@@ -1,6 +1,6 @@
-package com.exchanger.ExchangerApp.currency.domain;
+package com.exchanger.ExchangerApp.currency.domain.currency;
 
-import com.exchanger.ExchangerApp.currency.peristence.DatabaseCurrencyRepository;
+import com.exchanger.ExchangerApp.currency.peristence.currency.DatabaseCurrencyRepository;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 

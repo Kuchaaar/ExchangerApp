@@ -1,6 +1,7 @@
-package com.exchanger.ExchangerApp.currency.Holidays;
+package com.exchanger.ExchangerApp.currency.peristence.holidays;
 
-import com.exchanger.ExchangerApp.currency.domain.Currency;
+import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysRepository;
+import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 @Component
 @Qualifier("DatabaseHolidaysRepository")
-public class DatabaseHolidaysRepository implements HolidaysRepository{
+public class DatabaseHolidaysRepository implements HolidaysRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private static final String UPDATE_CURRENCY_QUERY = "INSERT INTO Holidays (date,name) VALUES (:date,:name)";
 

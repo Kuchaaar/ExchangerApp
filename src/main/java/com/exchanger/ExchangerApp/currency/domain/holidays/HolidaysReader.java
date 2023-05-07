@@ -1,6 +1,6 @@
-package com.exchanger.ExchangerApp.currency.Holidays;
+package com.exchanger.ExchangerApp.currency.domain.holidays;
 
-import com.exchanger.ExchangerApp.currency.domain.Currency;
+import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,6 @@
-package com.exchanger.ExchangerApp.currency.domain;
+package com.exchanger.ExchangerApp.currency.domain.currency;
 
-import com.exchanger.ExchangerApp.currency.integration.CurrencyResponse;
-
-import java.util.Date;
+import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyResponse;
 
 public record Currency(String currency, String code, double mid,String date) {
 

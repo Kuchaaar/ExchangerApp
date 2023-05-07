@@ -1,6 +1,9 @@
-package com.exchanger.ExchangerApp.currency.domain;
+package com.exchanger.ExchangerApp.currency.domain.currency;
 
-import com.exchanger.ExchangerApp.currency.Holidays.*;
+import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysReader;
+import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysUpdater;
+import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysClient;
+import com.exchanger.ExchangerApp.currency.peristence.holidays.InMemoryHolidaysRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +26,7 @@ private final DateChecker dateChecker;
         this.holidaysClient = holidaysClient;
         this.dateChecker = dateChecker;
     }
-    @Scheduled(fixedRate = 1000000000)//cron = "0 0 22 ? * MON-FRI"
+//    @Scheduled(fixedRate = 1000000000)//cron = "0 0 22 ? * MON-FRI"
     public void run(){
         LocalDate now = LocalDate.now();
         if(now.getDayOfWeek().getValue()>= 1 && now.getDayOfWeek().getValue()<=5 && !isHoliday(now) && !dateChecker.ifInDatabase()){

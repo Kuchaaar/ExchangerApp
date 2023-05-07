@@ -1,4 +1,4 @@
-package com.exchanger.ExchangerApp.currency.integration;
+package com.exchanger.ExchangerApp.currency.integration.currency;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;

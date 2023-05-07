@@ -1,8 +1,12 @@
-package com.exchanger.ExchangerApp.currency.domain;
+package com.exchanger.ExchangerApp.currency.domain.currency;
 
-import com.exchanger.ExchangerApp.currency.integration.CurrencyClient;
-import com.exchanger.ExchangerApp.currency.peristence.DatabaseCurrencyRepository;
-import com.exchanger.ExchangerApp.currency.peristence.InMemoryCurrencyRepository;
+import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyReader;
+import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyReader2;
+import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyUpdater;
+import com.exchanger.ExchangerApp.currency.domain.currency.DateChecker;
+import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyClient;
+import com.exchanger.ExchangerApp.currency.peristence.currency.DatabaseCurrencyRepository;
+import com.exchanger.ExchangerApp.currency.peristence.currency.InMemoryCurrencyRepository;
 import org.springframework.stereotype.Component;
 
 

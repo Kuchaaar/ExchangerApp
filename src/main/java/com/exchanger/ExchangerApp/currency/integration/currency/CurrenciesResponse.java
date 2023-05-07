@@ -1,6 +1,5 @@
-package com.exchanger.ExchangerApp.currency.integration;
+package com.exchanger.ExchangerApp.currency.integration.currency;
 
-import java.util.Date;
 import java.util.List;
 
 public record CurrenciesResponse(String effectiveDate,List<CurrencyResponse> rates) { }

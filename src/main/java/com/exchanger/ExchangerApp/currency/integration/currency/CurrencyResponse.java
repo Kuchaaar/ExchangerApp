@@ -1,4 +1,4 @@
-package com.exchanger.ExchangerApp.currency.integration;
+package com.exchanger.ExchangerApp.currency.integration.currency;
 
 import java.util.Date;
 

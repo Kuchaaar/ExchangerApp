@@ -21,6 +21,8 @@ spring:
   sql:
     init:
       mode: always
-currency:
-  repository:
-    type: memory
+repository:
+  mock:
+    holidays:
+      mock:
+        enable: true

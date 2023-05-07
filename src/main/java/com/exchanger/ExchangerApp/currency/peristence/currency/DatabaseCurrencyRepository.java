@@ -1,10 +1,11 @@
-package com.exchanger.ExchangerApp.currency.peristence;
+package com.exchanger.ExchangerApp.currency.peristence.currency;
 
-import com.exchanger.ExchangerApp.currency.domain.Currency;
-import com.exchanger.ExchangerApp.currency.domain.CurrencyRepository;
-import com.exchanger.ExchangerApp.currency.integration.CurrenciesResponse;
-import com.exchanger.ExchangerApp.currency.integration.CurrencyResponse;
+import com.exchanger.ExchangerApp.currency.domain.currency.Currency;
+import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyRepository;
+import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
@@ -15,7 +16,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-@Qualifier("DatabaseCurrencyRepository")
+@ConditionalOnProperty(
+        value = "repository.mock.holidays.mock.enable",
+        havingValue = "false"
+)
 public class DatabaseCurrencyRepository implements CurrencyRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;

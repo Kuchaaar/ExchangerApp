@@ -1,6 +1,5 @@
-package com.exchanger.ExchangerApp.currency.Holidays;
+package com.exchanger.ExchangerApp.currency.integration.holidays;
 
-import com.exchanger.ExchangerApp.currency.integration.CurrenciesResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
