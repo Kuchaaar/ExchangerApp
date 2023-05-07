@@ -18,10 +18,10 @@ import java.util.stream.Stream;
 public class CurrencyUpdater {
     private final CurrencyClient currencyClient;
     private final CurrencyRepository currencyRepository;
-    @Bean
-    public InMemoryCurrencyRepository inMemoryCurrencyRepository(){
-        return new InMemoryCurrencyRepository();
-    }
+//    @Bean
+//    public InMemoryCurrencyRepository inMemoryCurrencyRepository(){
+//        return new InMemoryCurrencyRepository();
+//    }
 
 
     public CurrencyUpdater(CurrencyClient currencyClient, CurrencyRepository currencyRepository) {
