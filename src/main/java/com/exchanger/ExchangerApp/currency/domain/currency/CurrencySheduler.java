@@ -37,7 +37,7 @@ private final DateChecker dateChecker;
         HolidaysReader holidaysReader = new HolidaysReader(inMemoryHolidaysRepository);
         HolidaysUpdater inMemoryHolidaysUpdater = new HolidaysUpdater(holidaysClient,inMemoryHolidaysRepository);
         inMemoryHolidaysUpdater.update();
-        return holidaysReader.findHolidays().stream()
+        return holidaysReader.findHolidaysByYear().stream()
                 .anyMatch(holidaysResponse -> {
                     LocalDate holidayDate = LocalDate.parse(holidaysResponse.date(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     return holidayDate.getMonth() == date.getMonth() && holidayDate.getDayOfMonth() == date.getDayOfMonth();

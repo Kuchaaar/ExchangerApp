@@ -6,5 +6,5 @@ import java.util.List;
 public interface HolidaysRepository {
     void saveHolidays(List<HolidaysResponse> holidaysResponseList);
 
-    List<HolidaysResponse> findHolidays();
+    List<HolidaysResponse> findHolidaysByYear();
 }

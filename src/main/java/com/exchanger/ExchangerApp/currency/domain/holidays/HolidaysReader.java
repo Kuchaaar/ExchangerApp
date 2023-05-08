@@ -14,7 +14,7 @@ public class HolidaysReader {
     public HolidaysReader(HolidaysRepository holidaysRepository) {
         this.holidaysRepository = holidaysRepository;
     }
-    public List<HolidaysResponse> findHolidays() {
-        return holidaysRepository.findHolidays();
+    public List<HolidaysResponse> findHolidaysByYear() {
+        return holidaysRepository.findHolidaysByYear();
     }
 }

@@ -34,7 +34,7 @@ public class DatabaseHolidaysRepository implements HolidaysRepository {
     }
 
     @Override
-    public List<HolidaysResponse> findHolidays() {
+    public List<HolidaysResponse> findHolidaysByYear() {
         return jdbcTemplate.query(FIND_ALL_CURRENCY_QUERY, (rs, rowNum) -> mapToHolidays(rs));
     }
     private HolidaysResponse mapToHolidays(ResultSet rs) throws SQLException {
