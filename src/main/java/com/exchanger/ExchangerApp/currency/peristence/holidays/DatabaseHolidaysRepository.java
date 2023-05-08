@@ -2,24 +2,22 @@ package com.exchanger.ExchangerApp.currency.peristence.holidays;
 
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysRepository;
 import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysResponse;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-@Component
+@Repository
 @ConditionalOnProperty(
         value = "repository.mock.holidays.mock.enable",
         havingValue = "false"
 )
 public class DatabaseHolidaysRepository implements HolidaysRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private static final String UPDATE_CURRENCY_QUERY = "INSERT INTO Holidays (date,name) VALUES (:date,:name)";
+    private static final String INSERT_HOLIDAY_QUERY = "INSERT INTO Holidays (date, name) VALUES (:date, :name)";
 
     private static final String FIND_ALL_CURRENCY_QUERY = "SELECT date, name from Holidays";
 
@@ -30,7 +28,7 @@ public class DatabaseHolidaysRepository implements HolidaysRepository {
     @Override
     public void saveHolidays(List<HolidaysResponse> holidaysResponses) {
         final SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(holidaysResponses);
-        jdbcTemplate.batchUpdate(UPDATE_CURRENCY_QUERY, batch);
+        jdbcTemplate.batchUpdate(INSERT_HOLIDAY_QUERY, batch);
     }
 
     @Override

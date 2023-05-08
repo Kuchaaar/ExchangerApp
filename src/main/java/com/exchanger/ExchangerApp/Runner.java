@@ -1,13 +1,11 @@
 package com.exchanger.ExchangerApp;
 
 import com.exchanger.ExchangerApp.currency.domain.currency.*;
-import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysReader;
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysRepository;
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysUpdater;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyClient;
 import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysClient;
 import com.exchanger.ExchangerApp.currency.peristence.holidays.DatabaseHolidaysRepository;
-import com.exchanger.ExchangerApp.currency.peristence.holidays.InMemoryHolidaysRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -29,13 +27,14 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
     private final DateChecker dateChecker;
     private final MainClass mainClass;
     @Bean
-    public CurrencySheduler myScheduler(InMemoryHolidaysRepository inMemoryHolidaysRepository,
+    public CurrencySheduler myScheduler(HolidaysRepository holidaysRepository,
                                         Sheduled sheduled, HolidaysClient holidaysClient, DateChecker dateChecker) {
-        return new CurrencySheduler(inMemoryHolidaysRepository,sheduled,holidaysClient,dateChecker);
+        return new CurrencySheduler(holidaysRepository,sheduled,holidaysClient,dateChecker);
     }
     public Runner(CurrencyClient currencyClient,
                   CurrencyRepository currencyRepository, HolidaysClient holidaysClient,
-                  HolidaysRepository holidaysRepository, Sheduled sheduled, DateChecker dateChecker, MainClass mainClass) {
+                  HolidaysRepository holidaysRepository,
+                  Sheduled sheduled, DateChecker dateChecker, MainClass mainClass) {
         this.currencyClient = currencyClient;
         this.currencyRepository = currencyRepository;
         this.holidaysClient = holidaysClient;
@@ -48,20 +47,18 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
-        CurrencyUpdater inMemoryDatabaseUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
         databaseUpdater.update("a");
-        inMemoryDatabaseUpdater.update("a");
-        CurrencyReader databaseCurrencyReader = new CurrencyReader(currencyRepository);
-        CurrencyReader inMemoryCurrencyReader = new CurrencyReader(currencyRepository);
-        System.out.println(inMemoryCurrencyReader.findAll() );
+        databaseUpdater.update("b");
+//        CurrencyReader databaseCurrencyReader = new CurrencyReader(currencyRepository);
+//        CurrencyReader inMemoryCurrencyReader = new CurrencyReader(currencyRepository);
+//        System.out.println(inMemoryCurrencyReader.findAll() );
         HolidaysUpdater databaseHolidaysUpdater = new HolidaysUpdater(holidaysClient,holidaysRepository);
-        HolidaysUpdater inMemoryHolidaysUpdater = new HolidaysUpdater(holidaysClient,holidaysRepository);
         databaseHolidaysUpdater.update();
-        inMemoryHolidaysUpdater.update();
-        HolidaysReader databaseHolidaysReader = new HolidaysReader(holidaysRepository);
-        HolidaysReader inMemoryHolidaysReader = new HolidaysReader(holidaysRepository);
-        System.out.println(inMemoryHolidaysReader.findHolidaysByYear());
-        System.out.println(currencyClient.getByTable("a"));
+//        HolidaysReader databaseHolidaysReader = new HolidaysReader(holidaysRepository);
+//        HolidaysReader inMemoryHolidaysReader = new HolidaysReader(holidaysRepository);
+//        System.out.println(inMemoryHolidaysReader.findHolidaysByYear());
+//        System.out.println(databaseHolidaysReader.findHolidaysByYear());
+//        System.out.println(currencyClient.getByTable("a"));
 //        mainClass.ExtractData("a",3);
 
 

@@ -2,15 +2,13 @@ package com.exchanger.ExchangerApp.currency.peristence.holidays;
 
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysRepository;
 import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysResponse;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Repository
 @ConditionalOnProperty(
         value = "repository.mock.holidays.mock.enable",
         havingValue = "true"

@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Repository
 @ConditionalOnProperty(
-        value = "repository.mock.holidays.mock.enable",
+        value = "repository.mock.currency.mock.enable",
         havingValue = "true"
 )
 public class InMemoryCurrencyRepository implements CurrencyRepository {

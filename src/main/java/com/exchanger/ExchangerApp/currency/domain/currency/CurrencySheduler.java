@@ -1,6 +1,7 @@
 package com.exchanger.ExchangerApp.currency.domain.currency;
 
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysReader;
+import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysRepository;
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysUpdater;
 import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysClient;
 import com.exchanger.ExchangerApp.currency.peristence.holidays.InMemoryHolidaysRepository;
@@ -12,21 +13,21 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class CurrencySheduler {
-private final InMemoryHolidaysRepository inMemoryHolidaysRepository;
+private final HolidaysRepository holidaysRepository;
 private final Sheduled sheduled;
 private final HolidaysClient holidaysClient;
 private final DateChecker dateChecker;
 
-    public CurrencySheduler(InMemoryHolidaysRepository inMemoryHolidaysRepository,
+    public CurrencySheduler(HolidaysRepository holidaysRepository,
                             Sheduled sheduled,
                             HolidaysClient holidaysClient,
                             DateChecker dateChecker) {
-        this.inMemoryHolidaysRepository = inMemoryHolidaysRepository;
+        this.holidaysRepository = holidaysRepository;
         this.sheduled = sheduled;
         this.holidaysClient = holidaysClient;
         this.dateChecker = dateChecker;
     }
-    @Scheduled(fixedRate = 1000000000)//cron = "0 0 22 ? * MON-FRI"
+//    @Scheduled(fixedRate = 1000000000)//cron = "0 0 22 ? * MON-FRI"
     public void run(){
         LocalDate now = LocalDate.now();
         if(now.getDayOfWeek().getValue()>= 1 && now.getDayOfWeek().getValue()<=5 && !isHoliday(now) && !dateChecker.ifInDatabase()){
@@ -34,8 +35,8 @@ private final DateChecker dateChecker;
         }
     }
     private boolean isHoliday(LocalDate date){
-        HolidaysReader holidaysReader = new HolidaysReader(inMemoryHolidaysRepository);
-        HolidaysUpdater inMemoryHolidaysUpdater = new HolidaysUpdater(holidaysClient,inMemoryHolidaysRepository);
+        HolidaysReader holidaysReader = new HolidaysReader(holidaysRepository);
+        HolidaysUpdater inMemoryHolidaysUpdater = new HolidaysUpdater(holidaysClient,holidaysRepository);
         inMemoryHolidaysUpdater.update();
         return holidaysReader.findHolidaysByYear().stream()
                 .anyMatch(holidaysResponse -> {

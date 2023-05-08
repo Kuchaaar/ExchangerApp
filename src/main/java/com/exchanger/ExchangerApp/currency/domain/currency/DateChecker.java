@@ -25,12 +25,14 @@ public class DateChecker {
         String formattedDate = localDate.format(formatter);
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("date", formattedDate);
-        List<Map<String, Object>> result = jdbcTemplate.queryForList(COUNT_CURRENCY_BY_DATE_QUERY, paramMap);
-        if (result.isEmpty()) {
+        Integer result = jdbcTemplate.queryForObject(COUNT_CURRENCY_BY_DATE_QUERY,paramMap, Integer.class);
+        if (result==0 || result == null) {
             return false;
-        } else {
+        }
+        else{
             return true;
         }
+
     }
     public boolean ifInDatabase(int days){
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -39,11 +41,11 @@ public class DateChecker {
             String formattedDate1 = localDate1.format(formatter);
             Map<String, Object> paramMap = new HashMap<>();
             paramMap.put("date",formattedDate1);
-            List<Map<String, Object>> result = jdbcTemplate.queryForList(COUNT_CURRENCY_BY_DATE_QUERY, paramMap);
-            if (result.isEmpty()) {
+            Integer result = jdbcTemplate.queryForObject(COUNT_CURRENCY_BY_DATE_QUERY,paramMap, Integer.class);
+            if (result ==0 || result == null) {
                 return false;
             }
-            result.clear();
+            result = 0;
             paramMap.clear();
         }
         return true;

@@ -4,13 +4,7 @@ package com.exchanger.ExchangerApp.currency.domain.currency;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrenciesResponse;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyClient;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyResponse;
-import com.exchanger.ExchangerApp.currency.peristence.currency.DatabaseCurrencyRepository;
-import com.exchanger.ExchangerApp.currency.peristence.currency.InMemoryCurrencyRepository;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.security.spec.NamedParameterSpec;
 import java.util.List;
 import java.util.stream.Stream;
 
