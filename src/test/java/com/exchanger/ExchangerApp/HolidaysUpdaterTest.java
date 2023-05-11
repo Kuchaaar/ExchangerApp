@@ -1,8 +1,8 @@
 package com.exchanger.ExchangerApp;
-import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysUpdater;
-import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysClient;
-import com.exchanger.ExchangerApp.currency.integration.holidays.HolidaysResponse;
-import com.exchanger.ExchangerApp.currency.peristence.holidays.InMemoryHolidaysRepository;
+import com.exchanger.currency.domain.holidays.HolidaysUpdater;
+import com.exchanger.currency.integration.holidays.HolidaysClient;
+import com.exchanger.currency.integration.holidays.HolidaysResponse;
+import com.exchanger.currency.peristence.holidays.InMemoryHolidaysRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

@@ -1,10 +1,10 @@
 package com.exchanger.ExchangerApp;
-import com.exchanger.ExchangerApp.currency.domain.currency.Currency;
-import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyUpdater;
-import com.exchanger.ExchangerApp.currency.integration.currency.CurrenciesResponse;
-import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyClient;
-import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyResponse;
-import com.exchanger.ExchangerApp.currency.peristence.currency.InMemoryCurrencyRepository;
+import com.exchanger.currency.domain.currency.Currency;
+import com.exchanger.currency.domain.currency.CurrencyUpdater;
+import com.exchanger.currency.integration.currency.CurrenciesResponse;
+import com.exchanger.currency.integration.currency.CurrencyClient;
+import com.exchanger.currency.integration.currency.CurrencyResponse;
+import com.exchanger.currency.peristence.currency.InMemoryCurrencyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
