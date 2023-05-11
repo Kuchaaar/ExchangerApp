@@ -11,15 +11,12 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class CurrencySheduler {
     private final DateChecker dateChecker;
-    private final HolidaysUpdater holidaysUpdater;
     private final HolidaysReader holidaysReader;
     private final Sheduled sheduled;
 
     public CurrencySheduler(HolidaysReader holidaysReader,
                             DateChecker dateChecker,
-                            HolidaysUpdater holidaysUpdater,
                             Sheduled sheduled) {
-        this.holidaysUpdater = holidaysUpdater;
         this.dateChecker = dateChecker;
         this.holidaysReader = holidaysReader;
         this.sheduled = sheduled;
@@ -30,15 +27,14 @@ public class CurrencySheduler {
         LocalDate now = LocalDate.now();
         if (now.getDayOfWeek().getValue() >= 1 && now.getDayOfWeek().getValue() <= 5
                 && !isHoliday(now) ) {//&& dateChecker.ifInDatabase(now)
-                sheduled.SheduledUpdate();
+//                sheduled.SheduledUpdate();
         }
         else{
-            sheduled.SheduledUpdate();
+//            sheduled.SheduledUpdate();
         }
     }
 
     private boolean isHoliday(LocalDate date) {
-        holidaysUpdater.update();
         return holidaysReader.findHolidaysByYear().stream()
                 .anyMatch(holidaysResponse -> {
                     LocalDate holidayDate = LocalDate.parse(holidaysResponse.date(),

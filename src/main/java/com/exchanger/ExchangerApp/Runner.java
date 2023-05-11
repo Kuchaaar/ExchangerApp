@@ -27,8 +27,8 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        holidaysUpdater.update();
-        currencyUpdater.update("a");
+//        holidaysUpdater.update();
+//        currencyUpdater.update("a",2);
 //        currencyUpdater.update("a");
 //        System.out.println(currencyReader.findAll() );
 //        currencyUpdater.update("b");

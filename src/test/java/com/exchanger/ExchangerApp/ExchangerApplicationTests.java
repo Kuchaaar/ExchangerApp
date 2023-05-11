@@ -9,8 +9,14 @@ public class ExchangerApplicationTests {
 	public void testCurrencyUpdater() {
 		CurrencyUpdaterTest currencyUpdaterTest = new CurrencyUpdaterTest();
 		currencyUpdaterTest.setup();
-		currencyUpdaterTest.updateWithoutTopCountTest();
 		currencyUpdaterTest.updateWithTopCountTest();
+		currencyUpdaterTest.updateWithoutTopCountTest();
+	}
+	@Test
+	public void testHolidaysUpdater(){
+		HolidaysUpdaterTest holidaysUpdaterTest = new HolidaysUpdaterTest();
+		holidaysUpdaterTest.setup();
+		holidaysUpdaterTest.updateTest();
 	}
 
 }

@@ -14,12 +14,12 @@ public class HolidaysUpdater {
         this.holidaysClient = holidaysClient;
         this.holidaysRepository = holidaysRepository;
     }
-    public void update() {
-        List<HolidaysResponse> holidaysResponses = fetchHolidaysResponse();
+    public void update(int year) {
+        List<HolidaysResponse> holidaysResponses = fetchHolidaysResponse(year);
         holidaysRepository.saveHolidays(holidaysResponses);
     }
 
-    private List<HolidaysResponse> fetchHolidaysResponse() {
-        return holidaysClient.getHolidays(2023);
+    private List<HolidaysResponse> fetchHolidaysResponse(int year) {
+        return holidaysClient.getHolidays(year);
     }
 }

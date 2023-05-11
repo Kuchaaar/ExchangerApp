@@ -2,6 +2,8 @@ package com.exchanger.ExchangerApp.currency.domain.currency;
 import com.exchanger.ExchangerApp.currency.domain.holidays.HolidaysUpdater;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class Sheduled {
 
@@ -17,7 +19,8 @@ public class Sheduled {
         currencyUpdater.update("b");
     }
     public void HolidaysUpdate(){
-        holidaysUpdater.update();
+        int year = LocalDate.now().getYear();
+        holidaysUpdater.update(year);
     }
 
 }
