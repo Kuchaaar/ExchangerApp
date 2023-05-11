@@ -1,6 +1,5 @@
 package com.exchanger.ExchangerApp.currency.domain.currency;
 
-import com.exchanger.ExchangerApp.currency.peristence.currency.DatabaseCurrencyRepository;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,6 @@ import java.util.Map;
 public class CurrencyReader2 {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private Map<String, Object> paramMap = new HashMap<>();
     private static final String DATA_CURRENCY_QUERY = "SELECT * from Currency WHERE date = :date";
 
     public CurrencyReader2(NamedParameterJdbcTemplate jdbcTemplate) {
@@ -31,7 +29,8 @@ public class CurrencyReader2 {
     }
     public void WriteData(){
         LocalDate localDate = LocalDate.now();
-        String formattedDate = localDate.format(formatter);
+        String formattedDate = localDate.format(FORMATTER);
+        Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("date", formattedDate);
         List<Map<String, Object>> result = jdbcTemplate.queryForList(DATA_CURRENCY_QUERY, paramMap);
         result.forEach(System.out::println);

@@ -3,32 +3,27 @@ package com.exchanger.ExchangerApp.currency.domain.currency;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyClient;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 
 
 @Component
 public class MainClass {
     private DateChecker dateChecker;
-    private CurrencyRepository currencyRepository;
-    private CurrencyClient currencyClient;
-    private CurrencyReader2 currencyReader2;
+    private final CurrencyReader2 currencyReader2;
+    private final CurrencyUpdater currencyUpdater;
 
-    private CurrencyReader databaseCurrencyReader = new CurrencyReader(currencyRepository);
-    private CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
-    private CurrencyUpdater inMemoryDatabaseUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
-
-    public MainClass(DateChecker dateChecker, CurrencyRepository currencyRepository,
-                     CurrencyClient currencyClient,
+    public MainClass(DateChecker dateChecker,
+                     CurrencyUpdater currencyUpdater,
                      CurrencyReader2 currencyReader2) {
         this.dateChecker = dateChecker;
-        this.currencyRepository = currencyRepository;
-        this.currencyClient = currencyClient;
+        this.currencyUpdater = currencyUpdater;
         this.currencyReader2 = currencyReader2;
     }
 
     public void ExtractData(String table , int topCount){
-        if(!dateChecker.ifInDatabase(topCount)){
-            databaseUpdater.update(table,topCount);
-            inMemoryDatabaseUpdater.update(table);
+        if(!dateChecker.ifInDatabase(LocalDate.now())){
+            currencyUpdater.update(table,topCount);
+            currencyUpdater.update(table);
             currencyReader2.WriteData(topCount);
         }
         else{
@@ -37,14 +32,14 @@ public class MainClass {
     }
 
 
-    public void ExtractData(String table){
-        if(!dateChecker.ifInDatabase()){
-            databaseUpdater.update(table);
-            inMemoryDatabaseUpdater.update(table);
-            currencyReader2.WriteData();
-        }
-        else{
-            currencyReader2.WriteData();
-        }
-    }
+//    public void ExtractData(String table){
+//        if(!dateChecker.ifInDatabase()){
+//            databaseUpdater.update(table);
+//            inMemoryDatabaseUpdater.update(table);
+//            currencyReader2.WriteData();
+//        }
+//        else{
+//            currencyReader2.WriteData();
+//        }
+//    }
 }

@@ -3,14 +3,11 @@ package com.exchanger.ExchangerApp.currency.peristence.currency;
 import com.exchanger.ExchangerApp.currency.domain.currency.Currency;
 import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyRepository;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyResponse;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,7 +23,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     private static final String UPDATE_CURRENCY_QUERY =
             "INSERT INTO Currency (currency,code,mid,date) VALUES (:currency,:code,:mid,:date)";
 
-    private static final String FIND_ALL_CURRENCY_QUERY = "SELECT currency, code, mid,date from Currency";
+    private static final String FIND_ALL_CURRENCY_QUERY = "SELECT * from Currency";
 
     public DatabaseCurrencyRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = namedParameterJdbcTemplate;

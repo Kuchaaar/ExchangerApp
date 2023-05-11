@@ -3,10 +3,7 @@ package com.exchanger.ExchangerApp.currency.peristence.currency;
 import com.exchanger.ExchangerApp.currency.domain.currency.Currency;
 import com.exchanger.ExchangerApp.currency.domain.currency.CurrencyRepository;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyResponse;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
