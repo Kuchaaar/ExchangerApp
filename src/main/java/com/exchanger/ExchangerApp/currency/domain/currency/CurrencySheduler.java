@@ -28,9 +28,9 @@ public class CurrencySheduler {
     @Scheduled(fixedRate = 1000000000)//cron = "0 0 22 ? * MON-FRI"
     public void run() {
         LocalDate now = LocalDate.now();
-        if (now.getDayOfWeek().getValue() >= 1 && now.getDayOfWeek().getValue() <= 5 &&
-                !isHoliday(now) ) {//&& dateChecker.ifInDatabase(now)
-        sheduled.SheduledUpdate();
+        if (now.getDayOfWeek().getValue() >= 1 && now.getDayOfWeek().getValue() <= 5
+                && !isHoliday(now) ) {//&& dateChecker.ifInDatabase(now)
+                sheduled.SheduledUpdate();
         }
         else{
             sheduled.SheduledUpdate();
@@ -41,8 +41,10 @@ public class CurrencySheduler {
         holidaysUpdater.update();
         return holidaysReader.findHolidaysByYear().stream()
                 .anyMatch(holidaysResponse -> {
-                    LocalDate holidayDate = LocalDate.parse(holidaysResponse.date(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                    return holidayDate.getMonth() == date.getMonth() && holidayDate.getDayOfMonth() == date.getDayOfMonth();
+                    LocalDate holidayDate = LocalDate.parse(holidaysResponse.date(),
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    return holidayDate.getMonth() == date.getMonth()
+                            && holidayDate.getDayOfMonth() == date.getDayOfMonth();
                 });
     }
 }

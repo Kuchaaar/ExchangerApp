@@ -25,7 +25,7 @@ repository:
   mock:
     holidays:
       mock:
-        enable: true
+        enable: false
     currency:
       mock:
-        enable: true
+        enable: false
