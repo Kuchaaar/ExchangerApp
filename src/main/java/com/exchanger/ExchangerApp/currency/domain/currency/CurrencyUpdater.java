@@ -1,6 +1,5 @@
 package com.exchanger.ExchangerApp.currency.domain.currency;
 
-
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrenciesResponse;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyClient;
 import com.exchanger.ExchangerApp.currency.integration.currency.CurrencyResponse;

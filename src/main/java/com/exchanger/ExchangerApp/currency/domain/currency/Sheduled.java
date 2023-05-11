@@ -13,9 +13,8 @@ public class Sheduled {
         this.holidaysUpdater = holidaysUpdater;
     }
     public void SheduledUpdate(){
-        CurrencyUpdater databaseUpdater = new CurrencyUpdater(currencyClient,databaseCurrencyRepository(jdbcTemplate));
-        databaseUpdater.update("a");
-        databaseUpdater.update("b");
+        currencyUpdater.update("a");
+        currencyUpdater.update("b");
     }
     public void HolidaysUpdate(){
         holidaysUpdater.update();
