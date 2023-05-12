@@ -9,5 +9,5 @@ import java.util.List;
 @FeignClient(name = "holidays")
 public interface HolidaysClient {
     @GetMapping(value = "{Year}/PL")
-    List<HolidaysResponse> getHolidays(@PathVariable("Year") int Year);
+    List<HolidaysResponse> getHolidays(@PathVariable("Year") int year);
 }

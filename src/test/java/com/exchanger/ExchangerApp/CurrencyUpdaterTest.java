@@ -13,8 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-
-public class CurrencyUpdaterTest {
+ class CurrencyUpdaterTest {
 
     private static final String EFFECTIVE_DATE_1 = "2023-05-01";
     private static final String EFFECTIVE_DATE_2 = "2023-05-02";
@@ -40,14 +39,14 @@ public class CurrencyUpdaterTest {
     }
 
     @Test
-    public void updateWithTopCountTest() {
-//      given:
+    void updateWithTopCountTest() {
+//      given
         String table = "example_table";
         int topCount = 10;
         when(currencyClient.getByTable(table, topCount)).thenReturn(mockCurrenciesResponse());
-//      when:
+//      when
         currencyUpdater.update(table, topCount);
-//      then:
+//      then
         assertEquals(sortedByCurrencyName(currencyRepository.findAll()), sortedByCurrencyName(List.of(
                 aCurrency(CURRENCY_1, CURRENCY_CODE_1, MID, EFFECTIVE_DATE_1),
                 aCurrency(CURRENCY_2, CURRENCY_CODE_2, MID_2, EFFECTIVE_DATE_2),
@@ -55,14 +54,8 @@ public class CurrencyUpdaterTest {
         )));
     }
 
-    private List<Currency> sortedByCurrencyName(List<Currency> currencies) {
-        return currencies.stream()
-                .sorted(Comparator.comparing(Currency::currency))
-                .toList();
-    }
-
     @Test
-    public void updateWithoutTopCountTest() {
+    void updateWithoutTopCountTest() {
 //      given
         String table = "example_table";
         when(currencyClient.getByTable(table)).thenReturn(mockCurrenciesResponse());
@@ -92,6 +85,11 @@ public class CurrencyUpdaterTest {
                         currency3));
         return List.of(response1, response2);
     }
+     private List<Currency> sortedByCurrencyName(List<Currency> currencies) {
+         return currencies.stream()
+                 .sorted(Comparator.comparing(Currency::currency))
+                 .toList();
+     }
 
     private static CurrenciesResponse aCurrenciesResponse(String effectiveDate, List<CurrencyResponse> currencyResponses) {
         return new CurrenciesResponse(effectiveDate, currencyResponses);

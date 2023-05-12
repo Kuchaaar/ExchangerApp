@@ -24,22 +24,5 @@ public class DateChecker {
         Integer result = jdbcTemplate.queryForObject(COUNT_CURRENCY_BY_DATE_QUERY, paramMap, Integer.class);
         return result != null && result != 0;
     }
-
-//    public boolean daysWithoutCurrencyDate(int days){
-//        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        for(int i=0;i<days;i++){
-//            LocalDate localDate1 = LocalDate.now().minusDays(i);
-//            String formattedDate1 = localDate1.format(formatter);
-//            Map<String, Object> paramMap = new HashMap<>();
-//            paramMap.put("date",formattedDate1);
-//            Integer result = jdbcTemplate.queryForObject(COUNT_CURRENCY_BY_DATE_QUERY,paramMap, Integer.class);
-//            if (result ==null || result == 0) {
-//                return false;
-//            }
-//            result = 0;
-//            paramMap.clear();
-//        }
-//        return true;
-//    }
 }
 

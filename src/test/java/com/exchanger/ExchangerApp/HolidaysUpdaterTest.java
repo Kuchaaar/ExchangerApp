@@ -31,12 +31,12 @@ class HolidaysUpdaterTest {
     }
     @Test
     void updateTest(){
-//      given:
+//      given
         int year = 111;
         when(holidaysClient.getHolidays(year)).thenReturn(mockHolidaysResponse());
-//      when:
+//      when
         holidaysUpdater.update(year);
-//      then:
+//      then
         assertEquals(sortedByHolidaysName(holidaysRepository.findHolidaysByYear()), sortedByHolidaysName(List.of(
                 aHolidaysResponse(DATE_1, NAME_1),
                 aHolidaysResponse(DATE_2, NAME_2),
