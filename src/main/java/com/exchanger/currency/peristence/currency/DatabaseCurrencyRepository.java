@@ -39,7 +39,8 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
         final List<Currency> currencies = currenciesResponse.stream()
                 .map(Currency::from)
                 .toList();
-        final SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(currencies);
+        final SqlParameterSource[] batch =
+                SqlParameterSourceUtils.createBatch(currencies);
         jdbcTemplate.batchUpdate(UPDATE_CURRENCY_QUERY, batch);
     }
 
@@ -60,7 +61,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<String> availableDate() {
+    public List<String> availableDates() {
         return jdbcTemplate.query(AVAILABLE_DATA_DISTINCT, (rs, rowNum) -> rs.getString("date"));
     }
 

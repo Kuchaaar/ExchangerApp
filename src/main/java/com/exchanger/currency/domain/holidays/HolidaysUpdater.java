@@ -14,6 +14,9 @@ public class HolidaysUpdater {
         this.holidaysClient = holidaysClient;
         this.holidaysRepository = holidaysRepository;
     }
+    public void deleteAll(){
+        holidaysRepository.deleteAllHolidays();
+    }
     public void update(int year) {
         List<HolidaysResponse> holidaysResponses = fetchHolidaysResponse(year);
         holidaysRepository.saveHolidays(holidaysResponses);

@@ -28,4 +28,9 @@ public class InMemoryHolidaysRepository implements HolidaysRepository {
                 .stream()
                 .toList();
     }
+
+    @Override
+    public void deleteAllHolidays() {
+        holidaysResponseMap.clear();
+    }
 }

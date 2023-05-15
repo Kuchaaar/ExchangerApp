@@ -19,7 +19,8 @@ public class DatabaseHolidaysRepository implements HolidaysRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private static final String INSERT_HOLIDAY_QUERY = "INSERT INTO Holidays (date, name) VALUES (:date, :name)";
 
-    private static final String FIND_ALL_CURRENCY_QUERY = "SELECT date, name from Holidays";
+    private static final String FIND_ALL_HOLIDAY_QUERY = "SELECT date, name from Holidays";
+    private static final String DELETE_ALL_HOLIDAY = "DELETE FROM Holidays";
 
     public DatabaseHolidaysRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = namedParameterJdbcTemplate;
@@ -30,10 +31,14 @@ public class DatabaseHolidaysRepository implements HolidaysRepository {
         final SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(holidaysResponses);
         jdbcTemplate.batchUpdate(INSERT_HOLIDAY_QUERY, batch);
     }
+    @Override
+    public void deleteAllHolidays(){
+        jdbcTemplate.batchUpdate(DELETE_ALL_HOLIDAY,new SqlParameterSource[0]);
+    }
 
     @Override
     public List<HolidaysResponse> findHolidaysByYear() {
-        return jdbcTemplate.query(FIND_ALL_CURRENCY_QUERY, (rs, rowNum) -> mapToHolidays(rs));
+        return jdbcTemplate.query(FIND_ALL_HOLIDAY_QUERY, (rs, rowNum) -> mapToHolidays(rs));
     }
     private HolidaysResponse mapToHolidays(ResultSet rs) throws SQLException {
         return new HolidaysResponse(

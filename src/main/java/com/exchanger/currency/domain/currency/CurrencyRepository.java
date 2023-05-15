@@ -9,7 +9,7 @@ public interface CurrencyRepository {
     void saveAll(List<CurrencyResponse> list);
     List<Currency> findByDates(LocalDate date1, LocalDate date2);
     List<Currency> findByDate(LocalDate date);
-    List<String> availableDate();
+    List<String> availableDates();
 
     List<Currency> findAll();
 }

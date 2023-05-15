@@ -7,4 +7,5 @@ public interface HolidaysRepository {
     void saveHolidays(List<HolidaysResponse> holidaysResponseList);
 
     List<HolidaysResponse> findHolidaysByYear();
+    void deleteAllHolidays();
 }

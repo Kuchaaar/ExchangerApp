@@ -26,14 +26,14 @@ public class CurrencySheduler {
     public void run() {
         LocalDate now = LocalDate.now();
         if (now.getDayOfWeek().getValue() >= 1 && now.getDayOfWeek().getValue() <= 5
-                && !isHoliday(now) ) {//&& dateChecker.ifInDatabase(now)
+                && !isHoliday(now) && !dateChecker.ifInDatabase(now)) {
 //                sheduled.SheduledUpdate();
         }
-        else{
-//            sheduled.SheduledUpdate();
-        }
     }
-
+    @Scheduled(cron = "0211*")
+    public void holidaysRun(){
+        sheduled.holidaysUpdate();
+    }
     private boolean isHoliday(LocalDate date) {
         return holidaysReader.findHolidaysByYear().stream()
                 .anyMatch(holidaysResponse -> {

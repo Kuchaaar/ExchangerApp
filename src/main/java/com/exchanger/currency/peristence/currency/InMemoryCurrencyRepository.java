@@ -41,7 +41,7 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<String> availableDate() {
+    public List<String> availableDates() {
         return new ArrayList<>(currencyMap.keySet());
     }
     @Override
