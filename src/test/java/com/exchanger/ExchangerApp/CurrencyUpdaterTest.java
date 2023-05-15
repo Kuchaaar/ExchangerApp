@@ -9,14 +9,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
  class CurrencyUpdaterTest {
 
-    private static final String EFFECTIVE_DATE_1 = "2023-05-01";
-    private static final String EFFECTIVE_DATE_2 = "2023-05-02";
+    private static final LocalDate EFFECTIVE_DATE_1 = LocalDate.parse("2023-05-01");
+    private static final LocalDate EFFECTIVE_DATE_2 = LocalDate.parse("2023-05-02");
     private static final String CURRENCY_2 = "Currency 2";
     private static final String CURRENCY_CODE_2 = "CUR2";
     private static final String CURRENCY_3 = "Currency 3";
@@ -73,13 +75,13 @@ import static org.mockito.Mockito.when;
         CurrencyResponse currency2 = aCurrencyResponse(CURRENCY_2, CURRENCY_CODE_2, MID_2);
         CurrencyResponse currency3 = aCurrencyResponse(CURRENCY_3, CURRENCY_CODE_3, MID_3);
         CurrenciesResponse response1 = aCurrenciesResponse(
-                EFFECTIVE_DATE_1,
+                String.valueOf(EFFECTIVE_DATE_1),
                 List.of(
                         aCurrencyResponse(CURRENCY_1, CURRENCY_CODE_1, MID),
                         currency2,
                         currency3));
         CurrenciesResponse response2 = aCurrenciesResponse(
-                EFFECTIVE_DATE_2,
+                String.valueOf(EFFECTIVE_DATE_2),
                 List.of(
                         currency2,
                         currency3));
@@ -99,7 +101,7 @@ import static org.mockito.Mockito.when;
         return new CurrencyResponse(currency, code, mid, EFFECTIVE_DATE_1);
     }
 
-    private Currency aCurrency(String currency, String code, double mid, String date) {
+    private Currency aCurrency(String currency, String code, double mid, LocalDate date) {
         return new Currency(currency, code, mid, date);
     }
 }

@@ -4,6 +4,8 @@ import com.exchanger.currency.integration.currency.CurrenciesResponse;
 import com.exchanger.currency.integration.currency.CurrencyClient;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -52,7 +54,7 @@ public class CurrencyUpdater {
                 rate.currency(),
                 rate.code(),
                 rate.mid(),
-                effectiveDate);
+                LocalDate.parse(effectiveDate));
     }
 }
 

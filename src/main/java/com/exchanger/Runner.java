@@ -8,21 +8,26 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 @EnableScheduling
 public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 
     private final CurrencyUpdater currencyUpdater;
+    private final DateChecker dateChecker;
     private final CurrencyRepository currencyRepository;
     private final HolidaysUpdater holidaysUpdater;
     private final HolidaysReader holidaysReader;
-
-    public Runner(CurrencyUpdater currencyUpdater, CurrencyRepository currencyRepository,
-                  HolidaysUpdater holidaysUpdater, HolidaysReader holidaysReader) {
+    private final MainClass mainClass;
+    public Runner(CurrencyUpdater currencyUpdater, DateChecker dateChecker, CurrencyRepository currencyRepository,
+                  HolidaysUpdater holidaysUpdater, HolidaysReader holidaysReader, MainClass mainClass) {
         this.currencyUpdater = currencyUpdater;
+        this.dateChecker = dateChecker;
         this.currencyRepository = currencyRepository;
         this.holidaysUpdater = holidaysUpdater;
         this.holidaysReader = holidaysReader;
+        this.mainClass = mainClass;
     }
 
     @Override
@@ -39,6 +44,8 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 //        System.out.println(currencyReader.findAll() );
 //        System.out.println(holidaysReader.findHolidaysByYear());
 //        mainClass.ExtractData("a",3);
+//        System.out.println(mainClass.ExtractData(LocalDate.now(),LocalDate.now().minusDays(5)));
+        System.out.println(currencyRepository.findByDates(LocalDate.now().minusDays(3),LocalDate.now()));
 
 
 

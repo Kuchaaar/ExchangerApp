@@ -9,8 +9,6 @@ import java.util.Map;
 @Component
 public class DateChecker {
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
     private static final String COUNT_CURRENCY_BY_DATE_QUERY = "SELECT count(*) FROM Currency where date = :date";
 
     public DateChecker(NamedParameterJdbcTemplate jdbcTemplate) {
@@ -18,9 +16,8 @@ public class DateChecker {
     }
 
     public boolean ifInDatabase(LocalDate actualizationDate) {
-        String formattedDate = actualizationDate.format(DateTimeFormatter.ISO_DATE);
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("date", formattedDate);
+        paramMap.put("date", actualizationDate);
         Integer result = jdbcTemplate.queryForObject(COUNT_CURRENCY_BY_DATE_QUERY, paramMap, Integer.class);
         return result != null && result != 0;
     }

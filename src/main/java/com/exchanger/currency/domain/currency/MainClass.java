@@ -1,6 +1,7 @@
 package com.exchanger.currency.domain.currency;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Component
@@ -11,11 +12,11 @@ public class MainClass {
         this.currencyRepository = currencyRepository;
     }
 
-    public void ExtractData(LocalDate start, LocalDate stop) {
+    public List<Currency> ExtractData(LocalDate start, LocalDate stop) {
         if(start == stop){
-            currencyRepository.findByDate(start.toString());
+            return currencyRepository.findByDate(start);
         }else{
-            currencyRepository.findByDates(start.toString(),stop.toString());
+            return currencyRepository.findByDates(start,stop);
         }
     }
 }

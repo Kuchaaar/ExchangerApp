@@ -1,6 +1,4 @@
 package com.exchanger.currency.domain.currency;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,11 +15,8 @@ public class CurrencyController {
         this.mainClass = mainClass;
     }
     @PostMapping("/extract-data")
-    public ResponseEntity<String> extractData(@RequestParam("startDate") String startDate,
-                                              @RequestParam("endDate") String endDate) {
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-        mainClass.ExtractData(start, end);
-        return ResponseEntity.ok("Data extraction initiated successfully.");
+    public void extractData(@RequestParam("startDate") LocalDate startDate,
+                                              @RequestParam("endDate") LocalDate endDate) {
+        mainClass.ExtractData(startDate, endDate);
     }
 }
