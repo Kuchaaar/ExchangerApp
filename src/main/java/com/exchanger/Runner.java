@@ -7,8 +7,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-
 @Component
 @EnableScheduling
 public class Runner implements ApplicationListener<ApplicationReadyEvent> {
@@ -29,6 +27,7 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+
 //        System.out.println(currencyReader2.writeData());
 //        System.out.println(currencyRepository.availableDate());
 //        System.out.println(currencyRepository.findByDate("2023-05-11"));
@@ -43,9 +42,6 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 //        mainClass.ExtractData("a",3);
 //        System.out.println(mainClass.ExtractData(LocalDate.now(),LocalDate.now().minusDays(5)));
 //        System.out.println(currencyRepository.findByDates(LocalDate.now().minusDays(3),LocalDate.now()));
-        
-
-
 
     }
 }
