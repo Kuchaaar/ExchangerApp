@@ -8,24 +8,24 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class CurrencySheduler {
-    private final DateChecker dateChecker;
+public class Scheduler {
+    private final DatabaseChecker databaseChecker;
     private final HolidaysRepository holidaysRepository;
-    private final Sheduled sheduled;
+    private final ScheduledUpdated sheduled;
 
-    public CurrencySheduler(DateChecker dateChecker,
-                            HolidaysRepository holidaysRepository, Sheduled sheduled) {
-        this.dateChecker = dateChecker;
+    public Scheduler(
+            DatabaseChecker databaseChecker, HolidaysRepository holidaysRepository, ScheduledUpdated sheduled) {
+        this.databaseChecker = databaseChecker;
         this.holidaysRepository = holidaysRepository;
         this.sheduled = sheduled;
     }
 
     @Scheduled(cron = "0 0 22 ? * MON-FRI")
-    public void run() {
+    public void currencyRun() {
         LocalDate now = LocalDate.now();
         if (now.getDayOfWeek().getValue() >= 1 && now.getDayOfWeek().getValue() <= 5
-                && !isHoliday(now) && !dateChecker.ifInDatabase(now)) {
-                sheduled.sheduledUpdate();
+                && !isHoliday(now) && !databaseChecker.ifDateInDatabase(now)) {
+                sheduled.currencyUpdate();
         }
     }
     @Scheduled(cron = "0 0 2 1 1 *")

@@ -3,7 +3,10 @@ package com.exchanger.currency.domain.currency;
 import com.exchanger.currency.integration.currency.CurrenciesResponse;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Component
 public class DatabaseChecker {
 
@@ -19,5 +22,11 @@ public class DatabaseChecker {
         } else {
             return true;
         }
+    }
+    public boolean ifDateInDatabase(LocalDate actualizationDate) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("date", actualizationDate);
+        List<Currency> list = currencyRepository.findByDate(actualizationDate);
+        return !list.isEmpty();
     }
 }

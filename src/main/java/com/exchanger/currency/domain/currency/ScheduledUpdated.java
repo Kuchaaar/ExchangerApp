@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 @Component
-public class Sheduled {
+public class ScheduledUpdated {
 
     private final HolidaysUpdater holidaysUpdater;
     private final CurrencyUpdater currencyUpdater;
@@ -14,14 +14,14 @@ public class Sheduled {
 
     private final DatabaseChecker databaseChecker;
 
-    public Sheduled(HolidaysUpdater holidaysUpdater, CurrencyUpdater currencyUpdater
+    public ScheduledUpdated(HolidaysUpdater holidaysUpdater, CurrencyUpdater currencyUpdater
             , CurrencyClient currencyClient, DatabaseChecker databaseChecker) {
         this.currencyUpdater = currencyUpdater;
         this.holidaysUpdater = holidaysUpdater;
         this.currencyClient = currencyClient;
         this.databaseChecker = databaseChecker;
     }
-    public void sheduledUpdate(){
+    public void currencyUpdate(){
         if(databaseChecker.ifDataInDatabase(currencyClient.getByTable("a"))){
             currencyUpdater.update("a");
         }
