@@ -1,7 +1,6 @@
 package com.exchanger.currency.domain.currency;
 
-import com.exchanger.currency.domain.holidays.HolidaysReader;
-import com.exchanger.currency.domain.holidays.HolidaysUpdater;
+import com.exchanger.currency.domain.holidays.HolidaysRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -11,31 +10,30 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class CurrencySheduler {
     private final DateChecker dateChecker;
-    private final HolidaysReader holidaysReader;
+    private final HolidaysRepository holidaysRepository;
     private final Sheduled sheduled;
 
-    public CurrencySheduler(HolidaysReader holidaysReader,
-                            DateChecker dateChecker,
-                            Sheduled sheduled) {
+    public CurrencySheduler(DateChecker dateChecker,
+                            HolidaysRepository holidaysRepository, Sheduled sheduled) {
         this.dateChecker = dateChecker;
-        this.holidaysReader = holidaysReader;
+        this.holidaysRepository = holidaysRepository;
         this.sheduled = sheduled;
     }
 
-    @Scheduled(fixedRate = 1000000000)//cron = "0 0 22 ? * MON-FRI"
+    @Scheduled(cron = "0 0 22 ? * MON-FRI")
     public void run() {
         LocalDate now = LocalDate.now();
         if (now.getDayOfWeek().getValue() >= 1 && now.getDayOfWeek().getValue() <= 5
                 && !isHoliday(now) && !dateChecker.ifInDatabase(now)) {
-//                sheduled.SheduledUpdate();
+                sheduled.sheduledUpdate();
         }
     }
-    @Scheduled(cron = "0211*")
+    @Scheduled(cron = "0 2 1 1 * *")
     public void holidaysRun(){
         sheduled.holidaysUpdate();
     }
     private boolean isHoliday(LocalDate date) {
-        return holidaysReader.findHolidaysByYear().stream()
+        return holidaysRepository.findHolidaysByYear().stream()
                 .anyMatch(holidaysResponse -> {
                     LocalDate holidayDate = LocalDate.parse(holidaysResponse.date(),
                             DateTimeFormatter.ofPattern("yyyy-MM-dd"));

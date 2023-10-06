@@ -1,7 +1,6 @@
 package com.exchanger.currency.domain.currency;
 import com.exchanger.currency.domain.holidays.HolidaysUpdater;
 import com.exchanger.currency.integration.currency.CurrencyClient;
-import com.exchanger.currency.integration.currency.CurrencyResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -12,6 +11,7 @@ public class Sheduled {
     private final HolidaysUpdater holidaysUpdater;
     private final CurrencyUpdater currencyUpdater;
     private final CurrencyClient currencyClient;
+
     private final DatabaseChecker databaseChecker;
 
     public Sheduled(HolidaysUpdater holidaysUpdater, CurrencyUpdater currencyUpdater
@@ -21,7 +21,7 @@ public class Sheduled {
         this.currencyClient = currencyClient;
         this.databaseChecker = databaseChecker;
     }
-    public void SheduledUpdate(){
+    public void sheduledUpdate(){
         if(databaseChecker.ifDataInDatabase(currencyClient.getByTable("a"))){
             currencyUpdater.update("a");
         }

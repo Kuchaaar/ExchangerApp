@@ -10,8 +10,6 @@ public interface CurrencyClient {
 
     @GetMapping(value = "{table}")
     List<CurrenciesResponse> getByTable(@PathVariable("table") String table);
-
-
     @GetMapping(value = "{table}/last/{topCount}/")
     List<CurrenciesResponse> getByTable(@PathVariable("table") String table, @PathVariable("topCount") int topCount);
 }

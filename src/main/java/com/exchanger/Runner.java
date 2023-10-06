@@ -1,7 +1,6 @@
 package com.exchanger;
 
 import com.exchanger.currency.domain.currency.*;
-import com.exchanger.currency.domain.holidays.HolidaysReader;
 import com.exchanger.currency.domain.holidays.HolidaysUpdater;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -18,15 +17,13 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
     private final DateChecker dateChecker;
     private final CurrencyRepository currencyRepository;
     private final HolidaysUpdater holidaysUpdater;
-    private final HolidaysReader holidaysReader;
     private final MainClass mainClass;
     public Runner(CurrencyUpdater currencyUpdater, DateChecker dateChecker, CurrencyRepository currencyRepository,
-                  HolidaysUpdater holidaysUpdater, HolidaysReader holidaysReader, MainClass mainClass) {
+                  HolidaysUpdater holidaysUpdater, MainClass mainClass) {
         this.currencyUpdater = currencyUpdater;
         this.dateChecker = dateChecker;
         this.currencyRepository = currencyRepository;
         this.holidaysUpdater = holidaysUpdater;
-        this.holidaysReader = holidaysReader;
         this.mainClass = mainClass;
     }
 
@@ -45,7 +42,8 @@ public class Runner implements ApplicationListener<ApplicationReadyEvent> {
 //        System.out.println(holidaysReader.findHolidaysByYear());
 //        mainClass.ExtractData("a",3);
 //        System.out.println(mainClass.ExtractData(LocalDate.now(),LocalDate.now().minusDays(5)));
-        System.out.println(currencyRepository.findByDates(LocalDate.now().minusDays(3),LocalDate.now()));
+//        System.out.println(currencyRepository.findByDates(LocalDate.now().minusDays(3),LocalDate.now()));
+        
 
 
 
