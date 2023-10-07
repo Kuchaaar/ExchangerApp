@@ -19,8 +19,8 @@ public class ExcelGenerator {
         row.createCell(0).setCellValue("Name");
         row.createCell(1).setCellValue("Code");
         row.createCell(2).setCellValue("Mid");
-        for (int i = 1; i < currencyResponseList.size(); i++) {
-            Row rows = sheet.createRow(i);
+        for (int i = 0; i < currencyResponseList.size(); i++) {
+            Row rows = sheet.createRow(i+1);
             rows.createCell(0).setCellValue(currencyResponseList.get(i).currency());
             rows.createCell(1).setCellValue(currencyResponseList.get(i).code());
             rows.createCell(2).setCellValue(currencyResponseList.get(i).mid());

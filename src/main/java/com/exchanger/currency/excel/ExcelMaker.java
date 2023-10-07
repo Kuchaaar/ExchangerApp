@@ -28,4 +28,18 @@ public class ExcelMaker {
             return excelGenerator.generateExcelWorkbook(currencyResponseList);
         }
     }
+    public byte[] generateExcelByCurrency(CurrencyReportPeriod currencyReportPeriod) throws IOException{
+        List<Currency> currencyResponseList =
+                currencyRepository.findCurrencyByDates(
+                        currencyReportPeriod.reportPeriod().startDate(),
+                        currencyReportPeriod.reportPeriod().endDate(),
+                        currencyReportPeriod.currencyCode());
+        if(currencyResponseList.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        else{
+            return excelGenerator.generateExcelWorkbook(currencyResponseList);
+        }
+
+    }
 }

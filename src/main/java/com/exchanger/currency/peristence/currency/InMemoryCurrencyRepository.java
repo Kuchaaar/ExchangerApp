@@ -49,4 +49,12 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
                 .stream()
                 .toList();
     }
+
+    @Override
+    public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code) {
+        return currencyMap.values().stream()
+                .filter(currency -> currency.date().isAfter(date1) && currency.date().isBefore(date2))
+                .filter(currency -> currency.code().equals(code))
+                .collect(Collectors.toList());
+    }
 }
