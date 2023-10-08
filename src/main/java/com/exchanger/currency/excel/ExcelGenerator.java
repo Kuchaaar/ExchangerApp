@@ -12,9 +12,26 @@ import java.io.IOException;
 import java.util.List;
 @Component
 public class ExcelGenerator {
+    private final static String SHEETNAME = "Currencies";
     public byte[] generateExcelWorkbook(List<Currency> currencyResponseList) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        excelMakerr(currencyResponseList).write(outputStream);
+        return outputStream.toByteArray();
+    }
+    public byte[] generateExcelWorkbookWithExtensions(List<Currency> currencyResponseList) throws IOException {
+        int i = currencyResponseList.size() + 1;
+        Workbook workbook = excelMakerr(currencyResponseList);
+        Row row = workbook.getSheet(SHEETNAME).getRow(0);
+        row.createCell(3).setCellValue("Average");
+        Row row1 = workbook.getSheet(SHEETNAME).getRow(1);
+        row1.createCell(3).setCellFormula("AVERAGE(C2:C" + i + ")");
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        return outputStream.toByteArray();
+    }
+    public Workbook excelMakerr(List<Currency> currencyResponseList){
         Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("Currencies");
+        Sheet sheet = workbook.createSheet(SHEETNAME);
         Row row = sheet.createRow(0);
         row.createCell(0).setCellValue("Name");
         row.createCell(1).setCellValue("Code");
@@ -28,8 +45,6 @@ public class ExcelGenerator {
         sheet.autoSizeColumn(0, true);
         sheet.autoSizeColumn(1, true);
         sheet.autoSizeColumn(3, true);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        workbook.write(outputStream);
-        return outputStream.toByteArray();
+        return workbook;
     }
 }

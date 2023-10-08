@@ -42,4 +42,17 @@ public class ExcelMaker {
         }
 
     }
+    public byte[] generateExcelByCurrencyWithExtansion(CurrencyReportPeriod currencyReportPeriod) throws IOException {
+        List<Currency> currencyResponseList =
+                currencyRepository.findCurrencyByDates(
+                        currencyReportPeriod.reportPeriod().startDate(),
+                        currencyReportPeriod.reportPeriod().endDate(),
+                        currencyReportPeriod.currencyCode());
+        if(currencyResponseList.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        else{
+            return excelGenerator.generateExcelWorkbookWithExtensions(currencyResponseList);
+        }
+    }
 }
