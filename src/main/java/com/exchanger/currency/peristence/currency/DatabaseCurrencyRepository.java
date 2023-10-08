@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -45,12 +46,13 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
                 SqlParameterSourceUtils.createBatch(currencies);
         jdbcTemplate.batchUpdate(UPDATE_CURRENCY_QUERY, batch);
     }
+
     @Override
-    public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code){
+    public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code) {
         return jdbcTemplate.query(
                 FIND_CURRENCY_BY_DATES,
                 new MapSqlParameterSource()
-                        .addValue("code",code)
+                        .addValue("code", code)
                         .addValue("date1", date1)
                         .addValue("date2", date2),
                 (rs, rowNum) -> mapToCurrency(rs));
@@ -69,7 +71,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     @Override
     public List<Currency> findByDate(LocalDate date) {
         return jdbcTemplate.query(FIND_BY_DATE, new MapSqlParameterSource("date", date),
-                (rs,rowNum) -> mapToCurrency(rs));
+                (rs, rowNum) -> mapToCurrency(rs));
     }
 
     @Override

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 @ConditionalOnProperty(
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 )
 public class InMemoryCurrencyRepository implements CurrencyRepository {
     private final Map<String, Currency> currencyMap = new HashMap<>();
-    
+
 
     @Override
     public void saveAll(List<CurrencyResponse> list) {
@@ -29,20 +28,21 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
     public List<Currency> findByDates(LocalDate date1, LocalDate date2) {
         return currencyMap.values().stream()
                 .filter(currency -> currency.date().isAfter(date1) && currency.date().isBefore(date2))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public List<Currency> findByDate(LocalDate date) {
         return currencyMap.values().stream()
                 .filter(currency -> currency.date().equals(date))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public List<String> availableDates() {
         return new ArrayList<>(currencyMap.keySet());
     }
+
     @Override
     public List<Currency> findAll() {
         return currencyMap.values()
@@ -55,6 +55,6 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
         return currencyMap.values().stream()
                 .filter(currency -> currency.date().isAfter(date1) && currency.date().isBefore(date2))
                 .filter(currency -> currency.code().equals(code))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

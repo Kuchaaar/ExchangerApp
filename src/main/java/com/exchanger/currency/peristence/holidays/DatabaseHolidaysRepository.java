@@ -7,9 +7,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Repository;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
 @Repository
 @ConditionalOnProperty(
         value = "repository.mock.holidays.mock.enable",
@@ -31,15 +33,17 @@ public class DatabaseHolidaysRepository implements HolidaysRepository {
         final SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(holidaysResponses);
         jdbcTemplate.batchUpdate(INSERT_HOLIDAY_QUERY, batch);
     }
+
     @Override
-    public void deleteAllHolidays(){
-        jdbcTemplate.batchUpdate(DELETE_ALL_HOLIDAY,new SqlParameterSource[0]);
+    public void deleteAllHolidays() {
+        jdbcTemplate.batchUpdate(DELETE_ALL_HOLIDAY, new SqlParameterSource[0]);
     }
 
     @Override
     public List<HolidaysResponse> findHolidaysByYear() {
         return jdbcTemplate.query(FIND_ALL_HOLIDAY_QUERY, (rs, rowNum) -> mapToHolidays(rs));
     }
+
     private HolidaysResponse mapToHolidays(ResultSet rs) throws SQLException {
         return new HolidaysResponse(
                 rs.getString("date"),

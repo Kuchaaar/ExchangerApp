@@ -57,5 +57,3 @@ public class CurrencyUpdater {
                 LocalDate.parse(effectiveDate));
     }
 }
-
-

@@ -1,4 +1,5 @@
 package com.exchanger.currency.domain.currency;
+
 import com.exchanger.currency.domain.holidays.HolidaysUpdater;
 import com.exchanger.currency.integration.currency.CurrencyClient;
 import org.springframework.stereotype.Component;
@@ -21,15 +22,17 @@ public class ScheduledUpdated {
         this.currencyClient = currencyClient;
         this.databaseChecker = databaseChecker;
     }
-    public void currencyUpdate(){
-        if(databaseChecker.ifDataInDatabase(currencyClient.getByTable("a"))){
+
+    public void currencyUpdate() {
+        if (databaseChecker.ifDataInDatabase(currencyClient.getByTable("a"))) {
             currencyUpdater.update("a");
         }
-        if(databaseChecker.ifDataInDatabase(currencyClient.getByTable("b"))){
+        if (databaseChecker.ifDataInDatabase(currencyClient.getByTable("b"))) {
             currencyUpdater.update("b");
         }
     }
-    public void holidaysUpdate(){
+
+    public void holidaysUpdate() {
         holidaysUpdater.deleteAll();
         int year = LocalDate.now().getYear();
         holidaysUpdater.update(year);

@@ -1,10 +1,9 @@
-package com.exchanger.currency.excel;
+package com.exchanger.currency.domain.excel;
 
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
-import org.springframework.http.HttpStatus;
+import com.exchanger.currency.exceptions.CustomException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,38 +17,40 @@ public class ExcelMaker {
         this.currencyRepository = currencyRepository;
         this.excelGenerator = excelGenerator;
     }
-    public byte[] generateExcel(ReportPeriod reportPeriod) throws IOException {
+    public byte[] generateExcel(ReportPeriod reportPeriod) throws IOException, CustomException {
         List<Currency> currencyResponseList =
                 currencyRepository.findByDates(reportPeriod.startDate(),reportPeriod.endDate());
         if(currencyResponseList.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new CustomException(); // RestControllerAdvise
         }
         else{
             return excelGenerator.generateExcelWorkbook(currencyResponseList);
         }
     }
-    public byte[] generateExcelByCurrency(CurrencyReportPeriod currencyReportPeriod) throws IOException{
+    public byte[] generateExcelByCurrency(CurrencyReportPeriod currencyReportPeriod)
+            throws IOException, CustomException {
         List<Currency> currencyResponseList =
                 currencyRepository.findCurrencyByDates(
                         currencyReportPeriod.reportPeriod().startDate(),
                         currencyReportPeriod.reportPeriod().endDate(),
                         currencyReportPeriod.currencyCode());
         if(currencyResponseList.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new CustomException();
         }
         else{
             return excelGenerator.generateExcelWorkbook(currencyResponseList);
         }
 
     }
-    public byte[] generateExcelByCurrencyWithExtansion(CurrencyReportPeriod currencyReportPeriod) throws IOException {
+    public byte[] generateExcelByCurrencyWithExtansion(CurrencyReportPeriod currencyReportPeriod)
+            throws IOException, CustomException {
         List<Currency> currencyResponseList =
                 currencyRepository.findCurrencyByDates(
                         currencyReportPeriod.reportPeriod().startDate(),
                         currencyReportPeriod.reportPeriod().endDate(),
                         currencyReportPeriod.currencyCode());
         if(currencyResponseList.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new CustomException();
         }
         else{
             return excelGenerator.generateExcelWorkbookWithExtensions(currencyResponseList);

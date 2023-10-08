@@ -1,4 +1,4 @@
-package com.exchanger.currency.excel;
+package com.exchanger.currency.domain.excel;
 
 public record CurrencyReportPeriod(ReportPeriod reportPeriod, String currencyCode) {
 }

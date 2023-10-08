@@ -25,13 +25,15 @@ public class Scheduler {
         LocalDate now = LocalDate.now();
         if (now.getDayOfWeek().getValue() >= 1 && now.getDayOfWeek().getValue() <= 5
                 && !isHoliday(now) && !databaseChecker.ifDateInDatabase(now)) {
-                sheduled.currencyUpdate();
+            sheduled.currencyUpdate();
         }
     }
+
     @Scheduled(cron = "0 0 2 1 1 *")
-    public void holidaysRun(){
+    public void holidaysRun() {
         sheduled.holidaysUpdate();
     }
+
     private boolean isHoliday(LocalDate date) {
         return holidaysRepository.findHolidaysByYear().stream()
                 .anyMatch(holidaysResponse -> {

@@ -16,10 +16,11 @@ import java.util.Map;
 )
 public class InMemoryHolidaysRepository implements HolidaysRepository {
     private final Map<String, HolidaysResponse> holidaysResponseMap = new HashMap<>();
+
     @Override
     public void saveHolidays(List<HolidaysResponse> list) {
-        list.forEach(HolidaysResponse -> holidaysResponseMap.put(HolidaysResponse.name(),
-                HolidaysResponse));
+        list.forEach(holidaysResponse -> holidaysResponseMap.put(holidaysResponse.name(),
+                holidaysResponse));
     }
 
     @Override
