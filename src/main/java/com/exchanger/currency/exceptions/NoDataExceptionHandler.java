@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 @RestControllerAdvice
-public class CustomExceptionHandler {
-    @ExceptionHandler(CustomException.class)
+public class NoDataExceptionHandler {
+    @ExceptionHandler(NoDataException.class)
     public ResponseEntity<Object> customExceptionHandler(Exception exception, WebRequest webRequest) {
         return new ResponseEntity<>("No data", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }

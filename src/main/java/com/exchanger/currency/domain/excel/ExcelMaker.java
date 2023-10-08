@@ -2,7 +2,7 @@ package com.exchanger.currency.domain.excel;
 
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
-import com.exchanger.currency.exceptions.CustomException;
+import com.exchanger.currency.exceptions.NoDataException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,40 +17,40 @@ public class ExcelMaker {
         this.currencyRepository = currencyRepository;
         this.excelGenerator = excelGenerator;
     }
-    public byte[] generateExcel(ReportPeriod reportPeriod) throws IOException, CustomException {
+    public byte[] generateExcel(ReportPeriod reportPeriod) throws IOException, NoDataException {
         List<Currency> currencyResponseList =
                 currencyRepository.findByDates(reportPeriod.startDate(),reportPeriod.endDate());
         if(currencyResponseList.isEmpty()){
-            throw new CustomException(); // RestControllerAdvise
+            throw new NoDataException(); // RestControllerAdvise
         }
         else{
             return excelGenerator.generateExcelWorkbook(currencyResponseList);
         }
     }
     public byte[] generateExcelByCurrency(CurrencyReportPeriod currencyReportPeriod)
-            throws IOException, CustomException {
+            throws IOException, NoDataException {
         List<Currency> currencyResponseList =
                 currencyRepository.findCurrencyByDates(
                         currencyReportPeriod.reportPeriod().startDate(),
                         currencyReportPeriod.reportPeriod().endDate(),
                         currencyReportPeriod.currencyCode());
         if(currencyResponseList.isEmpty()){
-            throw new CustomException();
+            throw new NoDataException();
         }
         else{
             return excelGenerator.generateExcelWorkbook(currencyResponseList);
         }
 
     }
-    public byte[] generateExcelByCurrencyWithExtansion(CurrencyReportPeriod currencyReportPeriod)
-            throws IOException, CustomException {
+    public byte[] generateExcelByCurrencyWithExtension(CurrencyReportPeriod currencyReportPeriod)
+            throws IOException, NoDataException {
         List<Currency> currencyResponseList =
                 currencyRepository.findCurrencyByDates(
                         currencyReportPeriod.reportPeriod().startDate(),
                         currencyReportPeriod.reportPeriod().endDate(),
                         currencyReportPeriod.currencyCode());
         if(currencyResponseList.isEmpty()){
-            throw new CustomException();
+            throw new NoDataException();
         }
         else{
             return excelGenerator.generateExcelWorkbookWithExtensions(currencyResponseList);

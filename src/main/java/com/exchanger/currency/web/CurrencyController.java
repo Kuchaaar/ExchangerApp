@@ -6,7 +6,7 @@ import com.exchanger.currency.domain.excel.DateConverter;
 import com.exchanger.currency.domain.excel.CurrencyConverter;
 import com.exchanger.currency.domain.excel.ReportPeriod;
 import com.exchanger.currency.domain.excel.CurrencyReportPeriod;
-import com.exchanger.currency.exceptions.CustomException;
+import com.exchanger.currency.exceptions.NoDataException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,22 +33,22 @@ public class CurrencyController {
     }
 
     @PostMapping(value = "/dane", produces = "application/octet-stream")
-    public ResponseEntity<byte[]> excelResponse(@RequestBody String dates) throws IOException, CustomException {
+    public ResponseEntity<byte[]> excelResponse(@RequestBody String dates) throws IOException, NoDataException {
         ReportPeriod list = dateConverter.stringIntoReportPeriod(dates);
 
         return ResponseEntity.ok().headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME)).body(excelMaker.generateExcel(list));
     }
 
     @PostMapping(value = "/currency", produces = "application/octet-stream")
-    public ResponseEntity<byte[]> oneCurrencyExcelResponse(@RequestBody String data) throws IOException, CustomException {
+    public ResponseEntity<byte[]> oneCurrencyExcelResponse(@RequestBody String data) throws IOException, NoDataException {
         CurrencyReportPeriod currencyReportPeriod = currencyConverter.currencyConvertion(data);
         return ResponseEntity.ok().headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME)).body(excelMaker.generateExcelByCurrency(currencyReportPeriod));
     }
 
     @PostMapping(value = "/currency/extensions", produces = "application/octet-stream")
-    public ResponseEntity<byte[]> oneCurrencyExcelResponseWithExtensions(@RequestBody String data) throws IOException, CustomException {
+    public ResponseEntity<byte[]> oneCurrencyExcelResponseWithExtensions(@RequestBody String data) throws IOException, NoDataException {
         CurrencyReportPeriod currencyReportPeriod = currencyConverter.currencyConvertion(data);
-        return ResponseEntity.ok().headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME)).body(excelMaker.generateExcelByCurrencyWithExtansion(currencyReportPeriod));
+        return ResponseEntity.ok().headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME)).body(excelMaker.generateExcelByCurrencyWithExtension(currencyReportPeriod));
     }
 
     @GetMapping("/daty")
