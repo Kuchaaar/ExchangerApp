@@ -1,5 +1,6 @@
 package com.exchanger.currency.web;
 
+import com.exchanger.currency.domain.JPAcurrency.ExcelMakerJPA;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.domain.excel.ExcelMaker;
 import com.exchanger.currency.domain.excel.DateConverter;
@@ -22,14 +23,21 @@ public class CurrencyController {
     private final ExcelMaker excelMaker;
     private final DateConverter dateConverter;
     private final CurrencyConverter currencyConverter;
+
+
+    private final ExcelMakerJPA excelMakerJPA;
     private static final String ATTACHMENT = "attachment";
     private static final String EXCEL_NAME = "excel.xlsx";
 
-    public CurrencyController(CurrencyRepository currencyRepository, ExcelMaker excelMaker, DateConverter dateConverter, CurrencyConverter currencyConverter) {
+    public CurrencyController(CurrencyRepository currencyRepository,
+                              ExcelMaker excelMaker, DateConverter dateConverter,
+                              CurrencyConverter currencyConverter,
+                              ExcelMakerJPA excelMakerJPA) {
         this.currencyRepository = currencyRepository;
         this.excelMaker = excelMaker;
         this.dateConverter = dateConverter;
         this.currencyConverter = currencyConverter;
+        this.excelMakerJPA = excelMakerJPA;
     }
 
     @PostMapping(value = "/dane", produces = "application/octet-stream")
@@ -56,4 +64,21 @@ public class CurrencyController {
         return currencyRepository.availableDates();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    @PostMapping(value = "/test")
+    public ResponseEntity<byte[]> excelResponsev2(@RequestBody String dates) throws IOException, NoDataException {
+        ReportPeriod reportPeriod = dateConverter.stringIntoReportPeriod(dates);
+        return ResponseEntity.ok().headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME)).body(excelMakerJPA.generateExcelByCurrency(reportPeriod));
+    }
 }
