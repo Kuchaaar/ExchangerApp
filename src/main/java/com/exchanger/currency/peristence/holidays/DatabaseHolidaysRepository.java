@@ -36,7 +36,7 @@ public class DatabaseHolidaysRepository implements HolidaysRepository {
 
     @Override
     public void deleteAllHolidays() {
-        jdbcTemplate.batchUpdate(DELETE_ALL_HOLIDAY, new SqlParameterSource[0]);
+        jdbcTemplate.batchUpdate(DELETE_ALL_HOLIDAY, new SqlParameterSource[1]);
     }
 
     @Override
