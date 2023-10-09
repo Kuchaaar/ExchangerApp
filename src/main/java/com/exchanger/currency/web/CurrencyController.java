@@ -1,6 +1,8 @@
 package com.exchanger.currency.web;
 
+import com.exchanger.currency.domain.JPAcurrency.CurrencyRepositoryJPA;
 import com.exchanger.currency.domain.JPAcurrency.ExcelMakerJPA;
+import com.exchanger.currency.domain.JPAcurrency.StringIntoCurrency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.domain.excel.ExcelMaker;
 import com.exchanger.currency.domain.excel.DateConverter;
@@ -23,6 +25,8 @@ public class CurrencyController {
     private final ExcelMaker excelMaker;
     private final DateConverter dateConverter;
     private final CurrencyConverter currencyConverter;
+    private final CurrencyRepositoryJPA currencyRepositoryJPA;
+    private final StringIntoCurrency stringIntoCurrency;
 
 
     private final ExcelMakerJPA excelMakerJPA;
@@ -32,11 +36,13 @@ public class CurrencyController {
     public CurrencyController(CurrencyRepository currencyRepository,
                               ExcelMaker excelMaker, DateConverter dateConverter,
                               CurrencyConverter currencyConverter,
-                              ExcelMakerJPA excelMakerJPA) {
+                              CurrencyRepositoryJPA currencyRepositoryJPA, StringIntoCurrency stringIntoCurrency, ExcelMakerJPA excelMakerJPA) {
         this.currencyRepository = currencyRepository;
         this.excelMaker = excelMaker;
         this.dateConverter = dateConverter;
         this.currencyConverter = currencyConverter;
+        this.currencyRepositoryJPA = currencyRepositoryJPA;
+        this.stringIntoCurrency = stringIntoCurrency;
         this.excelMakerJPA = excelMakerJPA;
     }
 
@@ -80,5 +86,13 @@ public class CurrencyController {
     public ResponseEntity<byte[]> excelResponsev2(@RequestBody String dates) throws IOException, NoDataException {
         ReportPeriod reportPeriod = dateConverter.stringIntoReportPeriod(dates);
         return ResponseEntity.ok().headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME)).body(excelMakerJPA.generateExcelByCurrency(reportPeriod));
+    }
+    @PostMapping(value = "/test/post")
+    public void save(@RequestBody String dates){
+        currencyRepositoryJPA.save(stringIntoCurrency.stringIntoCurrency(dates));
+    }
+    @GetMapping(value = "/test/daty")
+    public List<String> getLocalDatesJPA() {
+        return currencyRepositoryJPA.findDistinctDates();
     }
 }

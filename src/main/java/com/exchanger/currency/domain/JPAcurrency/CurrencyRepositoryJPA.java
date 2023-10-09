@@ -9,4 +9,7 @@ import java.util.List;
 public interface CurrencyRepositoryJPA extends JpaRepository<CurrencyJPA, Long> {
     @Query("SELECT c FROM CurrencyJPA c WHERE c.date BETWEEN :start AND :end")
     List<CurrencyJPA> findEntitiesBetweenDates(LocalDate start, LocalDate end);
+
+    @Query("SELECT DISTINCT c.date FROM CurrencyJPA c")
+    List<String> findDistinctDates();
 }

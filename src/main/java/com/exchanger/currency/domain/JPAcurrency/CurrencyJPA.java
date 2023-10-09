@@ -3,7 +3,6 @@ package com.exchanger.currency.domain.JPAcurrency;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "Currency")
@@ -23,13 +22,13 @@ public class CurrencyJPA {
     private Double exchangeRate;
 
     @Column(name = "date")
-    private LocalDate date;
+    private String date;
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
