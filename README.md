@@ -5,5 +5,4 @@
 ## -Testy jednostkowe
 ## - /dane - Pozwala na otrzymanie danych z podanego okresu czasu
 ## - /currency - Pozwala na otrzymanie danych podanej waluty z podanego okresu czasu
-## - /currency/extensions - Pozwala na otrzymanie danych podanej waluty z podanego okresu czasu
-## dodatkowym liczeniem średnich
+## - /currency/extensions - Pozwala na otrzymanie danych podanej waluty z podanego okresu czasu dodatkowym liczeniem średnich
