@@ -6,4 +6,4 @@
 ## - /dane - Pozwala na otrzymanie danych z podanego okresu czasu
 ## - /currency - Pozwala na otrzymanie danych podanej waluty z podanego okresu czasu
 ## - /currency/extensions - Pozwala na otrzymanie danych podanej waluty z podanego okresu czasu
-z dodatkowym liczeniem średnich
+## dodatkowym liczeniem średnich
