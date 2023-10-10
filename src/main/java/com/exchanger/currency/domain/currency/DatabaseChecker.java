@@ -11,22 +11,22 @@ public class DatabaseChecker {
 
     private final CurrencyRepository currencyRepository;
 
-    public DatabaseChecker(CurrencyRepository currencyRepository) {
+    public DatabaseChecker(CurrencyRepository currencyRepository){
         this.currencyRepository = currencyRepository;
     }
 
-    public boolean ifDataInDatabase(List<CurrenciesResponse> currenciesResponse) {
-        if (currenciesResponse.size() > 1) {
+    public boolean ifDataInDatabase(List<CurrenciesResponse> currenciesResponse){
+        if(currenciesResponse.size() > 1){
             LocalDate date = LocalDate.parse(currenciesResponse.get(1).effectiveDate());
             List<Currency> list = currencyRepository.findByDate(date);
-            return !list.isEmpty();
-        } else {
+            return ! list.isEmpty();
+        }else{
             return true;
         }
     }
 
-    public boolean ifDateInDatabase(LocalDate actualizationDate) {
+    public boolean ifDateInDatabase(LocalDate actualizationDate){
         List<Currency> list = currencyRepository.findByDate(actualizationDate);
-        return !list.isEmpty();
+        return ! list.isEmpty();
     }
 }

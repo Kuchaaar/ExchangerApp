@@ -7,7 +7,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 @ConditionalOnProperty(
@@ -19,39 +22,39 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
 
 
     @Override
-    public void saveAll(List<CurrencyResponse> list) {
+    public void saveAll(List<CurrencyResponse> list){
         list.forEach(currencyResponse -> currencyMap.put(currencyResponse.code(),
                 Currency.from(currencyResponse)));
     }
 
     @Override
-    public List<Currency> findByDates(LocalDate date1, LocalDate date2) {
+    public List<Currency> findByDates(LocalDate date1, LocalDate date2){
         return currencyMap.values().stream()
                 .filter(currency -> currency.date().isAfter(date1) && currency.date().isBefore(date2))
                 .toList();
     }
 
     @Override
-    public List<Currency> findByDate(LocalDate date) {
+    public List<Currency> findByDate(LocalDate date){
         return currencyMap.values().stream()
                 .filter(currency -> currency.date().equals(date))
                 .toList();
     }
 
     @Override
-    public List<String> availableDates() {
+    public List<String> availableDates(){
         return new ArrayList<>(currencyMap.keySet());
     }
 
     @Override
-    public List<Currency> findAll() {
+    public List<Currency> findAll(){
         return currencyMap.values()
                 .stream()
                 .toList();
     }
 
     @Override
-    public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code) {
+    public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code){
         return currencyMap.values().stream()
                 .filter(currency -> currency.date().isAfter(date1) && currency.date().isBefore(date2))
                 .filter(currency -> currency.code().equals(code))

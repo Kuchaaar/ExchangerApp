@@ -24,27 +24,27 @@ public class DatabaseHolidaysRepository implements HolidaysRepository {
     private static final String FIND_ALL_HOLIDAY_QUERY = "SELECT date, name from Holidays";
     private static final String DELETE_ALL_HOLIDAY = "DELETE FROM Holidays";
 
-    public DatabaseHolidaysRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public DatabaseHolidaysRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
         this.jdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
-    public void saveHolidays(List<HolidaysResponse> holidaysResponses) {
+    public void saveHolidays(List<HolidaysResponse> holidaysResponses){
         final SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(holidaysResponses);
         jdbcTemplate.batchUpdate(INSERT_HOLIDAY_QUERY, batch);
     }
 
     @Override
-    public void deleteAllHolidays() {
+    public void deleteAllHolidays(){
         jdbcTemplate.batchUpdate(DELETE_ALL_HOLIDAY, new SqlParameterSource[1]);
     }
 
     @Override
-    public List<HolidaysResponse> findHolidaysByYear() {
+    public List<HolidaysResponse> findHolidaysByYear(){
         return jdbcTemplate.query(FIND_ALL_HOLIDAY_QUERY, (rs, rowNum) -> mapToHolidays(rs));
     }
 
-    private HolidaysResponse mapToHolidays(ResultSet rs) throws SQLException {
+    private HolidaysResponse mapToHolidays(ResultSet rs) throws SQLException{
         return new HolidaysResponse(
                 rs.getString("date"),
                 rs.getString("name")

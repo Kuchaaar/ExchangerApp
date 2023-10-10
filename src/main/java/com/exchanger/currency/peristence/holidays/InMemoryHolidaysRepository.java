@@ -18,20 +18,20 @@ public class InMemoryHolidaysRepository implements HolidaysRepository {
     private final Map<String, HolidaysResponse> holidaysResponseMap = new HashMap<>();
 
     @Override
-    public void saveHolidays(List<HolidaysResponse> list) {
+    public void saveHolidays(List<HolidaysResponse> list){
         list.forEach(holidaysResponse -> holidaysResponseMap.put(holidaysResponse.name(),
                 holidaysResponse));
     }
 
     @Override
-    public List<HolidaysResponse> findHolidaysByYear() {
+    public List<HolidaysResponse> findHolidaysByYear(){
         return holidaysResponseMap.values()
                 .stream()
                 .toList();
     }
 
     @Override
-    public void deleteAllHolidays() {
+    public void deleteAllHolidays(){
         holidaysResponseMap.clear();
     }
 }

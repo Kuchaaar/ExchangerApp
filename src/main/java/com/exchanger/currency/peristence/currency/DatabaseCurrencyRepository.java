@@ -33,12 +33,12 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     private static final String FIND_CURRENCY_BY_DATES
             = "SELECT * FROM Currency WHERE code = :code AND date BETWEEN :date1 AND :date2";
 
-    public DatabaseCurrencyRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public DatabaseCurrencyRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
         this.jdbcTemplate = namedParameterJdbcTemplate;
     }
 
     @Override
-    public void saveAll(List<CurrencyResponse> currenciesResponse) {
+    public void saveAll(List<CurrencyResponse> currenciesResponse){
         final List<Currency> currencies = currenciesResponse.stream()
                 .map(Currency::from)
                 .toList();
@@ -48,7 +48,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code) {
+    public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code){
         return jdbcTemplate.query(
                 FIND_CURRENCY_BY_DATES,
                 new MapSqlParameterSource()
@@ -59,7 +59,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<Currency> findByDates(LocalDate date1, LocalDate date2) {
+    public List<Currency> findByDates(LocalDate date1, LocalDate date2){
         return jdbcTemplate.query(
                 FIND_BY_DATES,
                 new MapSqlParameterSource()
@@ -69,22 +69,22 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<Currency> findByDate(LocalDate date) {
+    public List<Currency> findByDate(LocalDate date){
         return jdbcTemplate.query(FIND_BY_DATE, new MapSqlParameterSource("date", date),
                 (rs, rowNum) -> mapToCurrency(rs));
     }
 
     @Override
-    public List<String> availableDates() {
+    public List<String> availableDates(){
         return jdbcTemplate.query(AVAILABLE_DATA_DISTINCT, (rs, rowNum) -> rs.getString("date"));
     }
 
     @Override
-    public List<Currency> findAll() {
+    public List<Currency> findAll(){
         return jdbcTemplate.query(FIND_ALL_CURRENCY_QUERY, (rs, rowNum) -> mapToCurrency(rs));
     }
 
-    private Currency mapToCurrency(ResultSet rs) throws SQLException {
+    private Currency mapToCurrency(ResultSet rs) throws SQLException{
         return new Currency(
                 rs.getString("currency"),
                 rs.getString("code"),

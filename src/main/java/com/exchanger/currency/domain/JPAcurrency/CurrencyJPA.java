@@ -1,7 +1,8 @@
 package com.exchanger.currency.domain.JPAcurrency;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 
 
 @Entity
@@ -11,57 +12,50 @@ public class CurrencyJPA {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "currency_id")
     private Long id;
-    @NotNull
-    @Column(name = "currency")
-    private String currencyName;
-    @NotNull
-    @Column(name = "code")
-    private String currencyCode;
-    @NotNull
-    @Column(name = "mid")
-    private Double exchangeRate;
-
+    private String currency;
+    private String code;
+    private Double mid;
     @Column(name = "date")
-    private String date;
+    private LocalDate date;
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Long getId() {
+    public Long getId(){
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id){
         this.id = id;
     }
 
-    public String getCurrencyCode() {
-        return currencyCode;
+    public String getCurrency(){
+        return currency;
     }
 
-    public void setCurrencyCode(String currencyCode) {
-        this.currencyCode = currencyCode;
+    public void setCurrency(String currency){
+        this.currency = currency;
     }
 
-    public String getCurrencyName() {
-        return currencyName;
+    public String getCode(){
+        return code;
     }
 
-    public void setCurrencyName(String currencyName) {
-        this.currencyName = currencyName;
+    public void setCode(String code){
+        this.code = code;
     }
 
-    public Double getExchangeRate() {
-        return exchangeRate;
+    public Double getMid(){
+        return mid;
     }
 
-    public void setExchangeRate(Double exchangeRate) {
-        this.exchangeRate = exchangeRate;
+    public void setMid(Double mid){
+        this.mid = mid;
+    }
+
+    public LocalDate getDate(){
+        return date;
+    }
+
+    public void setDate(LocalDate date){
+        this.date = date;
     }
 }
 

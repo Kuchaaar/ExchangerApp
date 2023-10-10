@@ -14,26 +14,26 @@ public class Scheduler {
     private final ScheduledUpdated sheduled;
 
     public Scheduler(
-            DatabaseChecker databaseChecker, HolidaysRepository holidaysRepository, ScheduledUpdated sheduled) {
+            DatabaseChecker databaseChecker, HolidaysRepository holidaysRepository, ScheduledUpdated sheduled){
         this.databaseChecker = databaseChecker;
         this.holidaysRepository = holidaysRepository;
         this.sheduled = sheduled;
     }
 
     @Scheduled(cron = "0 0 22 ? * MON-FRI")
-    public void currencyRun() {
+    public void currencyRun(){
         LocalDate now = LocalDate.now();
-        if (!isHoliday(now) && !databaseChecker.ifDateInDatabase(now)) {
+        if(! isHoliday(now) && ! databaseChecker.ifDateInDatabase(now)){
             sheduled.currencyUpdate();
         }
     }
 
     @Scheduled(cron = "0 0 2 1 1 *")
-    public void holidaysRun() {
+    public void holidaysRun(){
         sheduled.holidaysUpdate();
     }
 
-    private boolean isHoliday(LocalDate date) {
+    private boolean isHoliday(LocalDate date){
         return holidaysRepository.findHolidaysByYear().stream()
                 .anyMatch(holidaysResponse -> {
                     LocalDate holidayDate = LocalDate.parse(holidaysResponse.date(),

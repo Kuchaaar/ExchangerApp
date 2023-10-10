@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class ExchangerApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         SpringApplication.run(ExchangerApplication.class, args);
     }
 }

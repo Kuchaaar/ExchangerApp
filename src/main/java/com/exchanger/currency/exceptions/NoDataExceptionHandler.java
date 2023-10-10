@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 @RestControllerAdvice
 public class NoDataExceptionHandler {
     @ExceptionHandler(NoDataException.class)
-    public ResponseEntity<Object> customExceptionHandler(Exception exception, WebRequest webRequest) {
+    public ResponseEntity<Object> customExceptionHandler(Exception exception, WebRequest webRequest){
         return new ResponseEntity<>("No data", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 }

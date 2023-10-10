@@ -1,4 +1,5 @@
 package com.exchanger.ExchangerApp;
+
 import com.exchanger.currency.domain.holidays.HolidaysUpdater;
 import com.exchanger.currency.integration.holidays.HolidaysClient;
 import com.exchanger.currency.integration.holidays.HolidaysResponse;
@@ -7,10 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import java.util.Comparator;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 class HolidaysUpdaterTest {
     private static final String NAME_1 = "New Year";
@@ -23,12 +26,14 @@ class HolidaysUpdaterTest {
     private HolidaysClient holidaysClient;
     private InMemoryHolidaysRepository holidaysRepository;
     private HolidaysUpdater holidaysUpdater;
+
     @BeforeEach
-    public void setup() {
+    public void setup(){
         MockitoAnnotations.openMocks(this);
         holidaysRepository = new InMemoryHolidaysRepository();
         holidaysUpdater = new HolidaysUpdater(holidaysClient, holidaysRepository);
     }
+
     @Test
     void updateTest(){
 //      given
@@ -44,17 +49,19 @@ class HolidaysUpdaterTest {
         )));
     }
 
-    private List<HolidaysResponse> sortedByHolidaysName(List<HolidaysResponse> holidaysResponse) {
+    private List<HolidaysResponse> sortedByHolidaysName(List<HolidaysResponse> holidaysResponse){
         return holidaysResponse.stream()
                 .sorted(Comparator.comparing(HolidaysResponse::name))
                 .toList();
     }
+
     private List<HolidaysResponse> mockHolidaysResponse(){
-        return List.of(aHolidaysResponse(DATE_1,NAME_1),
-                aHolidaysResponse(DATE_2,NAME_2),
-                aHolidaysResponse(DATE_3,NAME_3));
+        return List.of(aHolidaysResponse(DATE_1, NAME_1),
+                aHolidaysResponse(DATE_2, NAME_2),
+                aHolidaysResponse(DATE_3, NAME_3));
     }
-    private HolidaysResponse aHolidaysResponse(String date,String name){
-        return new HolidaysResponse(date,name);
+
+    private HolidaysResponse aHolidaysResponse(String date, String name){
+        return new HolidaysResponse(date, name);
     }
 }

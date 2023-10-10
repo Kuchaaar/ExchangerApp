@@ -13,22 +13,23 @@ public class ExcelMaker {
     private final CurrencyRepository currencyRepository;
     private final ExcelGenerator excelGenerator;
 
-    public ExcelMaker(CurrencyRepository currencyRepository, ExcelGenerator excelGenerator) {
+    public ExcelMaker(CurrencyRepository currencyRepository, ExcelGenerator excelGenerator){
         this.currencyRepository = currencyRepository;
         this.excelGenerator = excelGenerator;
     }
-    public byte[] generateExcel(ReportPeriod reportPeriod) throws IOException, NoDataException {
+
+    public byte[] generateExcel(ReportPeriod reportPeriod) throws IOException, NoDataException{
         List<Currency> currencyResponseList =
-                currencyRepository.findByDates(reportPeriod.startDate(),reportPeriod.endDate());
+                currencyRepository.findByDates(reportPeriod.startDate(), reportPeriod.endDate());
         if(currencyResponseList.isEmpty()){
             throw new NoDataException(); // RestControllerAdvise
-        }
-        else{
+        }else{
             return excelGenerator.generateExcelWorkbook(currencyResponseList);
         }
     }
+
     public byte[] generateExcelByCurrency(CurrencyReportPeriod currencyReportPeriod)
-            throws IOException, NoDataException {
+            throws IOException, NoDataException{
         List<Currency> currencyResponseList =
                 currencyRepository.findCurrencyByDates(
                         currencyReportPeriod.reportPeriod().startDate(),
@@ -36,14 +37,14 @@ public class ExcelMaker {
                         currencyReportPeriod.currencyCode());
         if(currencyResponseList.isEmpty()){
             throw new NoDataException();
-        }
-        else{
+        }else{
             return excelGenerator.generateExcelWorkbook(currencyResponseList);
         }
 
     }
+
     public byte[] generateExcelByCurrencyWithExtension(CurrencyReportPeriod currencyReportPeriod)
-            throws IOException, NoDataException {
+            throws IOException, NoDataException{
         List<Currency> currencyResponseList =
                 currencyRepository.findCurrencyByDates(
                         currencyReportPeriod.reportPeriod().startDate(),
@@ -51,8 +52,7 @@ public class ExcelMaker {
                         currencyReportPeriod.currencyCode());
         if(currencyResponseList.isEmpty()){
             throw new NoDataException();
-        }
-        else{
+        }else{
             return excelGenerator.generateExcelWorkbookWithExtensions(currencyResponseList);
         }
     }

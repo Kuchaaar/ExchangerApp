@@ -1,4 +1,5 @@
 package com.exchanger.ExchangerApp;
+
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyUpdater;
 import com.exchanger.currency.integration.currency.CurrenciesResponse;
@@ -13,9 +14,11 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
- class CurrencyUpdaterTest {
+
+class CurrencyUpdaterTest {
 
     private static final LocalDate EFFECTIVE_DATE_1 = LocalDate.parse("2023-05-01");
     private static final LocalDate EFFECTIVE_DATE_2 = LocalDate.parse("2023-05-02");
@@ -34,14 +37,14 @@ import static org.mockito.Mockito.when;
     private CurrencyUpdater currencyUpdater;
 
     @BeforeEach
-    public void setup() {
+    public void setup(){
         MockitoAnnotations.openMocks(this);
         currencyRepository = new InMemoryCurrencyRepository();
         currencyUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
     }
 
     @Test
-    void updateWithTopCountTest() {
+    void updateWithTopCountTest(){
 //      given
         String table = "example_table";
         int topCount = 10;
@@ -57,7 +60,7 @@ import static org.mockito.Mockito.when;
     }
 
     @Test
-    void updateWithoutTopCountTest() {
+    void updateWithoutTopCountTest(){
 //      given
         String table = "example_table";
         when(currencyClient.getByTable(table)).thenReturn(mockCurrenciesResponse());
@@ -71,7 +74,7 @@ import static org.mockito.Mockito.when;
         )));
     }
 
-    private List<CurrenciesResponse> mockCurrenciesResponse() {
+    private List<CurrenciesResponse> mockCurrenciesResponse(){
         CurrencyResponse currency2 = aCurrencyResponse(CURRENCY_2, CURRENCY_CODE_2, MID_2);
         CurrencyResponse currency3 = aCurrencyResponse(CURRENCY_3, CURRENCY_CODE_3, MID_3);
         CurrenciesResponse response1 = aCurrenciesResponse(
@@ -87,21 +90,23 @@ import static org.mockito.Mockito.when;
                         currency3));
         return List.of(response1, response2);
     }
-     private List<Currency> sortedByCurrencyName(List<Currency> currencies) {
-         return currencies.stream()
-                 .sorted(Comparator.comparing(Currency::currency))
-                 .toList();
-     }
 
-    private static CurrenciesResponse aCurrenciesResponse(String effectiveDate, List<CurrencyResponse> currencyResponses) {
+    private List<Currency> sortedByCurrencyName(List<Currency> currencies){
+        return currencies.stream()
+                .sorted(Comparator.comparing(Currency::currency))
+                .toList();
+    }
+
+    private static CurrenciesResponse aCurrenciesResponse(String effectiveDate,
+                                                          List<CurrencyResponse> currencyResponses){
         return new CurrenciesResponse(effectiveDate, currencyResponses);
     }
 
-    private static CurrencyResponse aCurrencyResponse(String currency, String code, double mid) {
+    private static CurrencyResponse aCurrencyResponse(String currency, String code, double mid){
         return new CurrencyResponse(currency, code, mid, EFFECTIVE_DATE_1);
     }
 
-    private Currency aCurrency(String currency, String code, double mid, LocalDate date) {
+    private Currency aCurrency(String currency, String code, double mid, LocalDate date){
         return new Currency(currency, code, mid, date);
     }
 }
