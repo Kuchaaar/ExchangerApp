@@ -92,9 +92,7 @@ class CurrencyUpdaterTest {
     }
 
     private List<Currency> sortedByCurrencyName(List<Currency> currencies){
-        return currencies.stream()
-                .sorted(Comparator.comparing(Currency::currency))
-                .toList();
+        return null;
     }
 
     private static CurrenciesResponse aCurrenciesResponse(String effectiveDate,

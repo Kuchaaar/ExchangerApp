@@ -10,12 +10,12 @@ import java.util.List;
 public interface CurrencyRepositoryJPA extends JpaRepository<Currency, Long> {
     List<Currency> findAllByDateLessThanEqualAndDateGreaterThanEqual(LocalDate startDate, LocalDate endDate);
 
-    @Query("SELECT DISTINCT c.date FROM CurrencyJPA c")
+    @Query("SELECT DISTINCT c.date FROM Currency c")
     List<String> findDistinctDates();
 
     List<Currency> findAllByDate(LocalDate date);
-
+    @Query("")
     List<Currency> findAllByCodeAndDateLessThanEqualAndDateGreaterThanEqual(String code,
-                                                                            LocalDate date1,
-                                                                            LocalDate date2);
+                                                                            LocalDate startDate,
+                                                                            LocalDate endDate);
 }

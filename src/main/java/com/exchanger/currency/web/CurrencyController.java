@@ -1,7 +1,5 @@
 package com.exchanger.currency.web;
 
-import com.exchanger.currency.domain.JPAcurrency.CurrencyJPA;
-import com.exchanger.currency.domain.JPAcurrency.CurrencyRepositoryJPA;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.domain.excel.*;
 import com.exchanger.currency.exceptions.NoDataException;
@@ -24,17 +22,11 @@ public class CurrencyController {
     private static final String EXCEL_NAME = "excel.xlsx";
     private final CurrencyRepository currencyRepository;
     private final ExcelMaker excelMaker;
-    private final CurrencyRepositoryJPA currencyRepositoryJPA;
-    private final ExcelMakerJPA excelMakerJPA;
 
     public CurrencyController(CurrencyRepository currencyRepository,
-                              ExcelMaker excelMaker,
-                              CurrencyRepositoryJPA currencyRepositoryJPA,
-                              ExcelMakerJPA excelMakerJPA){
+                              ExcelMaker excelMaker){
         this.currencyRepository = currencyRepository;
         this.excelMaker = excelMaker;
-        this.currencyRepositoryJPA = currencyRepositoryJPA;
-        this.excelMakerJPA = excelMakerJPA;
     }
 
     @PostMapping(value = "/dane", produces = "application/octet-stream")
@@ -83,16 +75,6 @@ public class CurrencyController {
             throws IOException, NoDataException{
         return ResponseEntity.ok()
                 .headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME))
-                .body(excelMakerJPA.generateExcelByCurrency(currencyReportPeriod));
-    }
-
-    @PostMapping(value = "/test/post")
-    public void save(@RequestBody CurrencyJPA currencyJPA){
-        currencyRepositoryJPA.save(currencyJPA);
-    }
-
-    @GetMapping(value = "/test/daty")
-    public List<String> getLocalDatesJPA(){
-        return currencyRepositoryJPA.findDistinctDates();
+                .body(excelMaker.generateExcelByCurrency(currencyReportPeriod));
     }
 }

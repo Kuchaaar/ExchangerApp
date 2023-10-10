@@ -42,9 +42,9 @@ public class ExcelGenerator {
         row.createCell(2).setCellValue("Mid");
         for(int i = 0; i < currencyResponseList.size(); i++){
             Row rows = sheet.createRow(i + 1);
-            rows.createCell(0).setCellValue(currencyResponseList.get(i).currency());
-            rows.createCell(1).setCellValue(currencyResponseList.get(i).code());
-            rows.createCell(2).setCellValue(currencyResponseList.get(i).mid());
+            rows.createCell(0).setCellValue(currencyResponseList.get(i).getCurrency());
+            rows.createCell(1).setCellValue(currencyResponseList.get(i).getCode());
+            rows.createCell(2).setCellValue(currencyResponseList.get(i).getMid());
         }
         sheet.autoSizeColumn(0, true);
         sheet.autoSizeColumn(1, true);
