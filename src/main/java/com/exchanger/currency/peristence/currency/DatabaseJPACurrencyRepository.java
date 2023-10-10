@@ -6,7 +6,6 @@ import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -28,13 +27,12 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
         List<Currency> currencies = currenciesResponse.stream()
                 .map(Currency::from)
                 .toList();
-        for (Currency currency : currencies) {
-            currencyRepositoryJPA.save(currency);
-        }
+        currencyRepositoryJPA.saveAll(currencies);
+
     }
     @Override
     public List<Currency> findByDates(LocalDate date1, LocalDate date2){
-        return currencyRepositoryJPA.findAllByDateLessThanEqualAndDateGreaterThanEqual(date1,date2);
+        return currencyRepositoryJPA.findByDateBetween(date1,date2);
     }
     @Override
     public List<Currency> findByDate(LocalDate date){
@@ -42,7 +40,7 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     }
     @Override
     public List<String> availableDates(){
-        return currencyRepositoryJPA.findDistinctDates();
+        return currencyRepositoryJPA.findDistinctByDate();
     }
     @Override
     public List<Currency> findAll(){
@@ -50,6 +48,6 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     }
     @Override
     public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code){
-        return currencyRepositoryJPA.findAllByCodeAndDateLessThanEqualAndDateGreaterThanEqual(code,date1,date2);
+        return currencyRepositoryJPA.findAllByCodeAndDateBetween(code,date1,date2);
     }
 }

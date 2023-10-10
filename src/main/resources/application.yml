@@ -28,4 +28,4 @@ repository:
         enable: false
     currency:
       mock:
-        enable: false
+        enable: jpa
