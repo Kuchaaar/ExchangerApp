@@ -1,4 +1,4 @@
-package com.exchanger.currency.domain.currency;
+package com.exchanger.currency.services.sheduling;
 
 import com.exchanger.currency.domain.holidays.HolidaysRepository;
 import org.springframework.scheduling.annotation.Scheduled;

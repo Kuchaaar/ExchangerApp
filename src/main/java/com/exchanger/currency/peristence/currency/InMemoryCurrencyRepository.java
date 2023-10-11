@@ -14,8 +14,8 @@ import java.util.Map;
 
 @Repository
 @ConditionalOnProperty(
-        value = "repository.mock.currency.mock.enable",
-        havingValue = "true"
+        value = "repository.currency",
+        havingValue = "memory"
 )
 public class InMemoryCurrencyRepository implements CurrencyRepository {
     private final Map<String, Currency> currencyMap = new HashMap<>();

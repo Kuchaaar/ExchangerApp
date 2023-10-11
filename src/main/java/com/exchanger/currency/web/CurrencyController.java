@@ -1,8 +1,10 @@
 package com.exchanger.currency.web;
 
-import com.exchanger.currency.domain.JPAcurrency.CurrencyService;
-import com.exchanger.currency.domain.excel.*;
-import com.exchanger.currency.exceptions.NoDataException;
+import com.exchanger.currency.services.excel.ExcelMaker;
+import com.exchanger.currency.services.excel.ReportPeriod;
+import com.exchanger.currency.domain.currency.CurrencyService;
+import com.exchanger.currency.domain.exceptions.NoDataException;
+import com.exchanger.currency.services.excel.CurrencyReportPeriod;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

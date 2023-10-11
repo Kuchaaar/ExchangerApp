@@ -1,6 +1,5 @@
 package com.exchanger.currency.peristence.currency;
 
-import com.exchanger.currency.domain.JPAcurrency.CurrencyRepositoryJPA;
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @Repository
 @ConditionalOnProperty(
-        value = "repository.mock.currency.mock.enable",
+        value = "repository.currency",
         havingValue = "jpa"
 )
 public class DatabaseJPACurrencyRepository implements CurrencyRepository {

@@ -1,5 +1,7 @@
-package com.exchanger.currency.domain.currency;
+package com.exchanger.currency.services.sheduling;
 
+import com.exchanger.currency.domain.currency.Currency;
+import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrenciesResponse;
 import org.springframework.stereotype.Component;
 

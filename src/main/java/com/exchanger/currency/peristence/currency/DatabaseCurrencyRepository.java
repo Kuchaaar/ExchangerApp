@@ -17,8 +17,8 @@ import java.util.List;
 
 @Repository
 @ConditionalOnProperty(
-        value = "repository.mock.currency.mock.enable",
-        havingValue = "false"
+        value = "repository.currency",
+        havingValue = "jdbc"
 )
 public class DatabaseCurrencyRepository implements CurrencyRepository {
 

@@ -1,4 +1,4 @@
-package com.exchanger.currency.domain.JPAcurrency;
+package com.exchanger.currency.peristence.currency;
 
 import com.exchanger.currency.domain.currency.Currency;
 import org.springframework.data.jpa.repository.JpaRepository;
