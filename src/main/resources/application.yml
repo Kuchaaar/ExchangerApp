@@ -26,6 +26,4 @@ repository:
     holidays:
       mock:
         enable: false
-    currency:
-      mock:
-        enable: jpa
+    currency: jpa

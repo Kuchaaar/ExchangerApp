@@ -5,6 +5,7 @@ import java.util.List;
 
 @Service
 public class CurrencyService {
+
     private final CurrencyRepository currencyRepository;
 
     public CurrencyService(CurrencyRepository currencyRepository){
