@@ -15,15 +15,10 @@ public class ExcelGenerator {
     private static final String SHEET_NAME = "Currencies";
 
     public byte[] generateExcelWorkbook(CurrencyReportDatasource currencyReportDatasource, boolean isExtension)
-            throws IOException, NoDataException{
-        if(currencyReportDatasource.currencies.isEmpty()){
-            throw new NoDataException();
-        }
-        else{
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            excelMakerr(currencyReportDatasource, isExtension).write(outputStream);
-            return outputStream.toByteArray();
-        }
+            throws IOException, NoDataException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        excelMakerr(currencyReportDatasource, isExtension).write(outputStream);
+        return outputStream.toByteArray();
     }
 
     public Workbook excelMakerr(CurrencyReportDatasource currencyReportDatasource, boolean isExtension){
@@ -33,11 +28,12 @@ public class ExcelGenerator {
         row.createCell(0).setCellValue("Name");
         row.createCell(1).setCellValue("Code");
         row.createCell(2).setCellValue("Mid");
-        for(int i = 0; i < currencyReportDatasource.currencies.size(); i++){
+        for (int i = 0; i < currencyReportDatasource.dataSourceSize(); i++) {
             Row rows = sheet.createRow(i + 1);
-            rows.createCell(0).setCellValue(currencyReportDatasource.currencies.get(i).name());
-            rows.createCell(1).setCellValue(currencyReportDatasource.currencies.get(i).code());
-            rows.createCell(2).setCellValue(currencyReportDatasource.currencies.get(i).mid());
+            CurrencyReportCurrencies currencyReportCurrencies = currencyReportDatasource.currencyByIndex(i);
+            rows.createCell(0).setCellValue(currencyReportCurrencies.name());
+            rows.createCell(1).setCellValue(currencyReportCurrencies.code());
+            rows.createCell(2).setCellValue(currencyReportCurrencies.mid());
         }
         sheet.autoSizeColumn(0, true);
         sheet.autoSizeColumn(1, true);
@@ -45,7 +41,7 @@ public class ExcelGenerator {
         if(isExtension){
             row.createCell(3).setCellValue("Average");
             Row row1 = workbook.getSheet(SHEET_NAME).getRow(1);
-            row1.createCell(3).setCellValue(currencyReportDatasource.avg);
+            row1.createCell(3).setCellValue(currencyReportDatasource.averageMidPrice());
         }
         return workbook;
     }

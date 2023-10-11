@@ -21,7 +21,7 @@ public class ExcelMaker {
                     currencyRepository
                             .findByDates(reportPeriod.startDate(), reportPeriod.endDate())
                             .stream()
-                            .map(CurrencyReportCurrency::from)
+                            .map(CurrencyReportCurrencies::from)
                             .toList()
             ),false);
     }
@@ -36,7 +36,7 @@ public class ExcelMaker {
                                 currencyReportPeriod.currencyCode()
                         )
                         .stream()
-                        .map(CurrencyReportCurrency::from)
+                        .map(CurrencyReportCurrencies::from)
                         .toList()
         ),isExtension);
     }

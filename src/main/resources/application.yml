@@ -27,3 +27,4 @@ repository:
     holidays:
       mock:
         enable: false
+fetchDataOnStartup: true

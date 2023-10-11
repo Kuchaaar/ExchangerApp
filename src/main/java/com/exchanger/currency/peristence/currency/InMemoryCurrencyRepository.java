@@ -62,4 +62,11 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
                 .filter(currency -> currency.getCode().equals(code))
                 .toList();
     }
+
+    @Override public List<String> availableCurrencyCode(){
+        return currencyMap.values().stream()
+                .map(Currency::getCode)
+                .distinct()
+                .toList();
+    }
 }
