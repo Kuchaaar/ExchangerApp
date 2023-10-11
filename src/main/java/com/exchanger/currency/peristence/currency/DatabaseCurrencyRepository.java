@@ -75,8 +75,8 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<String> availableDates(){
-        return jdbcTemplate.query(AVAILABLE_DATA_DISTINCT, (rs, rowNum) -> rs.getString("date"));
+    public List<LocalDate> availableDates(){
+        return jdbcTemplate.query(AVAILABLE_DATA_DISTINCT, (rs, rowNum) -> rs.getObject("date",LocalDate.class));
     }
 
     @Override

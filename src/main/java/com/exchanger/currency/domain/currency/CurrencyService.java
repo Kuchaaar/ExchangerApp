@@ -1,6 +1,8 @@
 package com.exchanger.currency.domain.currency;
 
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -11,7 +13,7 @@ public class CurrencyService {
         this.currencyRepository = currencyRepository;
     }
 
-    public List<String> availableDates(){
+    public List<LocalDate> availableDates(){
         return currencyRepository.availableDates();
     }
 }

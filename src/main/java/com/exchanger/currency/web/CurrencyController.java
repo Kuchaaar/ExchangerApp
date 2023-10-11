@@ -8,20 +8,19 @@ import com.exchanger.currency.services.excel.CurrencyReportPeriod;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 public class CurrencyController {
-    private static final String ATTACHMENT = "attachment";
-    private static final String EXCEL_NAME = "excel.xlsx";
     private final CurrencyService currencyService;
     private final ExcelMaker excelMaker;
 
@@ -31,51 +30,27 @@ public class CurrencyController {
     }
 
     @PostMapping(value = "/dane", produces = "application/octet-stream")
-    public ResponseEntity<byte[]> excelResponse(@RequestBody ReportPeriod reportPeriod)
+    public byte[] excelResponse(@RequestBody ReportPeriod reportPeriod)
             throws IOException, NoDataException{
-
-        return ResponseEntity.ok()
-                .headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME))
-                .body(excelMaker.generateExcel(reportPeriod));
+        return excelMaker.generateExcel(reportPeriod);
     }
 
     @PostMapping(value = "/currency", produces = "application/octet-stream")
-    public ResponseEntity<Resource> oneCurrencyExcelResponse(@RequestBody CurrencyReportPeriod currencyReportPeriod)
+    public byte[] oneCurrencyExcelResponse(@RequestBody CurrencyReportPeriod currencyReportPeriod)
             throws IOException, NoDataException{
-
-        byte[] excelData = excelMaker.generateExcelByCurrencyWithExtension(currencyReportPeriod);
-
-        ByteArrayResource resource = new ByteArrayResource(excelData);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + EXCEL_NAME);
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentType(MediaType.MULTIPART_FORM_DATA)
-                .body(resource);
+        return excelMaker.generateExcelByCurrency(currencyReportPeriod,false);
     }
 
+
     @PostMapping(value = "/currency/extensions", produces = "application/octet-stream")
-    public ResponseEntity<byte[]> oneCurrencyExcelResponseWithExtensions(
+    public byte[] oneCurrencyExcelResponseWithExtensions(
             @RequestBody CurrencyReportPeriod currencyReportPeriod)
             throws IOException, NoDataException{
-        return ResponseEntity.ok()
-                .headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME))
-                .body(excelMaker.generateExcelByCurrencyWithExtension(currencyReportPeriod));
+        return excelMaker.generateExcelByCurrency(currencyReportPeriod,true);
     }
 
     @GetMapping("/daty")
-    public List<String> getLocalDates(){
+    public List<LocalDate> getLocalDates(){
         return currencyService.availableDates();
-    }
-
-
-    @PostMapping(value = "/test")
-    public ResponseEntity<byte[]> excelResponsev2(@RequestBody CurrencyReportPeriod currencyReportPeriod)
-            throws IOException, NoDataException{
-        return ResponseEntity.ok()
-                .headers(headers -> headers.add(ATTACHMENT, EXCEL_NAME))
-                .body(excelMaker.generateExcelByCurrency(currencyReportPeriod));
     }
 }

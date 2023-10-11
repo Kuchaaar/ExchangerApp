@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +41,11 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<String> availableDates(){
-        return new ArrayList<>(currencyMap.keySet());
+    public List<LocalDate> availableDates(){
+        return currencyMap.values().stream()
+                .map(Currency::getDate)
+                .distinct()
+                .toList();
     }
 
     @Override

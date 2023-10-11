@@ -43,7 +43,7 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<String> availableDates(){
+    public List<LocalDate> availableDates(){
         return currencyRepositoryJPA.findDistinctByDate();
     }
 
