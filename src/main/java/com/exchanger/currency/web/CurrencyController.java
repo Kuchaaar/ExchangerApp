@@ -1,6 +1,6 @@
 package com.exchanger.currency.web;
 
-import com.exchanger.currency.domain.currency.CurrencyRepository;
+import com.exchanger.currency.domain.JPAcurrency.CurrencyService;
 import com.exchanger.currency.domain.excel.*;
 import com.exchanger.currency.exceptions.NoDataException;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,12 +20,11 @@ import java.util.List;
 public class CurrencyController {
     private static final String ATTACHMENT = "attachment";
     private static final String EXCEL_NAME = "excel.xlsx";
-    private final CurrencyRepository currencyRepository;
+    private final CurrencyService currencyService;
     private final ExcelMaker excelMaker;
 
-    public CurrencyController(CurrencyRepository currencyRepository,
-                              ExcelMaker excelMaker){
-        this.currencyRepository = currencyRepository;
+    public CurrencyController(CurrencyService currencyService, ExcelMaker excelMaker){
+        this.currencyService = currencyService;
         this.excelMaker = excelMaker;
     }
 
@@ -66,7 +65,7 @@ public class CurrencyController {
 
     @GetMapping("/daty")
     public List<String> getLocalDates(){
-        return currencyRepository.availableDates();
+        return currencyService.availableDates();
     }
 
 

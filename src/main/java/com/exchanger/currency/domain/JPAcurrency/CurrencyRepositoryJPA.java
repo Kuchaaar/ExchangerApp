@@ -10,7 +10,7 @@ import java.util.List;
 public interface CurrencyRepositoryJPA extends JpaRepository<Currency, Long> {
     List<Currency> findByDateBetween(LocalDate startDate, LocalDate endDate);
 
-    @Query("select DISTINCT(c.date) from Currency c")
+    @Query("SELECT DISTINCT(c.date) FROM Currency c")
     List<String> findDistinctByDate();
 
     List<Currency> findAllByDate(LocalDate date);

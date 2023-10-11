@@ -18,10 +18,12 @@ import java.util.List;
 )
 public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     private final CurrencyRepositoryJPA currencyRepositoryJPA;
+
     @Autowired
     public DatabaseJPACurrencyRepository(CurrencyRepositoryJPA currencyRepositoryJPA){
         this.currencyRepositoryJPA = currencyRepositoryJPA;
     }
+
     @Override
     public void saveAll(List<CurrencyResponse> currenciesResponse){
         List<Currency> currencies = currenciesResponse.stream()
@@ -30,24 +32,29 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
         currencyRepositoryJPA.saveAll(currencies);
 
     }
+
     @Override
     public List<Currency> findByDates(LocalDate date1, LocalDate date2){
-        return currencyRepositoryJPA.findByDateBetween(date1,date2);
+        return currencyRepositoryJPA.findByDateBetween(date1, date2);
     }
+
     @Override
     public List<Currency> findByDate(LocalDate date){
         return currencyRepositoryJPA.findAllByDate(date);
     }
+
     @Override
     public List<String> availableDates(){
         return currencyRepositoryJPA.findDistinctByDate();
     }
+
     @Override
     public List<Currency> findAll(){
         return currencyRepositoryJPA.findAll();
     }
+
     @Override
     public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code){
-        return currencyRepositoryJPA.findAllByCodeAndDateBetween(code,date1,date2);
+        return currencyRepositoryJPA.findAllByCodeAndDateBetween(code, date1, date2);
     }
 }
