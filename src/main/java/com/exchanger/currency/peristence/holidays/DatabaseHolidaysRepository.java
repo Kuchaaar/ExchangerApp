@@ -19,10 +19,10 @@ import java.util.List;
 )
 public class DatabaseHolidaysRepository implements HolidaysRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private static final String INSERT_HOLIDAY_QUERY = "INSERT INTO Holidays (date, name) VALUES (:date, :name)";
+    private static final String INSERT_HOLIDAY_QUERY = "INSERT INTO holidays (date, name) VALUES (:date, :name)";
 
-    private static final String FIND_ALL_HOLIDAY_QUERY = "SELECT date, name from Holidays";
-    private static final String DELETE_ALL_HOLIDAY = "DELETE FROM Holidays";
+    private static final String FIND_ALL_HOLIDAY_QUERY = "SELECT date, name from holidays";
+    private static final String DELETE_ALL_HOLIDAY = "DELETE FROM holidays";
 
     public DatabaseHolidaysRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
         this.jdbcTemplate = namedParameterJdbcTemplate;
