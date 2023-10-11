@@ -2,12 +2,13 @@ version: '3'
 services:
   db:
     image: mysql:5.7
+    restart: always
     volumes:
-      - mysql-db:/var/lib/mysql
+      - "./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/1.sql"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: exchanger
     ports:
-      - "3306:3307"
+      - "3307:3306"
 volumes:
   mysql-db:

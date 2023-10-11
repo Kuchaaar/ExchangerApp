@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Currency
+CREATE TABLE IF NOT EXISTS currency
 (
     currency_id
     int
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Currency
     date date
     );
 
-CREATE TABLE IF NOT EXISTS Holidays
+CREATE TABLE IF NOT EXISTS holidays
 (
     holidays_id
     int
