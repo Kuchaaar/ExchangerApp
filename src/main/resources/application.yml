@@ -22,8 +22,8 @@ spring:
     init:
       mode: always
 repository:
+  currency: jpa
   mock:
     holidays:
       mock:
         enable: false
-    currency: jpa

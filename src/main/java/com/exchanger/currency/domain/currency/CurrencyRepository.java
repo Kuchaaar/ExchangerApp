@@ -4,7 +4,6 @@ import com.exchanger.currency.integration.currency.CurrencyResponse;
 
 import java.time.LocalDate;
 import java.util.List;
-
 public interface CurrencyRepository {
     void saveAll(List<CurrencyResponse> list);
 
