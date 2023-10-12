@@ -63,5 +63,6 @@ public class CurrencyController {
     public List<CurrencyWithPercentages> getCurrencyWithPercentages(
             @RequestBody CurrencyCalculatorRequest currencyCalculatorRequest){
         return currencyChangeService.findCurrenciesValues(currencyCalculatorRequest);
+
     }
 }
