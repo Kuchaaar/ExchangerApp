@@ -32,6 +32,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     private static final String FIND_BY_DATES = "SELECT * from currency WHERE date BETWEEN :date1 AND :date2";
     private static final String FIND_CURRENCY_BY_DATES
             = "SELECT * FROM currency WHERE code = :code AND date BETWEEN :date1 AND :date2";
+    private static final String AVAILABLE_CODE_DISTINCT = "SELECT DISTINCT code FROM currency";
 
     public DatabaseCurrencyRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
         this.jdbcTemplate = namedParameterJdbcTemplate;
@@ -45,6 +46,10 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
         final SqlParameterSource[] batch =
                 SqlParameterSourceUtils.createBatch(currencies);
         jdbcTemplate.batchUpdate(UPDATE_CURRENCY_QUERY, batch);
+    }
+
+    @Override public List<String> availableCodes(){
+        return jdbcTemplate.query(AVAILABLE_CODE_DISTINCT, (rs, rowNum) -> rs.getObject("code",String.class));
     }
 
     @Override

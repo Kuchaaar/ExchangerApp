@@ -16,4 +16,7 @@ public class CurrencyService {
     public List<LocalDate> availableDates(){
         return currencyRepository.availableDates();
     }
+    public List<String> availableCodes(){
+        return currencyRepository.availableCodes();
+    }
 }

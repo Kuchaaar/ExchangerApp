@@ -12,6 +12,8 @@ public interface CurrencyRepositoryJPA extends JpaRepository<Currency, Long> {
 
     @Query("SELECT DISTINCT(c.date) FROM Currency c")
     List<LocalDate> findDistinctByDate();
+    @Query("SELECT DISTINCT(c.code) FROM Currency c")
+    List<String> findDistinctByCode();
 
     List<Currency> findAllByDate(LocalDate date);
 

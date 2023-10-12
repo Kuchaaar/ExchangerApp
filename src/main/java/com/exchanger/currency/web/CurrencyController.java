@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost/","http://localhost"})
+@CrossOrigin(origins = "http://localhost")
 @RestController
 public class CurrencyController {
     private final CurrencyService currencyService;
@@ -44,5 +44,9 @@ public class CurrencyController {
     @GetMapping("/daty")
     public List<LocalDate> getLocalDates(){
         return currencyService.availableDates();
+    }
+    @GetMapping("/code")
+    public List<String> getCurrencyCodes(){
+        return currencyService.availableCodes();
     }
 }
