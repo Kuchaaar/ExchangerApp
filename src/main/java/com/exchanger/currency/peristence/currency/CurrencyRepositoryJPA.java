@@ -3,6 +3,7 @@ package com.exchanger.currency.peristence.currency;
 import com.exchanger.currency.domain.currency.Currency;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +15,8 @@ public interface CurrencyRepositoryJPA extends JpaRepository<Currency, Long> {
     List<LocalDate> findDistinctByDate();
     @Query("SELECT DISTINCT(c.code) FROM Currency c")
     List<String> findDistinctByCode();
+    @Query("SELECT DISTINCT(c.date) FROM Currency c WHERE c.code = :code")
+    List<LocalDate> findDistinctByDateByCode(@Param("code")String code);
 
     List<Currency> findAllByDate(LocalDate date);
 

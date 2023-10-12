@@ -46,11 +46,11 @@ public class CurrencyController {
         return currencyService.availableDates();
     }
     @GetMapping("/code")
-
     public List<String> getCurrencyCodes(){
         return currencyService.availableCodes();
-
-    public List<String> getAllCodes(){
-        return currencyService.availableCurrencyCode();
+    }
+    @PostMapping("/date/currency")
+    public List<LocalDate> getLocalDatesForCurrency(@RequestBody String currencyCode){
+        return currencyService.avilableDatesForCurrency(currencyCode);
     }
 }
