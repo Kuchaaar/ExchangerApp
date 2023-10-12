@@ -17,4 +17,5 @@ public interface CurrencyRepository {
     List<Currency> findAll();
 
     List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code);
+    List<String> availableCurrencyCode();
 }

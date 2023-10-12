@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
         havingValue = "true"
 )
 public class OnStartUpDataFetcher implements CommandLineRunner {
-    //declare
 
     private final Scheduler scheduler;
 

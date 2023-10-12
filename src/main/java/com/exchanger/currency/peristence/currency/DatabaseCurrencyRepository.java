@@ -31,7 +31,11 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     private static final String FIND_BY_DATE = "SELECT * from currency WHERE date = :date";
     private static final String FIND_BY_DATES = "SELECT * from currency WHERE date BETWEEN :date1 AND :date2";
     private static final String FIND_CURRENCY_BY_DATES
+
             = "SELECT * FROM currency WHERE code = :code AND date BETWEEN :date1 AND :date2";
+
+            = "SELECT * FROM Currency WHERE code = :code AND date BETWEEN :date1 AND :date2";
+
     private static final String AVAILABLE_CODE_DISTINCT = "SELECT DISTINCT code FROM currency";
 
     public DatabaseCurrencyRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
@@ -61,6 +65,10 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
                         .addValue("date1", date1)
                         .addValue("date2", date2),
                 (rs, rowNum) -> mapToCurrency(rs));
+    }
+
+    @Override public List<String> availableCurrencyCode(){
+        return jdbcTemplate.query(AVAILABLE_CODE_DISTINCT, (rs, rowNum) -> rs.getObject("code",String.class));
     }
 
     @Override
