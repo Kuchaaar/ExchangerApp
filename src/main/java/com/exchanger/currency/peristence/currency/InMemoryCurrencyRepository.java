@@ -27,6 +27,12 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
+    public List<String> availableCodes(){
+        return currencyMap.keySet().stream()
+                .toList();
+    }
+
+    @Override
     public List<Currency> findByDates(LocalDate date1, LocalDate date2){
         return currencyMap.values().stream()
                 .filter(currency -> currency.getDate().isAfter(date1) && currency.getDate().isBefore(date2))
@@ -60,6 +66,13 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
         return currencyMap.values().stream()
                 .filter(currency -> currency.getDate().isAfter(date1) && currency.getDate().isBefore(date2))
                 .filter(currency -> currency.getCode().equals(code))
+                .toList();
+    }
+
+    @Override public List<String> availableCurrencyCode(){
+        return currencyMap.values().stream()
+                .map(Currency::getCode)
+                .distinct()
                 .toList();
     }
 }

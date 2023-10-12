@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 public interface CurrencyRepository {
     void saveAll(List<CurrencyResponse> list);
+    List<String> availableCodes();
 
     List<Currency> findByDates(LocalDate date1, LocalDate date2);
 
@@ -16,4 +17,5 @@ public interface CurrencyRepository {
     List<Currency> findAll();
 
     List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code);
+    List<String> availableCurrencyCode();
 }

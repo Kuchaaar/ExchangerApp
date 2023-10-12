@@ -52,6 +52,7 @@ public class CurrencyController {
         return currencyService.availableDates();
     }
     @GetMapping("/code")
+
     public List<String> getCurrencyCodes(){
         return currencyService.availableCodes();
     }
@@ -62,5 +63,6 @@ public class CurrencyController {
     @PostMapping(value = "/currency/change")
     public List<CurrencyWithPercentages> getCurrencyChange(@RequestBody CurrencyCalculatorRequest currencyCalculatorRequest){
         return currencyChangeService.findCurrenciesValues(currencyCalculatorRequest);
+
     }
 }
