@@ -1,5 +1,8 @@
 package com.exchanger.currency.web;
 
+import com.exchanger.currency.services.CurrencyChange.CurrencyCalculatorRequest;
+import com.exchanger.currency.services.CurrencyChange.CurrencyChangeService;
+import com.exchanger.currency.services.CurrencyChange.CurrencyWithPercentages;
 import com.exchanger.currency.services.excel.ExcelMaker;
 import com.exchanger.currency.services.excel.ReportPeriod;
 import com.exchanger.currency.domain.currency.CurrencyService;
@@ -10,15 +13,18 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost/","http://localhost"})
+@CrossOrigin(origins = "http://localhost")
 @RestController
 public class CurrencyController {
     private final CurrencyService currencyService;
     private final ExcelMaker excelMaker;
+    private final CurrencyChangeService currencyChangeService;
 
-    public CurrencyController(CurrencyService currencyService, ExcelMaker excelMaker){
+    public CurrencyController(CurrencyService currencyService, ExcelMaker excelMaker,
+                              CurrencyChangeService currencyChangeService){
         this.currencyService = currencyService;
         this.excelMaker = excelMaker;
+        this.currencyChangeService = currencyChangeService;
     }
 
     @PostMapping(value = "/dane", produces = "application/octet-stream")
@@ -44,5 +50,17 @@ public class CurrencyController {
     @GetMapping("/daty")
     public List<LocalDate> getLocalDates(){
         return currencyService.availableDates();
+    }
+    @GetMapping("/code")
+    public List<String> getCurrencyCodes(){
+        return currencyService.availableCodes();
+    }
+    @PostMapping(value = "/date/currency")
+    public List<LocalDate> getLocalDatesForCurrency(@RequestBody String currencyCode){
+        return currencyService.avilableDatesForCurrency(currencyCode);
+    }
+    @PostMapping(value = "/currency/change")
+    public List<CurrencyWithPercentages> getCurrencyChange(@RequestBody CurrencyCalculatorRequest currencyCalculatorRequest){
+        return currencyChangeService.findCurrenciesValues(currencyCalculatorRequest);
     }
 }
