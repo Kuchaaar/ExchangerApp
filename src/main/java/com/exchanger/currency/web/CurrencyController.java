@@ -5,20 +5,12 @@ import com.exchanger.currency.services.excel.ReportPeriod;
 import com.exchanger.currency.domain.currency.CurrencyService;
 import com.exchanger.currency.domain.exceptions.NoDataException;
 import com.exchanger.currency.services.excel.CurrencyReportPeriod;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost/","http://localhost"})
 @RestController
 public class CurrencyController {
     private final CurrencyService currencyService;

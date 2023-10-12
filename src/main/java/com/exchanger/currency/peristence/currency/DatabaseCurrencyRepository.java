@@ -24,14 +24,14 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private static final String UPDATE_CURRENCY_QUERY =
-            "INSERT INTO Currency (currency,code,mid,date) VALUES (:currency,:code,:mid,:date)";
+            "INSERT INTO currency (currency,code,mid,date) VALUES (:currency,:code,:mid,:date)";
 
-    private static final String FIND_ALL_CURRENCY_QUERY = "SELECT * from Currency";
+    private static final String FIND_ALL_CURRENCY_QUERY = "SELECT * from currency";
     private static final String AVAILABLE_DATA_DISTINCT = "SELECT DISTINCT date FROM currency";
-    private static final String FIND_BY_DATE = "SELECT * from Currency WHERE date = :date";
-    private static final String FIND_BY_DATES = "SELECT * from Currency WHERE date BETWEEN :date1 AND :date2";
+    private static final String FIND_BY_DATE = "SELECT * from currency WHERE date = :date";
+    private static final String FIND_BY_DATES = "SELECT * from currency WHERE date BETWEEN :date1 AND :date2";
     private static final String FIND_CURRENCY_BY_DATES
-            = "SELECT * FROM Currency WHERE code = :code AND date BETWEEN :date1 AND :date2";
+            = "SELECT * FROM currency WHERE code = :code AND date BETWEEN :date1 AND :date2";
 
     public DatabaseCurrencyRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
         this.jdbcTemplate = namedParameterJdbcTemplate;
