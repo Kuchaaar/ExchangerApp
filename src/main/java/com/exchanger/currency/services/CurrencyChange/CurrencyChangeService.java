@@ -19,8 +19,7 @@ public class CurrencyChangeService {
     public List<Currency> findCurrenciesByDate(CurrencyCalculatorRequest currencyCalculatorRequest){
         List<Currency> currencies = currencyRepository.findByDate(currencyCalculatorRequest.startDate());
         List<Currency> currencies1 = currencyRepository.findByDate(currencyCalculatorRequest.endDate());
-        return Stream.concat(currencies.stream(), currencies1.stream())
-                .collect(Collectors.toList());
+        return Stream.concat(currencies.stream(), currencies1.stream()).toList();
     }
 
     public List<CurrencyWithPercentages> findCurrenciesValues(CurrencyCalculatorRequest currencyCalculatorRequest){
