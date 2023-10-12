@@ -32,6 +32,10 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
 
     }
 
+    @Override public List<String> availableCodes(){
+        return currencyRepositoryJPA.findDistinctByCode();
+    }
+
     @Override
     public List<Currency> findByDates(LocalDate date1, LocalDate date2){
         return currencyRepositoryJPA.findByDateBetween(date1, date2);

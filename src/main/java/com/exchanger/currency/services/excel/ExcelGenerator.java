@@ -19,9 +19,10 @@ public class ExcelGenerator {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         excelMakerr(currencyReportDatasource, isExtension).write(outputStream);
         return outputStream.toByteArray();
+
     }
 
-    public Workbook excelMakerr(CurrencyReportDatasource currencyReportDatasource, boolean isExtension){
+    public Workbook excelMakerr(CurrencyReportDatasource currencyReportDatasource, boolean isExtension) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet(SHEET_NAME);
         Row row = sheet.createRow(0);
@@ -38,7 +39,7 @@ public class ExcelGenerator {
         sheet.autoSizeColumn(0, true);
         sheet.autoSizeColumn(1, true);
         sheet.autoSizeColumn(3, true);
-        if(isExtension){
+        if (isExtension) {
             row.createCell(3).setCellValue("Average");
             Row row1 = workbook.getSheet(SHEET_NAME).getRow(1);
             row1.createCell(3).setCellValue(currencyReportDatasource.averageMidPrice());
