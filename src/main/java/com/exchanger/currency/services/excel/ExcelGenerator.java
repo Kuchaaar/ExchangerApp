@@ -34,7 +34,7 @@ public class ExcelGenerator {
             CurrencyReportCurrencies currencyReportCurrencies = currencyReportDatasource.currencyByIndex(i);
             rows.createCell(0).setCellValue(currencyReportCurrencies.name());
             rows.createCell(1).setCellValue(currencyReportCurrencies.code());
-            rows.createCell(2).setCellValue(currencyReportCurrencies.mid());
+            rows.createCell(2).setCellValue(currencyReportCurrencies.mid().doubleValue());
         }
         sheet.autoSizeColumn(0, true);
         sheet.autoSizeColumn(1, true);
@@ -42,7 +42,7 @@ public class ExcelGenerator {
         if (isExtension) {
             row.createCell(3).setCellValue("Average");
             Row row1 = workbook.getSheet(SHEET_NAME).getRow(1);
-            row1.createCell(3).setCellValue(currencyReportDatasource.averageMidPrice());
+            row1.createCell(3).setCellValue(currencyReportDatasource.averageMidPrice().doubleValue());
         }
         return workbook;
     }
