@@ -51,9 +51,10 @@ public class CurrencyChangeService {
             if(currencyMap.containsKey(code)){
                 Currency existingCurrency = currencyMap.get(code);
                 BigDecimal difference = (currency.getMid()
-                        .divide(existingCurrency.getMid(), RoundingMode.UP)
                         .multiply(BigDecimal.valueOf(100.0))
-                        .subtract((BigDecimal.valueOf(100.0))));
+                        .divide(existingCurrency.getMid(),RoundingMode.UP)
+                        .subtract((BigDecimal.valueOf(100.0))))
+                        .setScale(2,RoundingMode.UP);
                 result.add(new CurrencyCodeWithPercentage(code, difference));
             }else{
                 currencyMap.put(code, currency);

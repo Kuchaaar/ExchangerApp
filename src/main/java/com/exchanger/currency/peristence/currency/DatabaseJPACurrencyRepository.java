@@ -3,6 +3,7 @@ package com.exchanger.currency.peristence.currency;
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
+import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
@@ -63,5 +64,11 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     @Override
     public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code){
         return currencyRepositoryJPA.findAllByCodeAndDateBetween(code, date1, date2);
+    }
+
+    @Override
+    public List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate,
+                                                                                     LocalDate endDate){
+        return currencyRepositoryJPA.findCurrencyFromStartDateAndEndDate(startDate,endDate);
     }
 }

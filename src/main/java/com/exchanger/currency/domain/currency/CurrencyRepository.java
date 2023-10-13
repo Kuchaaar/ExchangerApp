@@ -1,6 +1,7 @@
 package com.exchanger.currency.domain.currency;
 
 import com.exchanger.currency.integration.currency.CurrencyResponse;
+import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,4 +19,5 @@ public interface CurrencyRepository {
     List<LocalDate> availableDatesForCurrency(String code);
 
     List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code);
+    List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate, LocalDate endDate);
 }

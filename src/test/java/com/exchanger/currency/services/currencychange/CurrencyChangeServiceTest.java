@@ -5,6 +5,7 @@ import com.exchanger.currency.peristence.currency.InMemoryCurrencyRepository;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,8 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CurrencyChangeServiceTest {
 
-    @Test
-    void findCurrencyWithHighestRatePercentageChange(){
+    @Test void findCurrencyWithHighestRatePercentageChange(){
         //given
         final InMemoryCurrencyRepository inMemoryCurrencyRepository = new InMemoryCurrencyRepository();
         final CurrencyChangeService currencyChangeService = new CurrencyChangeService(inMemoryCurrencyRepository);
@@ -23,8 +23,7 @@ class CurrencyChangeServiceTest {
                         new CurrencyResponse("name2", "code2", BigDecimal.valueOf(100.0), LocalDate.of(2023, 10, 10)),
                         new CurrencyResponse("name2", "code2", BigDecimal.valueOf(115.0), LocalDate.of(2023, 10, 11)),
                         new CurrencyResponse("name3", "code3", BigDecimal.valueOf(21.0), LocalDate.of(2023, 10, 10)),
-                        new CurrencyResponse("name4", "code4", BigDecimal.valueOf(37.0), LocalDate.of(1939, 9, 18))
-                );
+                        new CurrencyResponse("name4", "code4", BigDecimal.valueOf(37.0), LocalDate.of(1939, 9, 18)));
         inMemoryCurrencyRepository.saveAll(currencyResponses);
 
         //when
@@ -35,10 +34,10 @@ class CurrencyChangeServiceTest {
                         2));
         //then
         FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChangeResponseTest =
-                new FindCurrencyWithHighestRatePercentageChangeResponse(
-                        List.of(new CurrencyCodeWithPercentage("code", BigDecimal.valueOf(100.00)),
-                                new CurrencyCodeWithPercentage("code2", BigDecimal.valueOf(15.00))),
-                        List.of());
+                new FindCurrencyWithHighestRatePercentageChangeResponse(List.of(new CurrencyCodeWithPercentage("code",
+                                BigDecimal.valueOf(100.00).setScale(2, RoundingMode.UP)),
+                        new CurrencyCodeWithPercentage("code2",
+                                BigDecimal.valueOf(15.00).setScale(2, RoundingMode.UP))), List.of());
         assertEquals(findCurrencyWithHighestRatePercentageChangeResponseTest,
                 findCurrencyWithHighestRatePercentageChangeResponse);
     }
