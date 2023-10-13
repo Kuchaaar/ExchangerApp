@@ -3,6 +3,7 @@ package com.exchanger.currency.peristence.currency;
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
+import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
@@ -76,6 +77,28 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
                 .filter(currency -> currency.getDate().isAfter(date1) && currency.getDate().isBefore(date2))
                 .filter(currency -> currency.getCode().equals(code))
                 .toList();
+    }
+
+    @Override
+    public List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate,
+                                                                                     LocalDate endDate){
+        List<CurrencyFromStartDateAndEndDate> resultList = new ArrayList<>();
+
+        for (int i = 0; i < currencies.size(); i++) {
+            Currency currencyStartDate = currencies.get(i);
+
+            if (currencyStartDate.getDate().isEqual(startDate)) {
+                for (int j = i + 1; j < currencies.size(); j++) {
+                    Currency currencyEndDate = currencies.get(j);
+
+                    if (currencyEndDate.getDate().isEqual(endDate) && currencyStartDate.getCode().equals(currencyEndDate.getCode())) {
+                        resultList.add(new CurrencyFromStartDateAndEndDate(currencyStartDate, currencyEndDate));
+                    }
+                }
+            }
+        }
+
+        return resultList;
     }
 
 }

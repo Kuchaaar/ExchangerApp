@@ -3,6 +3,7 @@ package com.exchanger.currency.peristence.currency;
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
+import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,10 +23,8 @@ import java.util.List;
 )
 public class DatabaseCurrencyRepository implements CurrencyRepository {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
     private static final String UPDATE_CURRENCY_QUERY =
             "INSERT INTO currency (currency,code,mid,date) VALUES (:currency,:code,:mid,:date)";
-
     private static final String FIND_ALL_CURRENCY_QUERY = "SELECT * from currency";
     private static final String AVAILABLE_DATA_DISTINCT = "SELECT DISTINCT date FROM currency";
     private static final String FIND_BY_DATE = "SELECT * from currency WHERE date = :date";
@@ -33,9 +32,12 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     private static final String FIND_CURRENCY_BY_DATES
 
             = "SELECT * FROM currency WHERE code = :code AND date BETWEEN :date1 AND :date2";
-
     private static final String AVAILABLE_CODE_DISTINCT = "SELECT DISTINCT code FROM currency";
-    private static final String AVAILABLE_DATE_DISTINCT_BY_CODE = "SELECT DISTINCT date FROM currency WHERE code = :code";
+    private static final String AVAILABLE_DATE_DISTINCT_BY_CODE =
+            "SELECT DISTINCT date FROM currency WHERE code = :code";
+    private static final String CURRENCY_FROM_START_AND_END_DATE =
+            "SELECT c1.*, c2.* FROM currency c1, currency c2 WHERE c1.currency_id <> c2.currency_id AND c1.date = :startDate AND c2.date = :endDate AND c1.code = c2.code";
+    private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public DatabaseCurrencyRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
         this.jdbcTemplate = namedParameterJdbcTemplate;
@@ -52,7 +54,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     }
 
     @Override public List<String> availableCodes(){
-        return jdbcTemplate.query(AVAILABLE_CODE_DISTINCT, (rs, rowNum) -> rs.getObject("code",String.class));
+        return jdbcTemplate.query(AVAILABLE_CODE_DISTINCT, (rs, rowNum) -> rs.getObject("code", String.class));
     }
 
     @Override
@@ -64,6 +66,30 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
                         .addValue("date1", date1)
                         .addValue("date2", date2),
                 (rs, rowNum) -> mapToCurrency(rs));
+    }
+
+    @Override
+    public List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate,
+                                                                                     LocalDate endDate){
+
+        return jdbcTemplate.query(CURRENCY_FROM_START_AND_END_DATE,
+                new MapSqlParameterSource()
+                        .addValue("startDate", startDate)
+                        .addValue("endDate", endDate),
+                (rs, rowNum) -> new CurrencyFromStartDateAndEndDate(
+                        new Currency(
+                                rs.getString("currency"),
+                                rs.getString("code"),
+                                rs.getBigDecimal("mid"),
+                                rs.getDate("date").toLocalDate()
+                        ),
+
+                        new Currency(
+                                rs.getString("currency"),
+                                rs.getString("code"),
+                                rs.getBigDecimal("mid"),
+                                rs.getDate("date").toLocalDate()
+                        )));
     }
 
 
@@ -85,7 +111,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
 
     @Override
     public List<LocalDate> availableDates(){
-        return jdbcTemplate.query(AVAILABLE_DATA_DISTINCT, (rs, rowNum) -> rs.getObject("date",LocalDate.class));
+        return jdbcTemplate.query(AVAILABLE_DATA_DISTINCT, (rs, rowNum) -> rs.getObject("date", LocalDate.class));
     }
 
     @Override
@@ -95,8 +121,8 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
 
     @Override public List<LocalDate> availableDatesForCurrency(String code){
         return jdbcTemplate.query(AVAILABLE_DATE_DISTINCT_BY_CODE,
-                new MapSqlParameterSource("code",code),
-                (rs, rowNum) -> rs.getObject("date",LocalDate.class));
+                new MapSqlParameterSource("code", code),
+                (rs, rowNum) -> rs.getObject("date", LocalDate.class));
     }
 
     private Currency mapToCurrency(ResultSet rs) throws SQLException{

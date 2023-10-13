@@ -22,7 +22,7 @@ spring:
     init:
       mode: always
 repository:
-  currency: jpa
+  currency: jdbc
   mock:
     holidays:
       mock:
