@@ -23,7 +23,7 @@ public class Scheduler {
     @Scheduled(cron = "0 0 22 ? * MON-FRI")
     public void currencyRun(){
         LocalDate now = LocalDate.now();
-        if(! isHoliday(now) && ! databaseChecker.ifDateInDatabase(now)){
+        if(! isHoliday(now) && !databaseChecker.ifDateInDatabase(now)){
             sheduled.currencyUpdate();
         }
     }

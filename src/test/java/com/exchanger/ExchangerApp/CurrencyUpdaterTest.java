@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
@@ -27,9 +28,9 @@ class CurrencyUpdaterTest {
     private static final String CURRENCY_3 = "Currency 3";
     private static final String CURRENCY_CODE_3 = "CUR3";
     private static final String CURRENCY_1 = "Currency 1";
-    private static final double MID_2 = 2.0;
-    private static final double MID_3 = 3.0;
-    private static final double MID = 1.0;
+    private static final BigDecimal MID_2 = BigDecimal.valueOf(2.0);
+    private static final BigDecimal MID_3 = BigDecimal.valueOf(3.0);
+    private static final BigDecimal MID = BigDecimal.valueOf(1.0);
     private static final String CURRENCY_CODE_1 = "CUR1";
     @Mock
     private CurrencyClient currencyClient;
@@ -100,11 +101,11 @@ class CurrencyUpdaterTest {
         return new CurrenciesResponse(effectiveDate, currencyResponses);
     }
 
-    private static CurrencyResponse aCurrencyResponse(String currency, String code, double mid){
+    private static CurrencyResponse aCurrencyResponse(String currency, String code, BigDecimal mid){
         return new CurrencyResponse(currency, code, mid, EFFECTIVE_DATE_1);
     }
 
-    private Currency aCurrency(String currency, String code, double mid, LocalDate date){
+    private Currency aCurrency(String currency, String code, BigDecimal mid, LocalDate date){
         return new Currency(currency, code, mid, date);
     }
 }

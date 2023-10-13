@@ -3,6 +3,7 @@ package com.exchanger.currency.domain.currency;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -14,10 +15,10 @@ public class Currency{
     private Long id;
     private String currency;
     private String code;
-    private Double mid;
+    private BigDecimal mid;
     private LocalDate date;
 
-    public Currency(String currency, String code, Double mid, LocalDate date){
+    public Currency(String currency, String code, BigDecimal mid, LocalDate date){
         this.currency = currency;
         this.code = code;
         this.mid = mid;
@@ -52,11 +53,11 @@ public class Currency{
         this.code = code;
     }
 
-    public Double getMid(){
+    public BigDecimal getMid(){
         return mid;
     }
 
-    public void setMid(Double mid){
+    public void setMid(BigDecimal mid){
         this.mid = mid;
     }
 

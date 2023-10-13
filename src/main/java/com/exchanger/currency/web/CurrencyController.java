@@ -1,8 +1,8 @@
 package com.exchanger.currency.web;
 
-import com.exchanger.currency.services.CurrencyChange.CurrencyCalculatorRequest;
-import com.exchanger.currency.services.CurrencyChange.CurrencyChangeService;
-import com.exchanger.currency.services.CurrencyChange.CurrencyWithPercentages;
+import com.exchanger.currency.services.currencychange.FindCurrencyWithHighestRatePercentageChangeRequest;
+import com.exchanger.currency.services.currencychange.CurrencyChangeService;
+import com.exchanger.currency.services.currencychange.FindCurrencyWithHighestRatePercentageChangeResponse;
 import com.exchanger.currency.services.excel.ExcelMaker;
 import com.exchanger.currency.services.excel.ReportPeriod;
 import com.exchanger.currency.domain.currency.CurrencyService;
@@ -56,13 +56,14 @@ public class CurrencyController {
         return currencyService.availableCodes();
     }
     @PostMapping("/date/currency")
-    public List<LocalDate> getLocalDatesForCurrency(@RequestBody String currencyCode){
+    public List<LocalDate> findLocalDatesForCurrency(@RequestBody String currencyCode){
         return currencyService.avilableDatesForCurrency(currencyCode);
     }
     @PostMapping("/currency/change")
-    public List<CurrencyWithPercentages> getCurrencyWithPercentages(
-            @RequestBody CurrencyCalculatorRequest currencyCalculatorRequest){
-        return currencyChangeService.findCurrenciesValues(currencyCalculatorRequest);
-
+    public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChange(
+            @RequestBody
+            FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
+        return currencyChangeService.findCurrencyWithHighestRatePercentageChange(
+                findCurrencyWithHighestRatePercentageChangeRequest);
     }
 }

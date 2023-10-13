@@ -66,9 +66,6 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
                 (rs, rowNum) -> mapToCurrency(rs));
     }
 
-    @Override public List<String> availableCurrencyCode(){
-        return jdbcTemplate.query(AVAILABLE_CODE_DISTINCT, (rs, rowNum) -> rs.getObject("code",String.class));
-    }
 
     @Override
     public List<Currency> findByDates(LocalDate date1, LocalDate date2){
@@ -106,7 +103,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
         return new Currency(
                 rs.getString("currency"),
                 rs.getString("code"),
-                rs.getDouble("mid"),
+                rs.getBigDecimal("mid"),
                 rs.getDate("date").toLocalDate()
         );
     }
