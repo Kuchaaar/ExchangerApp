@@ -25,10 +25,10 @@ public class ScheduledUpdated {
     }
 
     public void currencyUpdate(){
-        if(databaseChecker.ifDataInDatabase(currencyClient.getByTable("a"))){
+        if(!databaseChecker.ifDataInDatabase(currencyClient.getByTable("a"))){
             currencyUpdater.update("a");
         }
-        if(databaseChecker.ifDataInDatabase(currencyClient.getByTable("b"))){
+        if(!databaseChecker.ifDataInDatabase(currencyClient.getByTable("b"))){
             currencyUpdater.update("b");
         }
     }

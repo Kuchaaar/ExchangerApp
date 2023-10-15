@@ -1,6 +1,5 @@
 package com.exchanger.currency.services.sheduling;
 
-import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrenciesResponse;
 import org.springframework.stereotype.Component;
@@ -18,17 +17,10 @@ public class DatabaseChecker {
     }
 
     public boolean ifDataInDatabase(List<CurrenciesResponse> currenciesResponse){
-        if(currenciesResponse.size() > 1){
-            LocalDate date = LocalDate.parse(currenciesResponse.get(1).effectiveDate());
-            List<Currency> list = currencyRepository.findByDate(date);
-            return ! list.isEmpty();
-        }else{
-            return true;
-        }
+        return ifDateInDatabase(LocalDate.parse(currenciesResponse.get(0).effectiveDate()));
     }
 
     public boolean ifDateInDatabase(LocalDate actualizationDate){
-        List<Currency> list = currencyRepository.findByDate(actualizationDate);
-        return ! list.isEmpty();
+        return ! currencyRepository.findByDate(actualizationDate).isEmpty();
     }
 }

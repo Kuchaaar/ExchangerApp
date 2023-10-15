@@ -14,22 +14,23 @@ import java.io.IOException;
 public class ExcelGenerator {
     private static final String SHEET_NAME = "Currencies";
 
-    public byte[] generateExcelWorkbook(CurrencyReportDatasource currencyReportDatasource, boolean isExtension)
+    public byte[] excelFileToByteArray(CurrencyReportDatasource currencyReportDatasource, boolean isExtension)
             throws IOException, NoDataException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        excelMakerr(currencyReportDatasource, isExtension).write(outputStream);
+        writeExcelFile(currencyReportDatasource, isExtension).write(outputStream);
         return outputStream.toByteArray();
 
     }
 
-    public Workbook excelMakerr(CurrencyReportDatasource currencyReportDatasource, boolean isExtension) {
+    public Workbook writeExcelFile(CurrencyReportDatasource currencyReportDatasource, boolean isExtension) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet(SHEET_NAME);
         Row row = sheet.createRow(0);
         row.createCell(0).setCellValue("Name");
         row.createCell(1).setCellValue("Code");
         row.createCell(2).setCellValue("Mid");
-        for (int i = 0; i < currencyReportDatasource.dataSourceSize(); i++) {
+        int dataSourceSize = currencyReportDatasource.dataSourceSize();
+        for (int i = 0; i < dataSourceSize; i++) {
             Row rows = sheet.createRow(i + 1);
             CurrencyReportCurrencies currencyReportCurrencies = currencyReportDatasource.currencyByIndex(i);
             rows.createCell(0).setCellValue(currencyReportCurrencies.name());
