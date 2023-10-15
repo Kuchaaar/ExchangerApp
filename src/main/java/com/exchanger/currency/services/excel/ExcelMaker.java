@@ -16,8 +16,8 @@ public class ExcelMaker {
         this.excelGenerator = excelGenerator;
     }
 
-    public byte[] generateExcel(ReportPeriod reportPeriod) throws IOException, NoDataException{
-            return excelGenerator.generateExcelWorkbook(new CurrencyReportDatasource(
+    public byte[] excelFileFromReportPeriod(ReportPeriod reportPeriod) throws IOException, NoDataException{
+            return excelGenerator.excelFileToByteArray(new CurrencyReportDatasource(
                     currencyRepository
                             .findByDates(reportPeriod.startDate(), reportPeriod.endDate())
                             .stream()
@@ -26,9 +26,9 @@ public class ExcelMaker {
             ),false);
     }
 
-    public byte[] generateExcelByCurrency(CurrencyReportPeriod currencyReportPeriod, boolean isExtension)
+    public byte[] excelFileFromCurrencyReportPeriod(CurrencyReportPeriod currencyReportPeriod, boolean isExtension)
             throws IOException, NoDataException{
-        return excelGenerator.generateExcelWorkbook(new CurrencyReportDatasource(
+        return excelGenerator.excelFileToByteArray(new CurrencyReportDatasource(
                 currencyRepository
                         .findCurrencyByDates(
                                 currencyReportPeriod.reportPeriod().startDate(),
