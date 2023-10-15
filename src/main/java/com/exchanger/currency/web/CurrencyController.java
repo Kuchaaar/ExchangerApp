@@ -32,20 +32,20 @@ public class CurrencyController {
 
     @PostMapping(value = "/dane", produces = "application/octet-stream")
     public byte[] excelResponse(@RequestBody ReportPeriod reportPeriod) throws IOException, NoDataException{
-        return excelMaker.generateExcel(reportPeriod);
+        return excelMaker.excelFileFromReportPeriod(reportPeriod);
     }
 
     @PostMapping(value = "/currency", produces = "application/octet-stream")
     public byte[] oneCurrencyExcelResponse(@RequestBody CurrencyReportPeriod currencyReportPeriod)
             throws IOException, NoDataException{
-        return excelMaker.generateExcelByCurrency(currencyReportPeriod, false);
+        return excelMaker.excelFileFromCurrencyReportPeriod(currencyReportPeriod, false);
     }
 
 
     @PostMapping(value = "/currency/extensions", produces = "application/octet-stream")
     public byte[] oneCurrencyExcelResponseWithExtensions(@RequestBody CurrencyReportPeriod currencyReportPeriod)
             throws IOException, NoDataException{
-        return excelMaker.generateExcelByCurrency(currencyReportPeriod, true);
+        return excelMaker.excelFileFromCurrencyReportPeriod(currencyReportPeriod, true);
     }
 
     @GetMapping("/daty") public List<LocalDate> getLocalDates(){
@@ -70,6 +70,7 @@ public class CurrencyController {
     @PostMapping("/cos")
     public List<CurrencyFromStartDateAndEndDate> testowe(@RequestBody
                                                          FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
-        return currencyService.testowaMetoda(findCurrencyWithHighestRatePercentageChangeRequest.startDate(), findCurrencyWithHighestRatePercentageChangeRequest.endDate());
+        return currencyService.testowaMetoda(findCurrencyWithHighestRatePercentageChangeRequest.startDate(),
+                findCurrencyWithHighestRatePercentageChangeRequest.endDate());
     }
 }
