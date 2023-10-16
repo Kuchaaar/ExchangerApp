@@ -78,6 +78,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
                         .addValue("endDate", endDate),
                 (rs, rowNum) -> new CurrencyFromStartDateAndEndDate(
                         new Currency(
+                                rs.getLong("currency_id"),
                                 rs.getString("currency"),
                                 rs.getString("code"),
                                 rs.getBigDecimal("mid"),
@@ -85,6 +86,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
                         ),
 
                         new Currency(
+                                rs.getLong("currency_id"),
                                 rs.getString("currency"),
                                 rs.getString("code"),
                                 rs.getBigDecimal("mid"),

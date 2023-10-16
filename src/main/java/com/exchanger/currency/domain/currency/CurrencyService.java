@@ -1,6 +1,8 @@
 package com.exchanger.currency.domain.currency;
 
 import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
+import com.exchanger.currency.services.currencychange.FindCurrencyWithHighestRatePercentageChangeRequest;
+import com.exchanger.currency.services.currencychange.FindCurrencyWithHighestRatePercentageChangeResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,7 +26,12 @@ public class CurrencyService {
     public List<LocalDate> avilableDatesForCurrency(String code){
         return currencyRepository.availableDatesForCurrency(code);
     }
-    public List<CurrencyFromStartDateAndEndDate> testowaMetoda(LocalDate startDate, LocalDate endDate){
+    public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChange(
+            FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
+        return FindCurrencyWithHighestRatePercentageChangeResponse.from(findCurrenciesFromStartDateAndEndDate(findCurrencyWithHighestRatePercentageChangeRequest.startDate(),
+                findCurrencyWithHighestRatePercentageChangeRequest.endDate()));
+    }
+    private List<CurrencyFromStartDateAndEndDate> findCurrenciesFromStartDateAndEndDate(LocalDate startDate, LocalDate endDate){
         return currencyRepository.findCurrencyFromStartDateAndEndDate(startDate,endDate);
     }
 }

@@ -13,13 +13,20 @@ public class Currency{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "currency_id")
     private Long id;
-    private String currency;
+    private String name;
     private String code;
     private BigDecimal mid;
     private LocalDate date;
 
-    public Currency(String currency, String code, BigDecimal mid, LocalDate date){
-        this.currency = currency;
+    public Currency(String name, String code, BigDecimal mid, LocalDate date){
+        this.name = name;
+        this.code = code;
+        this.mid = mid;
+        this.date = date;
+    }
+    public Currency(Long id, String name, String code, BigDecimal mid, LocalDate date){
+        this.id = id;
+        this.name = name;
         this.code = code;
         this.mid = mid;
         this.date = date;
@@ -37,12 +44,12 @@ public class Currency{
         this.id = id;
     }
 
-    public String getCurrency(){
-        return currency;
+    public String getName(){
+        return name;
     }
 
-    public void setCurrency(String currency){
-        this.currency = currency;
+    public void setName(String currency){
+        this.name = currency;
     }
 
     public String getCode(){

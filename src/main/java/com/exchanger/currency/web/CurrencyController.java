@@ -2,8 +2,6 @@ package com.exchanger.currency.web;
 
 import com.exchanger.currency.domain.currency.CurrencyService;
 import com.exchanger.currency.domain.exceptions.NoDataException;
-import com.exchanger.currency.services.currencychange.CurrencyChangeService;
-import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import com.exchanger.currency.services.currencychange.FindCurrencyWithHighestRatePercentageChangeRequest;
 import com.exchanger.currency.services.currencychange.FindCurrencyWithHighestRatePercentageChangeResponse;
 import com.exchanger.currency.services.excel.CurrencyReportPeriod;
@@ -20,14 +18,11 @@ import java.util.List;
 public class CurrencyController {
     private final CurrencyService currencyService;
     private final ExcelMaker excelMaker;
-    private final CurrencyChangeService currencyChangeService;
 
     public CurrencyController(CurrencyService currencyService,
-                              ExcelMaker excelMaker,
-                              CurrencyChangeService currencyChangeService){
+                              ExcelMaker excelMaker){
         this.currencyService = currencyService;
         this.excelMaker = excelMaker;
-        this.currencyChangeService = currencyChangeService;
     }
 
     @PostMapping(value = "/dane", produces = "application/octet-stream")
@@ -60,17 +55,9 @@ public class CurrencyController {
         return currencyService.avilableDatesForCurrency(currencyCode);
     }
 
-    @PostMapping("/currency/change")
-    public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChange(@RequestBody
-                                                                                                           FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
-        return currencyChangeService.findCurrencyWithHighestRatePercentageChange(
-                findCurrencyWithHighestRatePercentageChangeRequest);
-    }
-
     @PostMapping("/cos")
-    public List<CurrencyFromStartDateAndEndDate> testowe(@RequestBody
+    public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChangeResponse(@RequestBody
                                                          FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
-        return currencyService.testowaMetoda(findCurrencyWithHighestRatePercentageChangeRequest.startDate(),
-                findCurrencyWithHighestRatePercentageChangeRequest.endDate());
+        return currencyService.findCurrencyWithHighestRatePercentageChange(findCurrencyWithHighestRatePercentageChangeRequest);
     }
 }
