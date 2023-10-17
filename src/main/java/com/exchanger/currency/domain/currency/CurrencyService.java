@@ -29,7 +29,7 @@ public class CurrencyService {
     public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChange(
             FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
         return FindCurrencyWithHighestRatePercentageChangeResponse.from(findCurrenciesFromStartDateAndEndDate(findCurrencyWithHighestRatePercentageChangeRequest.startDate(),
-                findCurrencyWithHighestRatePercentageChangeRequest.endDate()));
+                findCurrencyWithHighestRatePercentageChangeRequest.endDate()),findCurrencyWithHighestRatePercentageChangeRequest.number());
     }
     private List<CurrencyFromStartDateAndEndDate> findCurrenciesFromStartDateAndEndDate(LocalDate startDate, LocalDate endDate){
         return currencyRepository.findCurrencyFromStartDateAndEndDate(startDate,endDate);
