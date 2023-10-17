@@ -14,11 +14,22 @@ public interface CurrencyRepositoryJPA extends JpaRepository<Currency, Long> {
 
     @Query("SELECT DISTINCT(c.date) FROM Currency c")
     List<LocalDate> findDistinctByDate();
+
     @Query("SELECT DISTINCT(c.code) FROM Currency c")
     List<String> findDistinctByCode();
+
     @Query("SELECT DISTINCT(c.date) FROM Currency c WHERE c.code = :code")
-    List<LocalDate> findDistinctByDateByCode(@Param("code")String code);
-    @Query("SELECT NEW com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate(c1, c2) FROM Currency c1, Currency c2 WHERE c1.code = c2.code AND c1.date = :startDate AND c2.date = :endDate")
+    List<LocalDate> findDistinctByDateByCode(@Param("code") String code);
+
+    @Query("SELECT NEW com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate(c1, c2) " +
+            "FROM Currency c1 " +
+            "LEFT JOIN Currency c2 ON c1.code = c2.code AND c2.date = :endDate " +
+            "WHERE c1.date = :startDate " +
+            "UNION " +
+            "SELECT NEW com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate(c1, c2) " +
+            "FROM Currency c1 " +
+            "RIGHT JOIN Currency c2 ON c1.code = c2.code AND c1.date = :startDate " +
+            "WHERE c2.date = :endDate")
     List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate, LocalDate endDate);
 
     List<Currency> findAllByDate(LocalDate date);

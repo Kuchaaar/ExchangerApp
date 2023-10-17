@@ -12,9 +12,9 @@ public record CurrencyCodeWithPercentage(String currencyCode, BigDecimal percent
                 );
     }
     private static BigDecimal getPercentageChange(CurrencyFromStartDateAndEndDate currencyFromStartDateAndEndDate){
-        return (currencyFromStartDateAndEndDate.currencyFromStartDate().getMid()
+        return (currencyFromStartDateAndEndDate.currencyFromEndDate().getMid()
                 .multiply(BigDecimal.valueOf(100.0))
-                .divide(currencyFromStartDateAndEndDate.currencyFromEndDate().getMid(), RoundingMode.UP)
+                .divide(currencyFromStartDateAndEndDate.currencyFromStartDate().getMid(), RoundingMode.UP)
                 .subtract((BigDecimal.valueOf(100.0))))
                 .setScale(2,RoundingMode.UP);
     }
