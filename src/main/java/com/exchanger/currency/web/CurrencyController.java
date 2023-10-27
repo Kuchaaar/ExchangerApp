@@ -1,7 +1,6 @@
 package com.exchanger.currency.web;
 
 import com.exchanger.currency.domain.currency.CurrencyService;
-import com.exchanger.currency.domain.exceptions.NoDataException;
 import com.exchanger.currency.services.currencychange.FindCurrencyWithHighestRatePercentageChangeRequest;
 import com.exchanger.currency.services.currencychange.FindCurrencyWithHighestRatePercentageChangeResponse;
 import com.exchanger.currency.services.excel.CurrencyReportPeriod;
@@ -25,39 +24,39 @@ public class CurrencyController {
         this.excelMaker = excelMaker;
     }
 
-    @PostMapping(value = "/dane", produces = "application/octet-stream")
-    public byte[] excelResponse(@RequestBody ReportPeriod reportPeriod) throws IOException, NoDataException{
+    @PostMapping(value = "/excel/currency/all", produces = "application/octet-stream")
+    public byte[] excelResponse(@RequestBody ReportPeriod reportPeriod) throws IOException{
         return excelMaker.excelFileFromReportPeriod(reportPeriod);
     }
 
-    @PostMapping(value = "/currency", produces = "application/octet-stream")
+    @PostMapping(value = "/excel/currency/by_one", produces = "application/octet-stream")
     public byte[] oneCurrencyExcelResponse(@RequestBody CurrencyReportPeriod currencyReportPeriod)
-            throws IOException, NoDataException{
+            throws IOException{
         return excelMaker.excelFileFromCurrencyReportPeriod(currencyReportPeriod, false);
     }
 
 
-    @PostMapping(value = "/currency/extensions", produces = "application/octet-stream")
+    @PostMapping(value = "/excel/currency/extensions", produces = "application/octet-stream")
     public byte[] oneCurrencyExcelResponseWithExtensions(@RequestBody CurrencyReportPeriod currencyReportPeriod)
-            throws IOException, NoDataException{
+            throws IOException{
         return excelMaker.excelFileFromCurrencyReportPeriod(currencyReportPeriod, true);
     }
 
-    @GetMapping("/daty") public List<LocalDate> getLocalDates(){
+    @GetMapping("/available_dates") public List<LocalDate> getLocalDates(){
         return currencyService.availableDates();
     }
 
-    @GetMapping("/code") public List<String> getCurrencyCodes(){
+    @GetMapping("/available_codes") public List<String> getCurrencyCodes(){
         return currencyService.availableCodes();
     }
 
-    @PostMapping("/date/currency") public List<LocalDate> findLocalDatesForCurrency(@RequestBody String currencyCode){
-        return currencyService.avilableDatesForCurrency(currencyCode);
+    @PostMapping("/available_dates/currency") public List<LocalDate> findLocalDatesForCurrency(@RequestBody String currencyCode){
+        return currencyService.availableDatesForCurrency(currencyCode);
     }
 
-    @PostMapping("/cos")
+    @PostMapping("/currency/highest_rate_percentage_change")
     public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChangeResponse(@RequestBody
-                                                         FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
+                                                                                                                   FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
         return currencyService.findCurrencyWithHighestRatePercentageChange(findCurrencyWithHighestRatePercentageChangeRequest);
     }
 }

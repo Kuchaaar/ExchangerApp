@@ -23,7 +23,7 @@ public class CurrencyService {
     public List<String> availableCodes(){
         return currencyRepository.availableCodes();
     }
-    public List<LocalDate> avilableDatesForCurrency(String code){
+    public List<LocalDate> availableDatesForCurrency(String code){
         return currencyRepository.availableDatesForCurrency(code);
     }
     public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChange(
