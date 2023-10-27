@@ -52,6 +52,7 @@ public class CurrencyController {
 
     @PostMapping("/available_dates/currency") public List<LocalDate> findLocalDatesForCurrency(@RequestBody String currencyCode){
         return currencyService.availableDatesForCurrency(currencyCode);
+
     }
 
     @PostMapping("/currency/highest_rate_percentage_change")
