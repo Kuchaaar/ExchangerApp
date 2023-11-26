@@ -13,12 +13,12 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-
 class CurrencyUpdaterTest {
 
     private static final LocalDate EFFECTIVE_DATE_1 = LocalDate.parse("2023-05-01");
@@ -38,7 +38,7 @@ class CurrencyUpdaterTest {
     private CurrencyUpdater currencyUpdater;
 
     @BeforeEach
-    public void setup(){
+    void setup(){
         MockitoAnnotations.openMocks(this);
         currencyRepository = new InMemoryCurrencyRepository();
         currencyUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
@@ -60,8 +60,7 @@ class CurrencyUpdaterTest {
         )));
     }
 
-    @Test
-    void updateWithoutTopCountTest(){
+    @Test void updateWithoutTopCountTest(){
 //      given
         String table = "example_table";
         when(currencyClient.getByTable(table)).thenReturn(mockCurrenciesResponse());
@@ -93,7 +92,8 @@ class CurrencyUpdaterTest {
     }
 
     private List<Currency> sortedByCurrencyName(List<Currency> currencies){
-        return null;
+        currencies.sort(Comparator.comparing(Currency::getCurrency));
+        return currencies;
     }
 
     private static CurrenciesResponse aCurrenciesResponse(String effectiveDate,

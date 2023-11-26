@@ -11,26 +11,26 @@ import java.time.format.DateTimeFormatter;
 public class Scheduler {
     private final DatabaseChecker databaseChecker;
     private final HolidaysRepository holidaysRepository;
-    private final ScheduledUpdated sheduled;
+    private final ScheduledUpdated scheduledUpdated;
 
     public Scheduler(
-            DatabaseChecker databaseChecker, HolidaysRepository holidaysRepository, ScheduledUpdated sheduled){
+            DatabaseChecker databaseChecker, HolidaysRepository holidaysRepository, ScheduledUpdated scheduledUpdated){
         this.databaseChecker = databaseChecker;
         this.holidaysRepository = holidaysRepository;
-        this.sheduled = sheduled;
+        this.scheduledUpdated = scheduledUpdated;
     }
 
     @Scheduled(cron = "0 0 22 ? * MON-FRI")
     public void currencyRun(){
         LocalDate now = LocalDate.now();
         if(! isHoliday(now) && !databaseChecker.ifDateInDatabase(now)){
-            sheduled.currencyUpdate();
+            scheduledUpdated.currencyUpdate();
         }
     }
 
     @Scheduled(cron = "0 0 2 1 1 *")
     public void holidaysRun(){
-        sheduled.holidaysUpdate();
+        scheduledUpdated.holidaysUpdate();
     }
 
     private boolean isHoliday(LocalDate date){

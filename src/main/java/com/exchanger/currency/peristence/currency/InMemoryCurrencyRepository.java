@@ -41,10 +41,13 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<Currency> findByDate(LocalDate date){
-        return currencies.stream()
-                .filter(currency -> currency.getDate().equals(date))
-                .toList();
+    public boolean isDateInData(LocalDate date){
+        for (Currency currency : currencies) {
+            if (currency.getDate().isEqual(date)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

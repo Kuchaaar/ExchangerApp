@@ -27,7 +27,7 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
             "INSERT INTO currency (currency,code,mid,date) VALUES (:currency,:code,:mid,:date)";
     private static final String FIND_ALL_CURRENCY_QUERY = "SELECT * from currency";
     private static final String AVAILABLE_DATA_DISTINCT = "SELECT DISTINCT date FROM currency";
-    private static final String FIND_BY_DATE = "SELECT * from currency WHERE date = :date";
+    private static final String IS_DATE_EXIST = "SELECT COUNT(*) > 0 FROM Currency WHERE date=:date";
     private static final String FIND_BY_DATES = "SELECT * from currency WHERE date BETWEEN :date1 AND :date2";
     private static final String FIND_CURRENCY_BY_DATES
 
@@ -106,9 +106,10 @@ public class DatabaseCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<Currency> findByDate(LocalDate date){
-        return jdbcTemplate.query(FIND_BY_DATE, new MapSqlParameterSource("date", date),
-                (rs, rowNum) -> mapToCurrency(rs));
+    public boolean isDateInData(LocalDate date){
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(IS_DATE_EXIST,
+                new MapSqlParameterSource("date", date),
+                Boolean.class));
     }
 
     @Override

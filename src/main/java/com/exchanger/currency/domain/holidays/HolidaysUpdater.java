@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component public class HolidaysUpdater {
+@Component
+public class HolidaysUpdater {
     private final HolidaysClient holidaysClient;
     private final HolidaysRepository holidaysRepository;
 
