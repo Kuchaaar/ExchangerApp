@@ -19,10 +19,10 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(corsProperties.getAllowedApi());
-        config.setAllowedMethods(corsProperties.getAllowedMethods());
-        config.setAllowedHeaders(corsProperties.getAllowedHeaders());
-        config.setAllowCredentials(corsProperties.isAllowCredentials());
+        config.setAllowedOrigins(corsProperties.allowedApi());
+        config.setAllowedMethods(corsProperties.allowedMethods());
+        config.setAllowedHeaders(corsProperties.allowedHeaders());
+        config.setAllowCredentials(corsProperties.allowCredentials());
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
