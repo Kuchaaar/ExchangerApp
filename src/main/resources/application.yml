@@ -29,7 +29,7 @@ repository:
         enable: false
 fetchDataOnStartup: true
 exchanger:
-  allowedApi: http://localhost,null
-  allowedMethods: GET,POST,PUT,DELETE
-  allowedHeaders: Content-Type
+  allowedApi: http://google.com/,null
+  allowedMethods: GET,POST,PUT,DELETE,OPTIONS
+  allowedHeaders: "*"
   allowCredentials: true
