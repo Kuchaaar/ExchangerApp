@@ -11,7 +11,7 @@ public interface CurrencyRepository {
 
     List<Currency> findByDates(LocalDate date1, LocalDate date2);
 
-    List<Currency> findByDate(LocalDate date);
+    boolean isDateInData(LocalDate date);
 
     List<LocalDate> availableDates();
 

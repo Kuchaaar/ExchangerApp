@@ -43,8 +43,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<Currency> findByDate(LocalDate date){
-        return currencyRepositoryJPA.findAllByDate(date);
+    public boolean isDateInData(LocalDate date){
+        return currencyRepositoryJPA.isDateInData(date);
     }
 
     @Override

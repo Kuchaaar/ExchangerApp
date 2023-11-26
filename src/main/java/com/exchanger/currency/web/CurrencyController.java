@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost")
 @RestController
 public class CurrencyController {
     private final CurrencyService currencyService;

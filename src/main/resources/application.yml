@@ -28,3 +28,8 @@ repository:
       mock:
         enable: false
 fetchDataOnStartup: true
+exchanger:
+  allowedApi: http://localhost,null
+  allowedMethods: GET,POST,PUT,DELETE
+  allowedHeaders: Content-Type
+  allowCredentials: true

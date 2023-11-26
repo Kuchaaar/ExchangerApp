@@ -21,6 +21,6 @@ public class DatabaseChecker {
     }
 
     public boolean ifDateInDatabase(LocalDate actualizationDate){
-        return ! currencyRepository.findByDate(actualizationDate).isEmpty();
+        return currencyRepository.isDateInData(actualizationDate);
     }
 }

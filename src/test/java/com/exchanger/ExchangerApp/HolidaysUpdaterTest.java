@@ -28,7 +28,7 @@ class HolidaysUpdaterTest {
     private HolidaysUpdater holidaysUpdater;
 
     @BeforeEach
-    public void setup(){
+    void setup(){
         MockitoAnnotations.openMocks(this);
         holidaysRepository = new InMemoryHolidaysRepository();
         holidaysUpdater = new HolidaysUpdater(holidaysClient, holidaysRepository);
