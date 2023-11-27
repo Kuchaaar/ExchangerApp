@@ -33,7 +33,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
 
     }
 
-    @Override public List<String> availableCodes(){
+    @Override
+    public List<String> availableCodes(){
         return currencyRepositoryJPA.findDistinctByCode();
     }
 
