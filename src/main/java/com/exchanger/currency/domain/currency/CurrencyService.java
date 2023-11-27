@@ -18,28 +18,41 @@ public class CurrencyService {
     public CurrencyService(CurrencyRepository currencyRepository){
         this.currencyRepository = currencyRepository;
     }
+
     @Cacheable("availableDates")
     public List<LocalDate> availableDates(){
         return currencyRepository.availableDates();
     }
+
     @Cacheable("availableCodes")
     public List<String> availableCodes(){
         return currencyRepository.availableCodes();
     }
+
     @Cacheable("availableDatesForCurrency")
     public List<LocalDate> availableDatesForCurrency(String code){
         return currencyRepository.availableDatesForCurrency(code);
     }
+
     @Cacheable("findCurrencyWithHighestRatePercentageChange")
     public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChange(
             FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
-        return FindCurrencyWithHighestRatePercentageChangeResponse.from(findCurrenciesFromStartDateAndEndDate(findCurrencyWithHighestRatePercentageChangeRequest.startDate(),
-                findCurrencyWithHighestRatePercentageChangeRequest.endDate()),findCurrencyWithHighestRatePercentageChangeRequest.number());
+        return FindCurrencyWithHighestRatePercentageChangeResponse.from(findCurrenciesFromStartDateAndEndDate(
+                        findCurrencyWithHighestRatePercentageChangeRequest.startDate(),
+                        findCurrencyWithHighestRatePercentageChangeRequest.endDate()),
+                findCurrencyWithHighestRatePercentageChangeRequest.number());
     }
+
     @Scheduled(cron = "0 0 22 ? * MON-FRI")
-    @CacheEvict(cacheNames = {"availableDates", "availableCodes", "availableDatesForCurrency", "findCurrencyWithHighestRatePercentageChange"}, allEntries = true)
-    public void clearCache() {}
-    private List<CurrencyFromStartDateAndEndDate> findCurrenciesFromStartDateAndEndDate(LocalDate startDate, LocalDate endDate){
-        return currencyRepository.findCurrencyFromStartDateAndEndDate(startDate,endDate);
+    @CacheEvict(cacheNames = {"availableDates",
+            "availableCodes",
+            "availableDatesForCurrency",
+            "findCurrencyWithHighestRatePercentageChange"}, allEntries = true)
+    public void clearCache(){
+    }
+
+    private List<CurrencyFromStartDateAndEndDate> findCurrenciesFromStartDateAndEndDate(LocalDate startDate,
+                                                                                        LocalDate endDate){
+        return currencyRepository.findCurrencyFromStartDateAndEndDate(startDate, endDate);
     }
 }
