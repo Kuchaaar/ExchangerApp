@@ -38,5 +38,4 @@ public class ScheduledUpdated {
         int year = LocalDate.now().getYear();
         holidaysUpdater.update(year);
     }
-
 }
