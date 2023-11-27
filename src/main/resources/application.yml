@@ -29,7 +29,9 @@ repository:
         enable: false
 fetchDataOnStartup: true
 exchanger:
-  allowedApi: http://google.com/,null
+  allowedApi: http://google.com:[*]
   allowedMethods: GET,POST,PUT,DELETE,OPTIONS
   allowedHeaders: "*"
   allowCredentials: true
+  exposedHeaders: "*"
+  maxAge: 36000

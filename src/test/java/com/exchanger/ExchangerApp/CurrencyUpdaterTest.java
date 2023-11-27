@@ -13,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -60,7 +59,8 @@ class CurrencyUpdaterTest {
         )));
     }
 
-    @Test void updateWithoutTopCountTest(){
+    @Test
+    void updateWithoutTopCountTest(){
 //      given
         String table = "example_table";
         when(currencyClient.getByTable(table)).thenReturn(mockCurrenciesResponse());

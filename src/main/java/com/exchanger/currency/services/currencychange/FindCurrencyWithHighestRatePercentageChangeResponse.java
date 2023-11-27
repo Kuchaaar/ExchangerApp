@@ -8,21 +8,25 @@ public record FindCurrencyWithHighestRatePercentageChangeResponse(
         List<CurrencyCodeWithPercentageError> currencyCodeWithPercentageErrors) {
 
 
-    public static FindCurrencyWithHighestRatePercentageChangeResponse from(List<CurrencyFromStartDateAndEndDate> currencyFromStartDateAndEndDates, int number){
+    public static FindCurrencyWithHighestRatePercentageChangeResponse from(List<CurrencyFromStartDateAndEndDate> currencyFromStartDateAndEndDates,
+                                                                           int number){
         List<CurrencyCodeWithPercentage> currencyCodeWithPercentages = new ArrayList<>();
         List<CurrencyCodeWithPercentageError> globalCurrencyCodeWithPercentageErrors = new ArrayList<>();
         for(CurrencyFromStartDateAndEndDate currencyFromStartDateAndEndDate : currencyFromStartDateAndEndDates){
-            List<CurrencyCodeWithPercentageError> currencyCodeWithPercentageErrors = aErrors(currencyFromStartDateAndEndDate);
+            List<CurrencyCodeWithPercentageError> currencyCodeWithPercentageErrors =
+                    aErrors(currencyFromStartDateAndEndDate);
             if(currencyCodeWithPercentageErrors.isEmpty()){
                 currencyCodeWithPercentages.add(CurrencyCodeWithPercentage.from(currencyFromStartDateAndEndDate));
-            }
-            else{
+            }else{
                 globalCurrencyCodeWithPercentageErrors.addAll(currencyCodeWithPercentageErrors);
             }
         }
-        return new FindCurrencyWithHighestRatePercentageChangeResponse(numberOfCurrencyCodeWithPercentages(currencyCodeWithPercentages,number),
+        return new FindCurrencyWithHighestRatePercentageChangeResponse(numberOfCurrencyCodeWithPercentages(
+                currencyCodeWithPercentages,
+                number),
                 globalCurrencyCodeWithPercentageErrors);
     }
+
     private static List<CurrencyCodeWithPercentageError> aErrors(CurrencyFromStartDateAndEndDate currencyFromStartDateAndEndDate){
         List<CurrencyCodeWithPercentageError> currencyCodeWithPercentageErrors = new ArrayList<>();
         if(currencyFromStartDateAndEndDate.currencyFromStartDate() == null){
@@ -39,14 +43,15 @@ public record FindCurrencyWithHighestRatePercentageChangeResponse(
         }
         return currencyCodeWithPercentageErrors;
     }
-    private static List<CurrencyCodeWithPercentage> numberOfCurrencyCodeWithPercentages(List<CurrencyCodeWithPercentage> currencyCodeWithPercentages, int number){
+
+    private static List<CurrencyCodeWithPercentage> numberOfCurrencyCodeWithPercentages(List<CurrencyCodeWithPercentage> currencyCodeWithPercentages,
+                                                                                        int number){
         currencyCodeWithPercentages.sort((c1, c2) -> Double.compare(c2.percentageChange().doubleValue(),
                 c1.percentageChange().doubleValue()));
-        if(currencyCodeWithPercentages.size()<number){
+        if(currencyCodeWithPercentages.size() < number){
             return currencyCodeWithPercentages;
-        }
-        else{
-            return currencyCodeWithPercentages.subList(0,number);
+        }else{
+            return currencyCodeWithPercentages.subList(0, number);
         }
     }
 }
