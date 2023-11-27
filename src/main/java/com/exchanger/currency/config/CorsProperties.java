@@ -8,6 +8,8 @@ public record CorsProperties(
         List<String> allowedApi,
         List<String> allowedMethods,
         List<String> allowedHeaders,
-        boolean allowCredentials
+        boolean allowCredentials,
+        List<String> exposedHeader,
+        Long maxAge
 ) {
 }
