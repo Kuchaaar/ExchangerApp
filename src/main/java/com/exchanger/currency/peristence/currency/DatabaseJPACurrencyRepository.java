@@ -30,7 +30,6 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
                 .map(Currency::from)
                 .toList();
         currencyRepositoryJPA.saveAll(currencies);
-
     }
 
     @Override

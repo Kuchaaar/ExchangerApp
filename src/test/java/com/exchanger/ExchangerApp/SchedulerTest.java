@@ -66,7 +66,7 @@ class SchedulerTest {
         when(databaseChecker.ifDateInDatabase(now)).thenReturn(true);
         //when
         scheduler.currencyRun();
-        //thhen
+        //then
         verify(scheduledUpdated, never()).currencyUpdate();
     }
 

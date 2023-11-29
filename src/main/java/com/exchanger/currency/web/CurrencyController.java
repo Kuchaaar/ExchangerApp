@@ -35,7 +35,10 @@ public class CurrencyController {
     }
 
     @PostMapping("/currency/highest_rate_percentage_change")
-    public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChangeResponse(@RequestBody FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
-        return currencyService.findCurrencyWithHighestRatePercentageChange(findCurrencyWithHighestRatePercentageChangeRequest);
+    public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChangeResponse(
+            @RequestBody
+            FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
+        return currencyService.findCurrencyWithHighestRatePercentageChange(
+                findCurrencyWithHighestRatePercentageChangeRequest);
     }
 }

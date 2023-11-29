@@ -34,14 +34,15 @@ class CorsConfigTest {
                         .header("Access-Control-Request-Headers", "*"))
                 .andReturn();
         //then
-        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
-        assertEquals("http://google.com", mvcResult.getResponse().getHeader("Access-Control-Allow-Origin"));
-        assertEquals("GET,POST,PUT,DELETE,OPTIONS", mvcResult.getResponse().getHeader("Access-Control-Allow-Methods"));
-        assertEquals("*", mvcResult.getResponse().getHeader("Access-Control-Allow-Headers"));
-        assertEquals(Boolean.TRUE.toString(), mvcResult.getResponse().getHeader("Access-Control-Allow-Credentials"));
-    }
+            assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+            assertEquals("http://google.com", mvcResult.getResponse().getHeader("Access-Control-Allow-Origin"));
+            assertEquals("GET,POST,PUT,DELETE,OPTIONS", mvcResult.getResponse().getHeader("Access-Control-Allow-Methods"));
+            assertEquals("*", mvcResult.getResponse().getHeader("Access-Control-Allow-Headers"));
+            assertEquals(Boolean.TRUE.toString(), mvcResult.getResponse().getHeader("Access-Control-Allow-Credentials"));
+        }
+
     @Test
-    void testCorsConfigWithBadOrigin()throws Exception{
+    void testCorsConfigWithBadOrigin() throws Exception{
         //when
         MvcResult mvcResult1 = mockMvc.perform(options("/available_codes")
                         .header("Origin", "http://google.pl")
@@ -50,11 +51,12 @@ class CorsConfigTest {
                 .andReturn();
 
         //then
-        assertEquals("Invalid CORS request",mvcResult1.getResponse().getContentAsString());
+        assertEquals("Invalid CORS request", mvcResult1.getResponse().getContentAsString());
         assertEquals(HttpStatus.FORBIDDEN.value(), mvcResult1.getResponse().getStatus());
     }
+
     @Test
-    void testCorsConfigWithBadMethod()throws Exception{
+    void testCorsConfigWithBadMethod() throws Exception{
         //when
         MvcResult mvcResult2 = mockMvc.perform(options("/available_codes")
                         .header("Origin", "http://google.com")

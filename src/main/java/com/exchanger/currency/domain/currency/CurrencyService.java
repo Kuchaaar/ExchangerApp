@@ -48,8 +48,7 @@ public class CurrencyService {
             "availableCodes",
             "availableDatesForCurrency",
             "findCurrencyWithHighestRatePercentageChange"}, allEntries = true)
-    public void clearCache(){
-    }
+    public void clearCache(){}
 
     private List<CurrencyFromStartDateAndEndDate> findCurrenciesFromStartDateAndEndDate(LocalDate startDate,
                                                                                         LocalDate endDate){

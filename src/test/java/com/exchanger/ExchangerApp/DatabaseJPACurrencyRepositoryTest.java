@@ -2,22 +2,21 @@ package com.exchanger.ExchangerApp;
 
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
+import com.exchanger.currency.peristence.currency.CurrencyRepositoryJPA;
 import com.exchanger.currency.peristence.currency.DatabaseJPACurrencyRepository;
 import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
-import org.testcontainers.containers.DockerComposeContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -25,18 +24,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataJpaTest
-@Testcontainers
-@TestPropertySource(properties = {
-        "spring.datasource.url=jdbc:tc:postgresql:///testdb",
-        "spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver"
-})
-class DatabaseJPACurrencyRepositoryTest {
-
+@SpringBootTest
+class DatabaseJPACurrencyRepositoryTest{
     @Container
-    private static final DockerComposeContainer<?> dockerComposeContainer =
-            new DockerComposeContainer<>(new File("C:\\Users\\kuba_\\OneDrive\\Pulpit\\ExchangerApp\\src\\test\\java\\com\\exchanger\\ExchangerApp\\docker-compose-test.yml"))
-                    .withExposedService("postgres", 5436);
+    private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8"))
+            .withUsername("root")
+            .withPassword("root")
+            .withNetworkAliases("mysql")
+            .withDatabaseName("test");
     private static final LocalDate localDate = LocalDate.parse("2023-10-16");
     private final String currency1 = "currency1";
     private final String currency2 = "currency2";
@@ -52,17 +47,30 @@ class DatabaseJPACurrencyRepositoryTest {
             new CurrencyResponse(currency2, code2, bigDecimal2, localDate),
             new CurrencyResponse(currency3, code3, bigDecimal3, localDate)
     );
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", MY_SQL_CONTAINER::getJdbcUrl);
+        registry.add("spring.datasource.username", MY_SQL_CONTAINER::getUsername);
+        registry.add("spring.datasource.password", MY_SQL_CONTAINER::getPassword);
+    }
     @Autowired
-    private DatabaseJPACurrencyRepository repository;
+    private CurrencyRepositoryJPA currencyRepositoryJPA;
+
+    private final DatabaseJPACurrencyRepository repository = new DatabaseJPACurrencyRepository(currencyRepositoryJPA);
 
     @BeforeAll
     static void startContainer(){
-        dockerComposeContainer.start();
+        MY_SQL_CONTAINER.start();
     }
 
     @AfterAll
     static void stopContainer(){
-        dockerComposeContainer.stop();
+        MY_SQL_CONTAINER.stop();
+    }
+
+    @BeforeEach
+    void setup(){
+        currencyRepositoryJPA.deleteAll();
     }
 
     @Test
@@ -161,6 +169,6 @@ class DatabaseJPACurrencyRepositoryTest {
                 new CurrencyFromStartDateAndEndDate(
                         new Currency(currency3, code3, bigDecimal3, localDate),
                         new Currency(currency3, code3, bigDecimal3, localDate))
-        ),repository.findCurrencyFromStartDateAndEndDate(localDate,localDate));
+        ), repository.findCurrencyFromStartDateAndEndDate(localDate, localDate));
     }
 }

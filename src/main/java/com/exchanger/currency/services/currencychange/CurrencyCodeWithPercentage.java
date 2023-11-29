@@ -18,5 +18,4 @@ public record CurrencyCodeWithPercentage(String currencyCode, BigDecimal percent
                 .subtract((BigDecimal.valueOf(100.0))))
                 .setScale(2,RoundingMode.UP);
     }
-
 }
