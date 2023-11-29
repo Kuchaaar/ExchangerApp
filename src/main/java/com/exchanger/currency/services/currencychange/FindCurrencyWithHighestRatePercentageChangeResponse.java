@@ -7,7 +7,6 @@ public record FindCurrencyWithHighestRatePercentageChangeResponse(
         List<CurrencyCodeWithPercentage> currencyCodeWithPercentages,
         List<CurrencyCodeWithPercentageError> currencyCodeWithPercentageErrors) {
 
-
     public static FindCurrencyWithHighestRatePercentageChangeResponse from(List<CurrencyFromStartDateAndEndDate> currencyFromStartDateAndEndDates,
                                                                            int number){
         List<CurrencyCodeWithPercentage> currencyCodeWithPercentages = new ArrayList<>();

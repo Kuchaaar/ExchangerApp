@@ -19,7 +19,6 @@ public class ExcelGenerator {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         writeExcelFile(currencyReportDatasource, isExtension).write(outputStream);
         return outputStream.toByteArray();
-
     }
 
     public Workbook writeExcelFile(CurrencyReportDatasource currencyReportDatasource, boolean isExtension) {

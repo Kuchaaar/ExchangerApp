@@ -30,10 +30,10 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
                 .map(Currency::from)
                 .toList();
         currencyRepositoryJPA.saveAll(currencies);
-
     }
 
-    @Override public List<String> availableCodes(){
+    @Override
+    public List<String> availableCodes(){
         return currencyRepositoryJPA.findDistinctByCode();
     }
 

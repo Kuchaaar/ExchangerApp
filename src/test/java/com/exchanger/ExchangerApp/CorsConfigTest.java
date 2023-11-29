@@ -26,39 +26,45 @@ class CorsConfigTest {
     private CurrencyService currencyService;
 
     @Test
-    void testCorsConfiguration() throws Exception {
+    void testCorsConfig() throws Exception{
+        //when
         MvcResult mvcResult = mockMvc.perform(options("/available_codes")
                         .header("Origin", "http://google.com")
                         .header("Access-Control-Request-Method", "OPTIONS")
                         .header("Access-Control-Request-Headers", "*"))
                 .andReturn();
+        //then
+            assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+            assertEquals("http://google.com", mvcResult.getResponse().getHeader("Access-Control-Allow-Origin"));
+            assertEquals("GET,POST,PUT,DELETE,OPTIONS", mvcResult.getResponse().getHeader("Access-Control-Allow-Methods"));
+            assertEquals("*", mvcResult.getResponse().getHeader("Access-Control-Allow-Headers"));
+            assertEquals(Boolean.TRUE.toString(), mvcResult.getResponse().getHeader("Access-Control-Allow-Credentials"));
+        }
 
-        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
-        assertEquals("http://google.com", mvcResult.getResponse().getHeader("Access-Control-Allow-Origin"));
-        assertEquals("GET,POST,PUT,DELETE,OPTIONS", mvcResult.getResponse().getHeader("Access-Control-Allow-Methods"));
-        assertEquals("*", mvcResult.getResponse().getHeader("Access-Control-Allow-Headers"));
-        assertEquals(Boolean.TRUE.toString(), mvcResult.getResponse().getHeader("Access-Control-Allow-Credentials"));
-
-        //response with bad Origin
-
+    @Test
+    void testCorsConfigWithBadOrigin() throws Exception{
+        //when
         MvcResult mvcResult1 = mockMvc.perform(options("/available_codes")
                         .header("Origin", "http://google.pl")
                         .header("Access-Control-Request-Method", "OPTIONS")
                         .header("Access-Control-Request-Headers", "*"))
                 .andReturn();
-        assertEquals("Invalid CORS request",mvcResult1.getResponse().getContentAsString());
+
+        //then
+        assertEquals("Invalid CORS request", mvcResult1.getResponse().getContentAsString());
         assertEquals(HttpStatus.FORBIDDEN.value(), mvcResult1.getResponse().getStatus());
+    }
 
-
-        //response with bad method
-
+    @Test
+    void testCorsConfigWithBadMethod() throws Exception{
+        //when
         MvcResult mvcResult2 = mockMvc.perform(options("/available_codes")
                         .header("Origin", "http://google.com")
                         .header("Access-Control-Request-Method", "TRACE")
                         .header("Access-Control-Request-Headers", "*"))
                 .andReturn();
-        assertEquals("Invalid CORS request",mvcResult2.getResponse().getContentAsString());
+        //then
+        assertEquals("Invalid CORS request", mvcResult2.getResponse().getContentAsString());
         assertEquals(HttpStatus.FORBIDDEN.value(), mvcResult2.getResponse().getStatus());
     }
-
 }

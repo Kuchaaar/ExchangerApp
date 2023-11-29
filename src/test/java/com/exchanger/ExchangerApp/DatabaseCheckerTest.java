@@ -1,6 +1,5 @@
 package com.exchanger.ExchangerApp;
 
-import com.exchanger.currency.domain.currency.CurrencyUpdater;
 import com.exchanger.currency.integration.currency.CurrenciesResponse;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
 import com.exchanger.currency.peristence.currency.InMemoryCurrencyRepository;
@@ -13,7 +12,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DatabaseCheckerTest {
@@ -48,7 +46,7 @@ class DatabaseCheckerTest {
 
     @Test
     void ifDataInDatabase(){
-        assertTrue(databaseChecker.ifDateInDatabase(LocalDate.parse(currenciesResponse.get(0).effectiveDate())));
+        assertTrue(databaseChecker.ifDataInDatabase(currenciesResponse));
     }
 
     @Test

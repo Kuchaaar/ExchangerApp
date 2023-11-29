@@ -52,11 +52,11 @@ class CurrencyUpdaterTest {
 //      when
         currencyUpdater.update(table, topCount);
 //      then
-        assertEquals(sortedByCurrencyName(currencyRepository.findAll()), sortedByCurrencyName(List.of(
+        assertEquals(currencyRepository.findAll(), List.of(
                 aCurrency(CURRENCY_1, CURRENCY_CODE_1, MID, EFFECTIVE_DATE_1),
                 aCurrency(CURRENCY_2, CURRENCY_CODE_2, MID_2, EFFECTIVE_DATE_2),
                 aCurrency(CURRENCY_3, CURRENCY_CODE_3, MID_3, EFFECTIVE_DATE_2)
-        )));
+        ));
     }
 
     @Test
@@ -69,8 +69,11 @@ class CurrencyUpdaterTest {
 //      then
         assertEquals(sortedByCurrencyName(currencyRepository.findAll()), sortedByCurrencyName(List.of(
                 aCurrency(CURRENCY_1, CURRENCY_CODE_1, MID, EFFECTIVE_DATE_1),
+                aCurrency(CURRENCY_2, CURRENCY_CODE_2, MID_2, EFFECTIVE_DATE_1),
+                aCurrency(CURRENCY_3, CURRENCY_CODE_3, MID_3, EFFECTIVE_DATE_1),
                 aCurrency(CURRENCY_2, CURRENCY_CODE_2, MID_2, EFFECTIVE_DATE_2),
                 aCurrency(CURRENCY_3, CURRENCY_CODE_3, MID_3, EFFECTIVE_DATE_2)
+
         )));
     }
 
