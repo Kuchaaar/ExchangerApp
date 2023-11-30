@@ -20,4 +20,5 @@ public interface CurrencyRepository {
 
     List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code);
     List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate, LocalDate endDate);
+    void deleteAll();
 }

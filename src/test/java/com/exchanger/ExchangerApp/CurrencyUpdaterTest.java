@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -41,6 +42,7 @@ class CurrencyUpdaterTest {
         MockitoAnnotations.openMocks(this);
         currencyRepository = new InMemoryCurrencyRepository();
         currencyUpdater = new CurrencyUpdater(currencyClient, currencyRepository);
+        currencyRepository.deleteAll();
     }
 
     @Test
@@ -52,11 +54,13 @@ class CurrencyUpdaterTest {
 //      when
         currencyUpdater.update(table, topCount);
 //      then
-        assertEquals(currencyRepository.findAll(), List.of(
+        assertEquals(sortedByCurrencyName(currencyRepository.findAll()), sortedByCurrencyName(Arrays.asList(
                 aCurrency(CURRENCY_1, CURRENCY_CODE_1, MID, EFFECTIVE_DATE_1),
+                aCurrency(CURRENCY_2, CURRENCY_CODE_2, MID_2, EFFECTIVE_DATE_1),
+                aCurrency(CURRENCY_3, CURRENCY_CODE_3, MID_3, EFFECTIVE_DATE_1),
                 aCurrency(CURRENCY_2, CURRENCY_CODE_2, MID_2, EFFECTIVE_DATE_2),
                 aCurrency(CURRENCY_3, CURRENCY_CODE_3, MID_3, EFFECTIVE_DATE_2)
-        ));
+        )));
     }
 
     @Test
@@ -67,13 +71,12 @@ class CurrencyUpdaterTest {
 //      when
         currencyUpdater.update(table);
 //      then
-        assertEquals(sortedByCurrencyName(currencyRepository.findAll()), sortedByCurrencyName(List.of(
+        assertEquals(sortedByCurrencyName(currencyRepository.findAll()), sortedByCurrencyName(Arrays.asList(
                 aCurrency(CURRENCY_1, CURRENCY_CODE_1, MID, EFFECTIVE_DATE_1),
                 aCurrency(CURRENCY_2, CURRENCY_CODE_2, MID_2, EFFECTIVE_DATE_1),
                 aCurrency(CURRENCY_3, CURRENCY_CODE_3, MID_3, EFFECTIVE_DATE_1),
                 aCurrency(CURRENCY_2, CURRENCY_CODE_2, MID_2, EFFECTIVE_DATE_2),
                 aCurrency(CURRENCY_3, CURRENCY_CODE_3, MID_3, EFFECTIVE_DATE_2)
-
         )));
     }
 

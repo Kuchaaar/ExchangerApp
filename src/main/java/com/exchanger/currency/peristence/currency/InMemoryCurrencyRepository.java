@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @ConditionalOnProperty(
@@ -62,7 +63,7 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
     public List<Currency> findAll(){
         return currencies
                 .stream()
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -102,6 +103,11 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
         }
 
         return resultList;
+    }
+
+    @Override
+    public void deleteAll(){
+        currencies.clear();
     }
 
 }

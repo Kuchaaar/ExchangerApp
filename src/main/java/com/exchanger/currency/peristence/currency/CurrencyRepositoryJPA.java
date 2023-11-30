@@ -32,7 +32,7 @@ public interface CurrencyRepositoryJPA extends JpaRepository<Currency, Long> {
             "WHERE c2.date = :endDate")
     List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate, LocalDate endDate);
 
-    @Query("SELECT COUNT(*) > 0 FROM Currency WHERE date=:date")
+    @Query("SELECT (COUNT(*) > 0) FROM Currency WHERE date=:date")
     boolean isDateInData(LocalDate date);
 
     List<Currency> findAllByCodeAndDateBetween(String code, LocalDate startDate, LocalDate endDate);

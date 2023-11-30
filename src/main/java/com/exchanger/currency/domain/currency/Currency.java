@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "currency")
@@ -81,5 +82,34 @@ public class Currency{
                 currencyResponse.code(),
                 currencyResponse.mid(),
                 currencyResponse.date());
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o)
+            return true;
+        if(! (o instanceof Currency currency1))
+            return false;
+        return Objects.equals(getId(), currency1.getId()) &&
+                Objects.equals(getCurrency(), currency1.getCurrency()) &&
+                Objects.equals(getCode(), currency1.getCode()) &&
+                Objects.equals(getMid(), currency1.getMid()) &&
+                Objects.equals(getDate(), currency1.getDate());
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(getId(), getCurrency(), getCode(), getMid(), getDate());
+    }
+
+    @Override
+    public String toString(){
+        return "Currency{" +
+                "id=" + id +
+                ", currency='" + currency + '\'' +
+                ", code='" + code + '\'' +
+                ", mid=" + mid +
+                ", date=" + date +
+                '}';
     }
 }

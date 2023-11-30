@@ -71,4 +71,9 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
                                                                                      LocalDate endDate){
         return currencyRepositoryJPA.findCurrencyFromStartDateAndEndDate(startDate,endDate);
     }
+
+    @Override
+    public void deleteAll(){
+        currencyRepositoryJPA.deleteAll();
+    }
 }

@@ -50,7 +50,7 @@ class SchedulerTest {
     void testCurrencyRunWhenHoliday() {
         //given
         LocalDate now = LocalDate.now();
-        when(holidaysRepository.findHolidaysByYear()).thenReturn(List.of(new HolidaysResponse("2023-11-27", "Holiday")));
+        when(holidaysRepository.findHolidaysByYear()).thenReturn(List.of(new HolidaysResponse(LocalDate.now().toString(), "Holiday")));
         when(databaseChecker.ifDateInDatabase(now)).thenReturn(false);
         //when
         scheduler.currencyRun();

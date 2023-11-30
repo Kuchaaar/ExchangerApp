@@ -3,46 +3,29 @@ package com.exchanger.ExchangerApp;
 import com.exchanger.currency.domain.exceptions.NoDataException;
 import com.exchanger.currency.services.excel.CurrencyReportCurrencies;
 import com.exchanger.currency.services.excel.CurrencyReportDatasource;
-import com.exchanger.currency.services.excel.ExcelGenerator;
+import com.exchanger.currency.services.excel.WorkbookGenerator;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
 
-class ExcelGeneratorTest {
+class ExcelGeneratorTest{
 
     @Test
     void testExcelFileToByteArray() throws IOException, NoDataException{
         // given
-        CurrencyReportDatasource mockDatasource = mock(CurrencyReportDatasource.class);
-        when(mockDatasource.dataSourceSize()).thenReturn(2);
-        when(mockDatasource.currencyByIndex(0)).thenReturn(new CurrencyReportCurrencies("EUR", "EU", BigDecimal.valueOf(1.5)));
-        when(mockDatasource.currencyByIndex(1)).thenReturn(new CurrencyReportCurrencies("EUR", "EU", BigDecimal.valueOf(1.0)));
-        when(mockDatasource.averageMidPrice()).thenReturn(BigDecimal.valueOf(1.3));
-        ExcelGenerator excelGenerator = new ExcelGenerator();
-
-        // when
-        byte[] result = excelGenerator.excelFileToByteArray(mockDatasource, true);
-
+        CurrencyReportDatasource mockDatasource =
+                new CurrencyReportDatasource(List.of(new CurrencyReportCurrencies("EUR", "EU", BigDecimal.valueOf(1.5)),
+                        new CurrencyReportCurrencies("EUR", "EU", BigDecimal.valueOf(1.0))));
+        WorkbookGenerator workbookGenerator = new WorkbookGenerator();
+        Workbook workbook = new XSSFWorkbook("src/test/java/resources/response.xlsx");
         // then
-        assertArrayEquals(convertExcelToByteArray(), result);
-    }
-    private static byte[] convertExcelToByteArray() throws IOException {
-        try (
-                FileInputStream fis = new FileInputStream("src/test/java/com/exchanger/ExchangerApp/response.xlsx");
-             Workbook workbook = WorkbookFactory.create(fis);
-             ByteArrayOutputStream bos = new ByteArrayOutputStream())
-        {
-            workbook.write(bos);
-            return bos.toByteArray();
-        }
+        assertEquals(workbook,
+                workbookGenerator.writeExcelFile(mockDatasource,true));
     }
 }
