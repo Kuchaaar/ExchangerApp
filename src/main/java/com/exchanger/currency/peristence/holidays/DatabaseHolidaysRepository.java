@@ -40,7 +40,7 @@ public class DatabaseHolidaysRepository implements HolidaysRepository {
     }
 
     @Override
-    public List<HolidaysResponse> findHolidaysByYear(){
+    public List<HolidaysResponse> findAllHolidays(){
         return jdbcTemplate.query(FIND_ALL_HOLIDAY_QUERY, (rs, rowNum) -> mapToHolidays(rs));
     }
 

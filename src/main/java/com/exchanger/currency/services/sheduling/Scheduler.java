@@ -34,7 +34,7 @@ public class Scheduler {
     }
 
     private boolean isHoliday(LocalDate date){
-        return holidaysRepository.findHolidaysByYear().stream()
+        return holidaysRepository.findAllHolidays().stream()
                 .anyMatch(holidaysResponse -> {
                     LocalDate holidayDate = LocalDate.parse(holidaysResponse.date(),
                             DateTimeFormatter.ofPattern("yyyy-MM-dd"));

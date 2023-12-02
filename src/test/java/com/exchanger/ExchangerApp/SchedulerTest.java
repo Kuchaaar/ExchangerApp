@@ -38,7 +38,7 @@ class SchedulerTest {
     void testCurrencyRunWhenNotHolidayAndNotInDatabase() {
         //given
         LocalDate now = LocalDate.now();
-        when(holidaysRepository.findHolidaysByYear()).thenReturn(emptyList());
+        when(holidaysRepository.findAllHolidays()).thenReturn(emptyList());
         when(databaseChecker.ifDateInDatabase(now)).thenReturn(false);
         //when
         scheduler.currencyRun();
@@ -50,7 +50,7 @@ class SchedulerTest {
     void testCurrencyRunWhenHoliday() {
         //given
         LocalDate now = LocalDate.now();
-        when(holidaysRepository.findHolidaysByYear()).thenReturn(List.of(new HolidaysResponse(LocalDate.now().toString(), "Holiday")));
+        when(holidaysRepository.findAllHolidays()).thenReturn(List.of(new HolidaysResponse(LocalDate.now().toString(), "Holiday")));
         when(databaseChecker.ifDateInDatabase(now)).thenReturn(false);
         //when
         scheduler.currencyRun();
@@ -62,7 +62,7 @@ class SchedulerTest {
     void testCurrencyRunWhenInDatabase() {
         //given
         LocalDate now = LocalDate.now();
-        when(holidaysRepository.findHolidaysByYear()).thenReturn(emptyList());
+        when(holidaysRepository.findAllHolidays()).thenReturn(emptyList());
         when(databaseChecker.ifDateInDatabase(now)).thenReturn(true);
         //when
         scheduler.currencyRun();

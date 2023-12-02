@@ -24,7 +24,7 @@ public class InMemoryHolidaysRepository implements HolidaysRepository {
     }
 
     @Override
-    public List<HolidaysResponse> findHolidaysByYear(){
+    public List<HolidaysResponse> findAllHolidays(){
         return holidaysResponseMap.values()
                 .stream()
                 .toList();

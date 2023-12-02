@@ -47,6 +47,11 @@ class DatabaseJPACurrencyRepositoryTest{
             new CurrencyResponse(currency2, code2, bigDecimal2, localDate),
             new CurrencyResponse(currency3, code3, bigDecimal3, localDate)
     );
+    private final List<Currency> currencies = List.of(
+            new Currency(currency1,code1,bigDecimal1,localDate),
+            new Currency(currency2,code2,bigDecimal2,localDate),
+            new Currency(currency3,code3,bigDecimal3,localDate)
+    );
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", MY_SQL_CONTAINER::getJdbcUrl);
@@ -79,7 +84,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(currencyResponses.size(), repository.findAll().size());
+        assertEquals(currencies, changeId(repository.findAll()));
     }
 
     @Test
@@ -97,10 +102,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(List.of(new Currency(currency1, code1, bigDecimal1, localDate),
-                        new Currency(currency2, code2, bigDecimal2, localDate),
-                        new Currency(currency3, code3, bigDecimal3, localDate))
-                , repository.findByDates(localDate, localDate));
+        assertEquals(currencies, changeId(repository.findByDates(localDate, localDate)));
     }
 
     @Test
@@ -127,9 +129,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(List.of(new Currency(currency1, code1, bigDecimal1, localDate),
-                new Currency(currency2, code2, bigDecimal2, localDate),
-                new Currency(currency3, code3, bigDecimal3, localDate)), repository.findAll());
+        assertEquals(currencies, changeId(repository.findAll()));
     }
 
     @Test
@@ -148,7 +148,7 @@ class DatabaseJPACurrencyRepositoryTest{
 
         //then
         assertEquals(List.of(new Currency(currency1, code1, bigDecimal1, localDate)),
-                repository.findCurrencyByDates(localDate, localDate, code1));
+                changeId(repository.findCurrencyByDates(localDate, localDate, code1)));
     }
 
     @Test
@@ -169,6 +169,19 @@ class DatabaseJPACurrencyRepositoryTest{
                 new CurrencyFromStartDateAndEndDate(
                         new Currency(currency3, code3, bigDecimal3, localDate),
                         new Currency(currency3, code3, bigDecimal3, localDate))
-        ), repository.findCurrencyFromStartDateAndEndDate(localDate, localDate));
+        ), changeIdCurrencies(repository.findCurrencyFromStartDateAndEndDate(localDate, localDate)));
+    }
+    private List<Currency> changeId(List<Currency> list){
+        for(Currency currency:list){
+            currency.setId(null);
+        }
+        return list;
+    }
+    private List<CurrencyFromStartDateAndEndDate> changeIdCurrencies(List<CurrencyFromStartDateAndEndDate> list){
+        for(CurrencyFromStartDateAndEndDate currency:list){
+            currency.currencyFromStartDate().setId(null);
+            currency.currencyFromEndDate().setId(null);
+        }
+        return list;
     }
 }

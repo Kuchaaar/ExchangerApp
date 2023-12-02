@@ -42,7 +42,7 @@ class HolidaysUpdaterTest {
 //      when
         holidaysUpdater.update(year);
 //      then
-        assertEquals(sortedByHolidaysName(holidaysRepository.findHolidaysByYear()), sortedByHolidaysName(List.of(
+        assertEquals(sortedByHolidaysName(holidaysRepository.findAllHolidays()), sortedByHolidaysName(List.of(
                 aHolidaysResponse(DATE_1, NAME_1),
                 aHolidaysResponse(DATE_2, NAME_2),
                 aHolidaysResponse(DATE_3, NAME_3)

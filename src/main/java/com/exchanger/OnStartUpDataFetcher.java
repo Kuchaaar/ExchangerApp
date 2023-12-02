@@ -22,6 +22,5 @@ public class OnStartUpDataFetcher implements CommandLineRunner {
     public void run(String... args) throws Exception {
         scheduler.currencyRun();
         scheduler.holidaysRun();
-
     }
 }

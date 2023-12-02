@@ -47,6 +47,11 @@ class DatabaseJDBCCurrencyRepositoryTest{
             new CurrencyResponse(currency2, code2, bigDecimal2, localDate),
             new CurrencyResponse(currency3, code3, bigDecimal3, localDate)
     );
+    private final List<Currency> currencies = List.of(
+            new Currency(currency1,code1,bigDecimal1,localDate),
+            new Currency(currency2,code2,bigDecimal2,localDate),
+            new Currency(currency3,code3,bigDecimal3,localDate)
+            );
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", MY_SQL_CONTAINER::getJdbcUrl);
@@ -54,9 +59,10 @@ class DatabaseJDBCCurrencyRepositoryTest{
         registry.add("spring.datasource.password", MY_SQL_CONTAINER::getPassword);
     }
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private DatabaseCurrencyRepository repository;
+
 
     @BeforeEach
     void setUp() {
@@ -80,7 +86,7 @@ class DatabaseJDBCCurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(currencyResponses, repository.findAll());
+        assertEquals(currencies, repository.findAll());
     }
 
     @Test
@@ -98,10 +104,7 @@ class DatabaseJDBCCurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(List.of(new Currency(currency1, code1, bigDecimal1, localDate),
-                        new Currency(currency2, code2, bigDecimal2, localDate),
-                        new Currency(currency3, code3, bigDecimal3, localDate))
-                , repository.findByDates(localDate, localDate));
+        assertEquals(currencies, repository.findByDates(localDate, localDate));
     }
 
     @Test
@@ -128,9 +131,7 @@ class DatabaseJDBCCurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(List.of(new Currency(currency1, code1, bigDecimal1, localDate),
-                new Currency(currency2, code2, bigDecimal2, localDate),
-                new Currency(currency3, code3, bigDecimal3, localDate)), repository.findAll());
+        assertEquals(currencies, repository.findAll());
     }
 
     @Test
