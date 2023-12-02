@@ -1,4 +1,4 @@
-package com.exchanger.ExchangerApp;
+package com.exchanger.ExchangerApp.services.sheduling;
 
 import com.exchanger.currency.integration.currency.CurrenciesResponse;
 import com.exchanger.currency.integration.currency.CurrencyResponse;

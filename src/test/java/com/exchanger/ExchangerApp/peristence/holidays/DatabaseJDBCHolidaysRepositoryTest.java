@@ -1,4 +1,4 @@
-package com.exchanger.ExchangerApp;
+package com.exchanger.ExchangerApp.peristence.holidays;
 
 import com.exchanger.currency.integration.holidays.HolidaysResponse;
 import com.exchanger.currency.peristence.holidays.DatabaseHolidaysRepository;

@@ -1,4 +1,4 @@
-package com.exchanger.ExchangerApp;
+package com.exchanger.ExchangerApp.domain.holidays;
 
 import com.exchanger.currency.domain.holidays.HolidaysUpdater;
 import com.exchanger.currency.integration.holidays.HolidaysClient;

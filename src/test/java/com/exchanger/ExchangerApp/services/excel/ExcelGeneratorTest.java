@@ -1,4 +1,4 @@
-package com.exchanger.ExchangerApp;
+package com.exchanger.ExchangerApp.services.excel;
 
 import com.exchanger.currency.services.excel.CurrencyReportCurrencies;
 import com.exchanger.currency.services.excel.CurrencyReportDatasource;

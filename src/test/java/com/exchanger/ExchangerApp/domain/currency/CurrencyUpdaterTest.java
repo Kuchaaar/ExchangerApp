@@ -1,4 +1,4 @@
-package com.exchanger.ExchangerApp;
+package com.exchanger.ExchangerApp.domain.currency;
 
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyUpdater;

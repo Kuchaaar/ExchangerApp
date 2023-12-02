@@ -1,4 +1,4 @@
-package com.exchanger.ExchangerApp;
+package com.exchanger.ExchangerApp.config;
 
 import com.exchanger.currency.config.CorsConfig;
 import com.exchanger.currency.config.CorsProperties;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @WebMvcTest({CurrencyController.class, CorsConfig.class,
         CorsProperties.class})
-class CorsConfigTest {
+class CorsConfigTest{
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,12 +34,12 @@ class CorsConfigTest {
                         .header("Access-Control-Request-Headers", "*"))
                 .andReturn();
         //then
-            assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
-            assertEquals("http://google.com", mvcResult.getResponse().getHeader("Access-Control-Allow-Origin"));
-            assertEquals("GET,POST,PUT,DELETE,OPTIONS", mvcResult.getResponse().getHeader("Access-Control-Allow-Methods"));
-            assertEquals("*", mvcResult.getResponse().getHeader("Access-Control-Allow-Headers"));
-            assertEquals(Boolean.TRUE.toString(), mvcResult.getResponse().getHeader("Access-Control-Allow-Credentials"));
-        }
+        assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+        assertEquals("http://google.com", mvcResult.getResponse().getHeader("Access-Control-Allow-Origin"));
+        assertEquals("GET,POST,PUT,DELETE,OPTIONS", mvcResult.getResponse().getHeader("Access-Control-Allow-Methods"));
+        assertEquals("*", mvcResult.getResponse().getHeader("Access-Control-Allow-Headers"));
+        assertEquals(Boolean.TRUE.toString(), mvcResult.getResponse().getHeader("Access-Control-Allow-Credentials"));
+    }
 
     @Test
     void testCorsConfigWithBadOrigin() throws Exception{
