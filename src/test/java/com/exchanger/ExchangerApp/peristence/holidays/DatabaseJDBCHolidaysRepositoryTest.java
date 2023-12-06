@@ -19,7 +19,6 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,7 +41,6 @@ class DatabaseJDBCHolidaysRepositoryTest{
             new HolidaysResponse("2022-10-12", "test3")
     );
     @Autowired
-    private DataSource dataSource;
     private DatabaseHolidaysRepository repository;
 
     @DynamicPropertySource
@@ -64,8 +62,6 @@ class DatabaseJDBCHolidaysRepositoryTest{
 
     @BeforeEach
     void setUp(){
-        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        repository = new DatabaseHolidaysRepository(namedParameterJdbcTemplate);
         repository.deleteAllHolidays();
     }
 
