@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableConfigurationProperties(CorsProperties.class)
 public class ExchangerApplication {
-
     public static void main(String[] args){
         SpringApplication.run(ExchangerApplication.class, args);
     }

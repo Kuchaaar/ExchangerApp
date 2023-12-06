@@ -6,13 +6,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.6</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>com.exchanger</groupId>
     <artifactId>ExchangerApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Exchanger Application</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Exchanger app</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -30,10 +30,6 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -131,6 +127,10 @@
             <artifactId>mockserver-spring-test-listener</artifactId>
             <version>5.14.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -140,6 +140,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <defaultGoal>install</defaultGoal>
     </build>
 
 </project>
