@@ -1,4 +1,4 @@
-## Table of contest
+## Table of contents
 
 * [General info](#General-info)
 * [Requirements](#Requirements)
@@ -19,7 +19,7 @@ fetches data from the NBP API only when there are no holidays in Poland.
 |--------|--------------------------------------------|-----------------------------------------------------------------------------------|
 | `GET`  | `/available_dates`                         | Retrieve all available dates                                                      |
 | `GET`  | `/available_codes`                         | Retrieve all available codes                                                      |
-| `POST` | `/available_dates/currency`                | Retrieve all available dates for the given currency code                          |
+| `GET`  | `/available_dates/currency`                | Retrieve all available dates for the given currency code                          |
 | `POST` | `/currency/highest_rate_percentage_change` | Retrieve number of highest percent change for the given dates and number          |
 | `POST` | `/excel/currency/all`                      | Retrieve excel with all currencies for the given dates                            |
 | `POST` | `/excel/currency/by_one`                   | Retrieve excel for the given currency code and dates                              |
@@ -85,7 +85,7 @@ fetches data from the NBP API only when there are no holidays in Poland.
 1. Clone this repository
 2. Run docker
 3. Go to the root directory of the repository: ``` cd ./exchanger```
-4. Run the ```package``` Maven task ```mvn package```
+4. Run the ```package``` Maven task ```mvn clean install```
 5. Run the generated JAR file: ```java - jar <JAR-FILE>```
 
 To view the generated Swagger UI documentation go to: http://localhost:8080/swagger-ui.html

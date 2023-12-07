@@ -5,19 +5,21 @@ import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
 import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @ConditionalOnProperty(
         value = "repository.currency",
         havingValue = "memory"
 )
-public class InMemoryCurrencyRepository implements CurrencyRepository {
+public class InMemoryCurrencyRepository implements CurrencyRepository{
     private final List<Currency> currencies = new ArrayList<>();
 
 
@@ -27,11 +29,13 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<String> availableCodes(){
-        return currencies.stream()
-                .map(Currency::getCode)
-                .distinct()
-                .toList();
+    public Page<String> availableCodes(Pageable pageable){
+        long offset = pageable.getOffset();
+        long max = pageable.getOffset() + pageable.getPageSize();
+        List<String> result = currencies.stream().map(Currency::getCode).distinct().toList().subList(Math.toIntExact(
+                offset), Math.toIntExact(max));
+        int total = currencies.stream().map(Currency::getCode).distinct().toList().size();
+        return new PageImpl<>(result, pageable, total);
     }
 
     @Override
@@ -43,8 +47,8 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
 
     @Override
     public boolean isDateInData(LocalDate date){
-        for (Currency currency : currencies) {
-            if (currency.getDate().isEqual(date)) {
+        for(Currency currency : currencies){
+            if(currency.getDate().isEqual(date)){
                 return true;
             }
         }
@@ -52,27 +56,35 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<LocalDate> availableDates(){
-        return currencies.stream()
-                .map(Currency::getDate)
-                .distinct()
-                .toList();
+    public Page<LocalDate> availableDates(Pageable pageable){
+        long offset = pageable.getOffset();
+        long max = pageable.getOffset() + pageable.getPageSize();
+        int total = currencies.stream().map(Currency::getDate).distinct().toList().size();
+        List<LocalDate> result = currencies.stream().map(Currency::getDate).distinct().toList().subList(Math.toIntExact(
+                offset), Math.toIntExact(max));
+        return new PageImpl<>(result, pageable, total);
     }
 
     @Override
     public List<Currency> findAll(){
-        return currencies
-                .stream()
-                .collect(Collectors.toList());
+        return new ArrayList<>(currencies);
     }
 
     @Override
-    public List<LocalDate> availableDatesForCurrency(String code){
-        return currencies.stream()
+    public Page<LocalDate> availableDatesForCurrency(String code, Pageable pageable){
+        int total = currencies.stream()
                 .filter(currency -> currency.getCode().equals(code))
                 .map(Currency::getDate)
                 .distinct()
-                .toList();
+                .toList().size();
+        long offset = pageable.getOffset();
+        long max = pageable.getOffset() + pageable.getPageSize();
+        List<LocalDate> result = currencies.stream()
+                .filter(currency -> currency.getCode().equals(code))
+                .map(Currency::getDate)
+                .distinct()
+                .toList().subList(Math.toIntExact(offset), Math.toIntExact(max));
+        return new PageImpl<>(result, pageable, total);
     }
 
     @Override
@@ -88,14 +100,15 @@ public class InMemoryCurrencyRepository implements CurrencyRepository {
                                                                                      LocalDate endDate){
         List<CurrencyFromStartDateAndEndDate> resultList = new ArrayList<>();
 
-        for (int i = 0; i < currencies.size(); i++) {
+        for(int i = 0; i < currencies.size(); i++){
             Currency currencyStartDate = currencies.get(i);
 
-            if (currencyStartDate.getDate().isEqual(startDate)) {
-                for (int j = i + 1; j < currencies.size(); j++) {
+            if(currencyStartDate.getDate().isEqual(startDate)){
+                for(int j = i + 1; j < currencies.size(); j++){
                     Currency currencyEndDate = currencies.get(j);
 
-                    if (currencyEndDate.getDate().isEqual(endDate) && currencyStartDate.getCode().equals(currencyEndDate.getCode())) {
+                    if(currencyEndDate.getDate().isEqual(endDate) &&
+                            currencyStartDate.getCode().equals(currencyEndDate.getCode())){
                         resultList.add(new CurrencyFromStartDateAndEndDate(currencyStartDate, currencyEndDate));
                     }
                 }

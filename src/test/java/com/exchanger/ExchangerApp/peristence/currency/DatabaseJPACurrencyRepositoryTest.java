@@ -14,6 +14,9 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -22,6 +25,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -51,6 +55,7 @@ class DatabaseJPACurrencyRepositoryTest{
     private final BigDecimal bigDecimal1 = BigDecimal.valueOf(1.0);
     private final BigDecimal bigDecimal2 = BigDecimal.valueOf(10.0);
     private final BigDecimal bigDecimal3 = BigDecimal.valueOf(100.0);
+    Pageable pageable = PageRequest.of(0,100);
     private final List<CurrencyResponse> currencyResponses = List.of(
             new CurrencyResponse(currency1, code1, bigDecimal1, localDate),
             new CurrencyResponse(currency2, code2, bigDecimal2, localDate),
@@ -103,7 +108,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(List.of("ABC", "DEF", "GHI"), repository.availableCodes());
+        assertEquals(List.of("ABC", "DEF", "GHI"), repository.availableCodes(pageable).getContent());
     }
 
     @Test
@@ -128,9 +133,8 @@ class DatabaseJPACurrencyRepositoryTest{
     void availableDatesTest(){
         // when
         repository.saveAll(currencyResponses);
-
         // then
-        assertEquals(List.of(localDate), repository.availableDates());
+        assertEquals(List.of(localDate), repository.availableDates(pageable).getContent());
     }
 
     @Test
@@ -148,7 +152,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1));
+        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1,pageable).getContent());
     }
 
     @Test

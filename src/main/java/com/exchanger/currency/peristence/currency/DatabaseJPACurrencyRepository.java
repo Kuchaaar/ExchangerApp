@@ -6,6 +6,8 @@ import com.exchanger.currency.integration.currency.CurrencyResponse;
 import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -33,8 +35,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<String> availableCodes(){
-        return currencyRepositoryJPA.findDistinctByCode();
+    public Page<String> availableCodes(Pageable pageable){
+        return currencyRepositoryJPA.findDistinctByCode(pageable);
     }
 
     @Override
@@ -48,8 +50,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     }
 
     @Override
-    public List<LocalDate> availableDates(){
-        return currencyRepositoryJPA.findDistinctByDate();
+    public Page<LocalDate> availableDates(Pageable pageable){
+        return currencyRepositoryJPA.findDistinctByDate(pageable);
     }
 
     @Override
@@ -57,8 +59,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
         return currencyRepositoryJPA.findAll();
     }
 
-    @Override public List<LocalDate> availableDatesForCurrency(String code){
-        return currencyRepositoryJPA.findDistinctByDateByCode(code);
+    @Override public Page<LocalDate> availableDatesForCurrency(String code,Pageable pageable){
+        return currencyRepositoryJPA.findDistinctByDateByCode(code,pageable);
     }
 
     @Override
