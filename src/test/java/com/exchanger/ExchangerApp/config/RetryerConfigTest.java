@@ -7,14 +7,12 @@ import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpStatusCode;
 import org.mockserver.springtest.MockServerTest;
 import org.mockserver.verify.VerificationTimes;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
-import org.springframework.context.ApplicationContext;
 
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
@@ -29,12 +27,8 @@ class RetryerConfigTest{
     private HolidaysClient holidaysClient;
     private MockServerClient mockServerClient;
 
-    @Autowired
-    private ApplicationContext applicationContext;
-
     @Test
     void testRetryerAttempts(){
-        applicationContext.getBeanDefinitionCount();
         HttpRequest requestDefinition = request().withMethod("GET").withPath("/2023/PL");
         mockServerClient
                 .when(requestDefinition)

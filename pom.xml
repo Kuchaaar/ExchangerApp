@@ -56,7 +56,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>4.0.2</version>
+            <version>4.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -66,7 +66,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-            <version>4.0.2</version>
+            <version>4.0.4</version>
         </dependency>
 
         <dependency>
@@ -93,18 +93,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-            <version>3.1.5</version>
-        </dependency>
-
-
-
-
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -125,7 +114,7 @@
         <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-spring-test-listener</artifactId>
-            <version>5.14.0</version>
+            <version>5.15.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

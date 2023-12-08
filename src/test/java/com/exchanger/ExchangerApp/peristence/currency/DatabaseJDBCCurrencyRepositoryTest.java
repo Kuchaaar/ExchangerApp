@@ -3,7 +3,6 @@ package com.exchanger.ExchangerApp.peristence.currency;
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
 import com.exchanger.currency.peristence.currency.DatabaseCurrencyRepository;
-import com.exchanger.currency.peristence.holidays.DatabaseHolidaysRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,35 +53,29 @@ class DatabaseJDBCCurrencyRepositoryTest{
     private final BigDecimal bigDecimal1 = BigDecimal.valueOf(1.0);
     private final BigDecimal bigDecimal2 = BigDecimal.valueOf(10.0);
     private final BigDecimal bigDecimal3 = BigDecimal.valueOf(100.0);
-    Pageable pageable = PageRequest.of(0,100);
+    private final Pageable pageable = PageRequest.of(0, 100);
     private final List<CurrencyResponse> currencyResponses = List.of(
             new CurrencyResponse(currency1, code1, bigDecimal1, localDate),
             new CurrencyResponse(currency2, code2, bigDecimal2, localDate),
             new CurrencyResponse(currency3, code3, bigDecimal3, localDate)
     );
     private final List<Currency> currencies = List.of(
-            new Currency(currency1,code1,bigDecimal1,localDate),
-            new Currency(currency2,code2,bigDecimal2,localDate),
-            new Currency(currency3,code3,bigDecimal3,localDate)
-            );
+            new Currency(currency1, code1, bigDecimal1, localDate),
+            new Currency(currency2, code2, bigDecimal2, localDate),
+            new Currency(currency3, code3, bigDecimal3, localDate)
+    );
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    @Autowired
+    private DataSource dataSource;
+    private DatabaseCurrencyRepository repository;
+
     @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
+    static void configureProperties(DynamicPropertyRegistry registry){
         registry.add("spring.datasource.url", MY_SQL_CONTAINER::getJdbcUrl);
         registry.add("spring.datasource.username", MY_SQL_CONTAINER::getUsername);
         registry.add("spring.datasource.password", MY_SQL_CONTAINER::getPassword);
     }
-    @Autowired
-    private DataSource dataSource;
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private DatabaseCurrencyRepository repository;
 
-
-    @BeforeEach
-    void setUp() {
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        repository = new DatabaseCurrencyRepository(namedParameterJdbcTemplate);
-        repository.deleteAll();
-    }
     @BeforeAll
     static void startContainer(){
         MY_SQL_CONTAINER.start();
@@ -91,6 +84,13 @@ class DatabaseJDBCCurrencyRepositoryTest{
     @AfterAll
     static void stopContainer(){
         MY_SQL_CONTAINER.stop();
+    }
+
+    @BeforeEach
+    void setUp(){
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        repository = new DatabaseCurrencyRepository(namedParameterJdbcTemplate);
+        repository.deleteAll();
     }
 
     @Test
@@ -153,7 +153,7 @@ class DatabaseJDBCCurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1,pageable).getContent());
+        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1, pageable).getContent());
     }
 
     @Test

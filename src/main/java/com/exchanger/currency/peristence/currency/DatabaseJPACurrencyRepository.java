@@ -18,7 +18,7 @@ import java.util.List;
         value = "repository.currency",
         havingValue = "jpa"
 )
-public class DatabaseJPACurrencyRepository implements CurrencyRepository {
+public class DatabaseJPACurrencyRepository implements CurrencyRepository{
     private final CurrencyRepositoryJPA currencyRepositoryJPA;
 
     @Autowired
@@ -59,8 +59,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
         return currencyRepositoryJPA.findAll();
     }
 
-    @Override public Page<LocalDate> availableDatesForCurrency(String code,Pageable pageable){
-        return currencyRepositoryJPA.findDistinctByDateByCode(code,pageable);
+    @Override public Page<LocalDate> availableDatesForCurrency(String code, Pageable pageable){
+        return currencyRepositoryJPA.findDistinctByDateByCode(code, pageable);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository {
     @Override
     public List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate,
                                                                                      LocalDate endDate){
-        return currencyRepositoryJPA.findCurrencyFromStartDateAndEndDate(startDate,endDate);
+        return currencyRepositoryJPA.findCurrencyFromStartDateAndEndDate(startDate, endDate);
     }
 
     @Override

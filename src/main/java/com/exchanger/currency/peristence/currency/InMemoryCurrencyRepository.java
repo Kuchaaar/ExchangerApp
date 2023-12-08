@@ -47,12 +47,10 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
 
     @Override
     public boolean isDateInData(LocalDate date){
-        for(Currency currency : currencies){
-            if(currency.getDate().isEqual(date)){
-                return true;
-            }
-        }
-        return false;
+        return currencies.stream()
+                .map(currency -> currency.getDate().isEqual(date))
+                .findFirst()
+                .orElse(false);
     }
 
     @Override
