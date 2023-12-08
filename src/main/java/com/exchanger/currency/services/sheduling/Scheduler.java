@@ -25,6 +25,7 @@ public class Scheduler {
         LocalDate now = LocalDate.now();
         if(! isHoliday(now) && !databaseChecker.ifDateInDatabase(now)){
             scheduledUpdated.currencyUpdate();
+
         }
     }
 

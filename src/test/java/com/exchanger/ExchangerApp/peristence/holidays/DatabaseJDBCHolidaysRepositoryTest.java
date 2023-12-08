@@ -7,20 +7,27 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.jdbc.JdbcRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+@SpringBootTest(classes = {DatabaseHolidaysRepository.class})
+@ImportAutoConfiguration(classes = {JdbcTemplateAutoConfiguration.class,
+        DataSourceAutoConfiguration.class,
+        JdbcRepositoriesAutoConfiguration.class})
+@Sql({"classpath:holidays.sql"})
 class DatabaseJDBCHolidaysRepositoryTest{
     @Container
     private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8"))
@@ -34,7 +41,6 @@ class DatabaseJDBCHolidaysRepositoryTest{
             new HolidaysResponse("2022-10-12", "test3")
     );
     @Autowired
-    private DataSource dataSource;
     private DatabaseHolidaysRepository repository;
 
     @DynamicPropertySource
@@ -56,8 +62,6 @@ class DatabaseJDBCHolidaysRepositoryTest{
 
     @BeforeEach
     void setUp(){
-        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-        repository = new DatabaseHolidaysRepository(namedParameterJdbcTemplate);
         repository.deleteAllHolidays();
     }
 

@@ -22,7 +22,7 @@ spring:
     init:
       mode: always
 repository:
-  currency: jpa
+  currency: jdbc
   mock:
     holidays:
       mock:
@@ -35,3 +35,8 @@ exchanger:
   allowCredentials: true
   exposedHeaders: "*"
   maxAge: 36000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

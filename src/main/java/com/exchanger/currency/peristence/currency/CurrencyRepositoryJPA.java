@@ -2,6 +2,8 @@ package com.exchanger.currency.peristence.currency;
 
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,13 +15,13 @@ public interface CurrencyRepositoryJPA extends JpaRepository<Currency, Long> {
     List<Currency> findByDateBetween(LocalDate startDate, LocalDate endDate);
 
     @Query("SELECT DISTINCT(c.date) FROM Currency c")
-    List<LocalDate> findDistinctByDate();
+    Page<LocalDate> findDistinctByDate(Pageable pageable);
 
     @Query("SELECT DISTINCT(c.code) FROM Currency c")
-    List<String> findDistinctByCode();
+    Page<String> findDistinctByCode(Pageable pageable);
 
     @Query("SELECT DISTINCT(c.date) FROM Currency c WHERE c.code = :code")
-    List<LocalDate> findDistinctByDateByCode(@Param("code") String code);
+    Page<LocalDate> findDistinctByDateByCode(@Param("code") String code,Pageable pageable);
 
     @Query("SELECT NEW com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate(c1, c2) " +
             "FROM Currency c1 " +

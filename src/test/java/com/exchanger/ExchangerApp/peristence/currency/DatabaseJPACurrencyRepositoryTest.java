@@ -10,7 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
@@ -23,9 +27,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-@SpringBootTest
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class DatabaseJPACurrencyRepositoryTest{
+    @Autowired
+    private ApplicationContext applicationContext;
     @Container
     private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8"))
             .withUsername("root")
@@ -42,32 +48,28 @@ class DatabaseJPACurrencyRepositoryTest{
     private final BigDecimal bigDecimal1 = BigDecimal.valueOf(1.0);
     private final BigDecimal bigDecimal2 = BigDecimal.valueOf(10.0);
     private final BigDecimal bigDecimal3 = BigDecimal.valueOf(100.0);
+    private final Pageable pageable = PageRequest.of(0,100);
     private final List<CurrencyResponse> currencyResponses = List.of(
             new CurrencyResponse(currency1, code1, bigDecimal1, localDate),
             new CurrencyResponse(currency2, code2, bigDecimal2, localDate),
             new CurrencyResponse(currency3, code3, bigDecimal3, localDate)
     );
     private final List<Currency> currencies = List.of(
-            new Currency(currency1,code1,bigDecimal1,localDate),
-            new Currency(currency2,code2,bigDecimal2,localDate),
-            new Currency(currency3,code3,bigDecimal3,localDate)
+            new Currency(currency1, code1, bigDecimal1, localDate),
+            new Currency(currency2, code2, bigDecimal2, localDate),
+            new Currency(currency3, code3, bigDecimal3, localDate)
     );
+    @Autowired
+    private CurrencyRepositoryJPA currencyRepositoryJPA;
+    private DatabaseJPACurrencyRepository repository;
+
     @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
+    static void configureProperties(DynamicPropertyRegistry registry){
         registry.add("spring.datasource.url", MY_SQL_CONTAINER::getJdbcUrl);
         registry.add("spring.datasource.username", MY_SQL_CONTAINER::getUsername);
         registry.add("spring.datasource.password", MY_SQL_CONTAINER::getPassword);
     }
-    @Autowired
-    private CurrencyRepositoryJPA currencyRepositoryJPA;
 
-    private DatabaseJPACurrencyRepository repository;
-
-    @BeforeEach
-    void setUp() {
-        repository = new DatabaseJPACurrencyRepository(currencyRepositoryJPA);
-        currencyRepositoryJPA.deleteAll();
-    }
     @BeforeAll
     static void startContainer(){
         MY_SQL_CONTAINER.start();
@@ -76,6 +78,12 @@ class DatabaseJPACurrencyRepositoryTest{
     @AfterAll
     static void stopContainer(){
         MY_SQL_CONTAINER.stop();
+    }
+
+    @BeforeEach
+    void setUp(){
+        repository = new DatabaseJPACurrencyRepository(currencyRepositoryJPA);
+        currencyRepositoryJPA.deleteAll();
     }
 
     @Test
@@ -93,7 +101,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(List.of("ABC", "DEF", "GHI"), repository.availableCodes());
+        assertEquals(List.of("ABC", "DEF", "GHI"), repository.availableCodes(pageable).getContent());
     }
 
     @Test
@@ -118,9 +126,8 @@ class DatabaseJPACurrencyRepositoryTest{
     void availableDatesTest(){
         // when
         repository.saveAll(currencyResponses);
-
         // then
-        assertEquals(List.of(localDate), repository.availableDates());
+        assertEquals(List.of(localDate), repository.availableDates(pageable).getContent());
     }
 
     @Test
@@ -138,7 +145,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1));
+        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1,pageable).getContent());
     }
 
     @Test
@@ -171,14 +178,16 @@ class DatabaseJPACurrencyRepositoryTest{
                         new Currency(currency3, code3, bigDecimal3, localDate))
         ), changeIdCurrencies(repository.findCurrencyFromStartDateAndEndDate(localDate, localDate)));
     }
+
     private List<Currency> changeId(List<Currency> list){
-        for(Currency currency:list){
+        for(Currency currency : list){
             currency.setId(null);
         }
         return list;
     }
+
     private List<CurrencyFromStartDateAndEndDate> changeIdCurrencies(List<CurrencyFromStartDateAndEndDate> list){
-        for(CurrencyFromStartDateAndEndDate currency:list){
+        for(CurrencyFromStartDateAndEndDate currency : list){
             currency.currencyFromStartDate().setId(null);
             currency.currencyFromEndDate().setId(null);
         }

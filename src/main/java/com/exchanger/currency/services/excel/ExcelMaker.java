@@ -2,6 +2,8 @@ package com.exchanger.currency.services.excel;
 
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.domain.exceptions.NoDataException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -33,8 +35,7 @@ public class ExcelMaker {
                         .findCurrencyByDates(
                                 currencyReportPeriod.reportPeriod().startDate(),
                                 currencyReportPeriod.reportPeriod().endDate(),
-                                currencyReportPeriod.currencyCode()
-                        )
+                                currencyReportPeriod.currencyCode())
                         .stream()
                         .map(CurrencyReportCurrencies::from)
                         .toList()
