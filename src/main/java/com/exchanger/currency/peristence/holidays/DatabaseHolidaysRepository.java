@@ -14,8 +14,8 @@ import java.util.List;
 
 @Repository
 @ConditionalOnProperty(
-        value = "repository.mock.holidays.mock.enable",
-        havingValue = "false"
+        value = "repository.holidays",
+        havingValue = "jdbc"
 )
 public class DatabaseHolidaysRepository implements HolidaysRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;

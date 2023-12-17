@@ -58,8 +58,15 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
         long offset = pageable.getOffset();
         long max = pageable.getOffset() + pageable.getPageSize();
         int total = currencies.stream().map(Currency::getDate).distinct().toList().size();
-        List<LocalDate> result = currencies.stream().map(Currency::getDate).distinct().toList().subList(Math.toIntExact(
-                offset), Math.toIntExact(max));
+        List<LocalDate> result;
+        if(currencies.size() < max){
+            result = currencies.stream().map(Currency::getDate).distinct().toList().subList(Math.toIntExact(
+                    offset), currencies.size());
+        }
+        else{
+            result = currencies.stream().map(Currency::getDate).distinct().toList().subList(Math.toIntExact(
+                    offset), Math.toIntExact(max));
+        }
         return new PageImpl<>(result, pageable, total);
     }
 

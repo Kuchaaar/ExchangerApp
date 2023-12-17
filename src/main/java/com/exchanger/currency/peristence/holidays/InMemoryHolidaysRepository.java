@@ -11,8 +11,8 @@ import java.util.Map;
 
 @Repository
 @ConditionalOnProperty(
-        value = "repository.mock.holidays.mock.enable",
-        havingValue = "true"
+        value = "repository.holidays",
+        havingValue = "memory"
 )
 public class InMemoryHolidaysRepository implements HolidaysRepository {
     private final Map<String, HolidaysResponse> holidaysResponseMap = new HashMap<>();
