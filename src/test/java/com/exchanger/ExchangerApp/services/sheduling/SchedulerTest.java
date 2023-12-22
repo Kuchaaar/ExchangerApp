@@ -1,7 +1,7 @@
 package com.exchanger.ExchangerApp.services.sheduling;
 
 import com.exchanger.currency.integration.holidays.HolidaysResponse;
-import com.exchanger.currency.peristence.holidays.InMemoryHolidaysRepository;
+import com.exchanger.currency.persistence.holidays.InMemoryHolidaysRepository;
 import com.exchanger.currency.services.sheduling.DatabaseChecker;
 import com.exchanger.currency.services.sheduling.ScheduledUpdated;
 import com.exchanger.currency.services.sheduling.Scheduler;

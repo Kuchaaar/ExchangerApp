@@ -6,41 +6,43 @@ import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.domain.currency.CurrencyService;
 import com.exchanger.currency.web.CurrencyController;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static com.exchanger.ExchangerApp.config.AbstractSpringDocTest.getContent;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest({CurrencyController.class, CorsConfig.class,
-        CorsProperties.class,CurrencyService.class})
+@WebMvcTest(
+        controllers = {CurrencyController.class, CorsConfig.class, CorsProperties.class,
+                CurrencyService.class, CurrencyRepository.class},
+        properties = "repository.currency=memory")
 @AutoConfigureMockMvc
 class PaginationTest{
 
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
-    private CurrencyRepository currencyRepository;
-    @Test
-    void paginationTest() throws Exception{
-        //when
-        mockMvc.perform(get("/available_codes")
-                        .param("page", "0")
-                        .param("size", "10"))
-                .andExpect(status().isOk());
-        ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
 
-        //then
-        verify(currencyRepository).availableCodes(pageableCaptor.capture());
-        Pageable pageable = pageableCaptor.getValue();
-        assertEquals(0, pageable.getPageNumber());
-        assertEquals(10, pageable.getPageSize());
+    @Test
+    void emptyAvailableDatesPaginationTestData() throws Exception{
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders.get("/available_dates"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(getContent("config/emptyAvailableDatesPaginationTestData.json"), true));
+    }
+    @Test
+    void emptyAvailableCodesPaginationTestData() throws Exception{
+        // Then
+        mockMvc.perform(MockMvcRequestBuilders.get("/available_codes"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(getContent("config/emptyAvailableCodesPaginationTestData.json"), true));
     }
 }

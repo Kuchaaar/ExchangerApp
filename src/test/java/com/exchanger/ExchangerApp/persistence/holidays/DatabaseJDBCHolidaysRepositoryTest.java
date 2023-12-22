@@ -1,7 +1,7 @@
-package com.exchanger.ExchangerApp.peristence.holidays;
+package com.exchanger.ExchangerApp.persistence.holidays;
 
 import com.exchanger.currency.integration.holidays.HolidaysResponse;
-import com.exchanger.currency.peristence.holidays.DatabaseHolidaysRepository;
+import com.exchanger.currency.persistence.holidays.DatabaseHolidaysRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ImportAutoConfiguration(classes = {JdbcTemplateAutoConfiguration.class,
         DataSourceAutoConfiguration.class,
         JdbcRepositoriesAutoConfiguration.class})
-@Sql({"classpath:holidays.sql"})
+@Sql({"classpath:holidays/holidays.sql"})
 class DatabaseJDBCHolidaysRepositoryTest{
     @Container
     private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8"))

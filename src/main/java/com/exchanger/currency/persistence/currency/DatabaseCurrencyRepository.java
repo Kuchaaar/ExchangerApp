@@ -1,4 +1,4 @@
-package com.exchanger.currency.peristence.currency;
+package com.exchanger.currency.persistence.currency;
 
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;

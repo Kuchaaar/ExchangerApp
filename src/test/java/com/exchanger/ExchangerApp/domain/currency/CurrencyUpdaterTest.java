@@ -5,7 +5,7 @@ import com.exchanger.currency.domain.currency.CurrencyUpdater;
 import com.exchanger.currency.integration.currency.CurrenciesResponse;
 import com.exchanger.currency.integration.currency.CurrencyClient;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
-import com.exchanger.currency.peristence.currency.InMemoryCurrencyRepository;
+import com.exchanger.currency.persistence.currency.InMemoryCurrencyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

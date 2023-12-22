@@ -1,4 +1,4 @@
-package com.exchanger.currency.peristence.currency;
+package com.exchanger.currency.persistence.currency;
 
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
@@ -32,9 +32,16 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
     public Page<String> availableCodes(Pageable pageable){
         long offset = pageable.getOffset();
         long max = pageable.getOffset() + pageable.getPageSize();
-        List<String> result = currencies.stream().map(Currency::getCode).distinct().toList().subList(Math.toIntExact(
-                offset), Math.toIntExact(max));
         int total = currencies.stream().map(Currency::getCode).distinct().toList().size();
+        List<String> result;
+        if(currencies.size() < max){
+            result = currencies.stream().map(Currency::getCode).distinct().toList().subList(Math.toIntExact(
+                    offset), currencies.size());
+        }
+        else{
+            result = currencies.stream().map(Currency::getCode).distinct().toList().subList(Math.toIntExact(
+                    offset), Math.toIntExact(max));
+        }
         return new PageImpl<>(result, pageable, total);
     }
 
@@ -127,5 +134,4 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
     public void deleteAll(){
         currencies.clear();
     }
-
 }

@@ -2,7 +2,7 @@ package com.exchanger.ExchangerApp.services.sheduling;
 
 import com.exchanger.currency.integration.currency.CurrenciesResponse;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
-import com.exchanger.currency.peristence.currency.InMemoryCurrencyRepository;
+import com.exchanger.currency.persistence.currency.InMemoryCurrencyRepository;
 import com.exchanger.currency.services.sheduling.DatabaseChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

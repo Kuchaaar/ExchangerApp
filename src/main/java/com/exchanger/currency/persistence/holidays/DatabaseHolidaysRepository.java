@@ -1,4 +1,4 @@
-package com.exchanger.currency.peristence.holidays;
+package com.exchanger.currency.persistence.holidays;
 
 import com.exchanger.currency.domain.holidays.HolidaysRepository;
 import com.exchanger.currency.integration.holidays.HolidaysResponse;

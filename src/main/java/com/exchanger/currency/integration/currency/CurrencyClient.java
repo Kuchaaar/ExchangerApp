@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @FeignClient(name = "currency")
-public interface CurrencyClient {
+public interface CurrencyClient{
 
     @GetMapping(value = "{table}")
     List<CurrenciesResponse> getByTable(@PathVariable("table") String table);

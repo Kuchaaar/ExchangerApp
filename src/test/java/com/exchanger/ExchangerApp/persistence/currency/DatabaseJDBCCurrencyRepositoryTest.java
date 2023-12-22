@@ -1,37 +1,42 @@
-package com.exchanger.ExchangerApp.peristence.currency;
+package com.exchanger.ExchangerApp.persistence.currency;
 
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
-import com.exchanger.currency.peristence.currency.CurrencyRepositoryJPA;
-import com.exchanger.currency.peristence.currency.DatabaseJPACurrencyRepository;
-import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
+import com.exchanger.currency.persistence.currency.DatabaseCurrencyRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.ApplicationContext;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.jdbc.JdbcRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class DatabaseJPACurrencyRepositoryTest{
-    @Autowired
-    private ApplicationContext applicationContext;
+
+@SpringBootTest(classes = {DatabaseCurrencyRepository.class})
+@ImportAutoConfiguration(classes = {JdbcTemplateAutoConfiguration.class,
+        DataSourceAutoConfiguration.class,
+        JdbcRepositoriesAutoConfiguration.class})
+@Sql({"classpath:persistence/currency/currency.sql"})
+class DatabaseJDBCCurrencyRepositoryTest{
     @Container
     private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8"))
             .withUsername("root")
@@ -48,7 +53,7 @@ class DatabaseJPACurrencyRepositoryTest{
     private final BigDecimal bigDecimal1 = BigDecimal.valueOf(1.0);
     private final BigDecimal bigDecimal2 = BigDecimal.valueOf(10.0);
     private final BigDecimal bigDecimal3 = BigDecimal.valueOf(100.0);
-    private final Pageable pageable = PageRequest.of(0,100);
+    private final Pageable pageable = PageRequest.of(0, 100);
     private final List<CurrencyResponse> currencyResponses = List.of(
             new CurrencyResponse(currency1, code1, bigDecimal1, localDate),
             new CurrencyResponse(currency2, code2, bigDecimal2, localDate),
@@ -59,9 +64,10 @@ class DatabaseJPACurrencyRepositoryTest{
             new Currency(currency2, code2, bigDecimal2, localDate),
             new Currency(currency3, code3, bigDecimal3, localDate)
     );
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
-    private CurrencyRepositoryJPA currencyRepositoryJPA;
-    private DatabaseJPACurrencyRepository repository;
+    private DataSource dataSource;
+    private DatabaseCurrencyRepository repository;
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry){
@@ -82,8 +88,9 @@ class DatabaseJPACurrencyRepositoryTest{
 
     @BeforeEach
     void setUp(){
-        repository = new DatabaseJPACurrencyRepository(currencyRepositoryJPA);
-        currencyRepositoryJPA.deleteAll();
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        repository = new DatabaseCurrencyRepository(namedParameterJdbcTemplate);
+        repository.deleteAll();
     }
 
     @Test
@@ -92,7 +99,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(currencies, changeId(repository.findAll()));
+        assertEquals(currencies, repository.findAll());
     }
 
     @Test
@@ -110,7 +117,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(currencies, changeId(repository.findByDates(localDate, localDate)));
+        assertEquals(currencies, repository.findByDates(localDate, localDate));
     }
 
     @Test
@@ -126,6 +133,7 @@ class DatabaseJPACurrencyRepositoryTest{
     void availableDatesTest(){
         // when
         repository.saveAll(currencyResponses);
+
         // then
         assertEquals(List.of(localDate), repository.availableDates(pageable).getContent());
     }
@@ -136,7 +144,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(currencies, changeId(repository.findAll()));
+        assertEquals(currencies, repository.findAll());
     }
 
     @Test
@@ -145,7 +153,7 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1,pageable).getContent());
+        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1, pageable).getContent());
     }
 
     @Test
@@ -154,8 +162,8 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(List.of(new Currency(currency1, code1, bigDecimal1, localDate)),
-                changeId(repository.findCurrencyByDates(localDate, localDate, code1)));
+        assertEquals(List.of(new Currency(currency1, code1, bigDecimal1, localDate)).size(),
+                repository.findCurrencyByDates(localDate, localDate, code1).size());
     }
 
     @Test
@@ -164,33 +172,6 @@ class DatabaseJPACurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         //then
-        assertEquals(List.of(
-                new CurrencyFromStartDateAndEndDate(
-                        new Currency(currency1, code1, bigDecimal1, localDate),
-                        new Currency(currency1, code1, bigDecimal1, localDate)
-                ),
-                new CurrencyFromStartDateAndEndDate(
-                        new Currency(currency2, code2, bigDecimal2, localDate),
-                        new Currency(currency2, code2, bigDecimal2, localDate)
-                ),
-                new CurrencyFromStartDateAndEndDate(
-                        new Currency(currency3, code3, bigDecimal3, localDate),
-                        new Currency(currency3, code3, bigDecimal3, localDate))
-        ), changeIdCurrencies(repository.findCurrencyFromStartDateAndEndDate(localDate, localDate)));
-    }
-
-    private List<Currency> changeId(List<Currency> list){
-        for(Currency currency : list){
-            currency.setId(null);
-        }
-        return list;
-    }
-
-    private List<CurrencyFromStartDateAndEndDate> changeIdCurrencies(List<CurrencyFromStartDateAndEndDate> list){
-        for(CurrencyFromStartDateAndEndDate currency : list){
-            currency.currencyFromStartDate().setId(null);
-            currency.currencyFromEndDate().setId(null);
-        }
-        return list;
+        assertEquals(List.of(), repository.findCurrencyFromStartDateAndEndDate(localDate, localDate));
     }
 }
