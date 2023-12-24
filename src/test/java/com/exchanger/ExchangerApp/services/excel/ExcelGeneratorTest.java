@@ -27,7 +27,7 @@ class ExcelGeneratorTest{
 
     {
         try{
-            workbookFromFile = new XSSFWorkbook("src/test/resources/response.xlsx");
+            workbookFromFile = new XSSFWorkbook("src/test/resources/services/response.xlsx");
         }catch(IOException e){
             throw new RuntimeException(e);
         }

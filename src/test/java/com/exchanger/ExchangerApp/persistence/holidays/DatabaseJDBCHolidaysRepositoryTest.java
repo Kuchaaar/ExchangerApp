@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ImportAutoConfiguration(classes = {JdbcTemplateAutoConfiguration.class,
         DataSourceAutoConfiguration.class,
         JdbcRepositoriesAutoConfiguration.class})
-@Sql({"classpath:holidays/holidays.sql"})
+@Sql({"classpath:persistence/holidays/holidays.sql"})
 class DatabaseJDBCHolidaysRepositoryTest{
     @Container
     private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8"))

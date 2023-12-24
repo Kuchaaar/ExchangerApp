@@ -48,6 +48,11 @@ class HolidaysUpdaterTest {
                 aHolidaysResponse(DATE_3, NAME_3)
         )));
     }
+    @Test
+    void deleteTest(){
+        holidaysUpdater.deleteAll();
+        assertEquals(sortedByHolidaysName(holidaysRepository.findAllHolidays()),List.of());
+    }
 
     private List<HolidaysResponse> sortedByHolidaysName(List<HolidaysResponse> holidaysResponse){
         return holidaysResponse.stream()
