@@ -6,7 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-public abstract class AbstractJsonLoaderTest{
+public final class AbstractJsonLoaderTest{
+    private AbstractJsonLoaderTest(){
+
+    }
     public static String getContent(String fileName) {
         try {
             Path path = Paths.get(Objects.requireNonNull(AbstractJsonLoaderTest.class.getClassLoader()

@@ -83,8 +83,8 @@ fetches data from the NBP API only when there are no holidays in Poland.
 ## Setup
 
 1. Clone this repository
-2. Run docker
-3. Go to the root directory of the repository: ``` cd ./exchanger```
+2. Go to the root directory of the repository: ``` cd ./exchanger```
+3. Run ```docker-compose.yml```
 4. Run the ```package``` Maven task ```mvn clean install```
 5. Run the generated JAR file: ```java - jar <JAR-FILE>```
 
