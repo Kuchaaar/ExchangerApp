@@ -35,7 +35,7 @@ class CurrencyReportDatasourceTest {
 
     @Test
     void invalidCurrencyByIndex() {
-        assertNull(currencyReportDatasource.currencyByIndex(100));
+        assertThrows(NoDataException.class,()->currencyReportDatasource.currencyByIndex(100));
     }
 
     @Test

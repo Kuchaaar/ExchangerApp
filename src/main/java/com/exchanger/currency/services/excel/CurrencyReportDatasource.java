@@ -38,7 +38,7 @@ public class CurrencyReportDatasource {
 
     public CurrencyReportCurrencies currencyByIndex(int index){
         if(currencies.size() <=index){
-            return null;
+            throw new NoDataException();
         }
         return currencies.get(index);
     }
