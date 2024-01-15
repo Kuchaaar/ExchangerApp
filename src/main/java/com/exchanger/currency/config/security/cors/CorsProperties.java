@@ -1,4 +1,4 @@
-package com.exchanger.currency.config;
+package com.exchanger.currency.config.security.cors;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;

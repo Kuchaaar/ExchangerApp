@@ -1,7 +1,7 @@
 package com.exchanger.ExchangerApp.config;
 
-import com.exchanger.currency.config.CorsConfig;
-import com.exchanger.currency.config.CorsProperties;
+import com.exchanger.currency.config.security.cors.CorsConfig;
+import com.exchanger.currency.config.security.cors.CorsProperties;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.domain.currency.CurrencyService;
 import com.exchanger.currency.web.CurrencyController;
