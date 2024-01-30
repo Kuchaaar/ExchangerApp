@@ -1,4 +1,4 @@
-package com.exchanger.currency.persistence.user;
+package com.exchanger.currency.peristence.user;
 
 import com.exchanger.currency.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;

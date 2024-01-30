@@ -20,7 +20,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +29,8 @@ import com.exchanger.currency.models.ERole;
 import com.exchanger.currency.models.Role;
 import com.exchanger.currency.models.User;
 
-import com.exchanger.currency.persistence.user.RoleRepository;
-import com.exchanger.currency.persistence.user.UserRepository;
+import com.exchanger.currency.peristence.user.RoleRepository;
+import com.exchanger.currency.peristence.user.UserRepository;
 
 
 @RestController

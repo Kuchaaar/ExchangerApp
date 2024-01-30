@@ -1,7 +1,7 @@
 package com.exchanger.currency.config.security.services;
 
 import com.exchanger.currency.models.User;
-import com.exchanger.currency.persistence.user.UserRepository;
+import com.exchanger.currency.peristence.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -38,5 +38,12 @@ management:
       exposure:
         include: "*"
 app:
-  jwtSecret: testTest
+  jwtSecret: ------------------------------12345---------------------------------
   jwtExpirationMs: 86400000
+Spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-url: http://localhost:8080/auth/realms/master
+          jwk-set-uri: http://localhost:8080/auth/realms/master/protocol/openid-connect/certs
