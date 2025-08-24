@@ -14,25 +14,25 @@ import java.util.List;
 public class CurrencyService {
     private final CurrencyRepository currencyRepository;
 
-    public CurrencyService(CurrencyRepository currencyRepository){
+    public CurrencyService(CurrencyRepository currencyRepository) {
         this.currencyRepository = currencyRepository;
     }
 
-    public Page<LocalDate> availableDates(Pageable pageable){
+    public Page<LocalDate> availableDates(Pageable pageable) {
         return currencyRepository.availableDates(pageable);
     }
 
-    public Page<String> availableCodes(Pageable pageable){
+    public Page<String> availableCodes(Pageable pageable) {
         return currencyRepository.availableCodes(pageable);
     }
 
 
-    public Page<LocalDate> availableDatesForCurrency(String code,Pageable pageable){
-        return currencyRepository.availableDatesForCurrency(code,pageable);
+    public Page<LocalDate> availableDatesForCurrency(String code, Pageable pageable) {
+        return currencyRepository.availableDatesForCurrency(code, pageable);
     }
 
     public FindCurrencyWithHighestRatePercentageChangeResponse findCurrencyWithHighestRatePercentageChange(
-            FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest){
+            FindCurrencyWithHighestRatePercentageChangeRequest findCurrencyWithHighestRatePercentageChangeRequest) {
         return FindCurrencyWithHighestRatePercentageChangeResponse.from(findCurrenciesFromStartDateAndEndDate(
                         findCurrencyWithHighestRatePercentageChangeRequest.startDate(),
                         findCurrencyWithHighestRatePercentageChangeRequest.endDate()),
@@ -40,7 +40,11 @@ public class CurrencyService {
     }
 
     private List<CurrencyFromStartDateAndEndDate> findCurrenciesFromStartDateAndEndDate(LocalDate startDate,
-                                                                                        LocalDate endDate){
+                                                                                        LocalDate endDate) {
         return currencyRepository.findCurrencyFromStartDateAndEndDate(startDate, endDate);
+    }
+
+    public List<Currency> findCurrencyByDates(LocalDate startDate, LocalDate endDate, String code) {
+        return currencyRepository.findCurrencyByDates(startDate, endDate, code);
     }
 }
