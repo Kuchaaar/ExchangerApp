@@ -3,6 +3,7 @@ package com.exchanger.currency.services.sheduling;
 import com.exchanger.currency.domain.currency.CurrencyUpdater;
 import com.exchanger.currency.domain.holidays.HolidaysUpdater;
 import com.exchanger.currency.integration.currency.CurrencyClient;
+import feign.FeignException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -30,6 +31,18 @@ public class ScheduledUpdated {
         }
         if(!databaseChecker.ifDataInDatabase(currencyClient.getByTable("b"))){
             currencyUpdater.update("b");
+        }
+    }
+
+    public void currencyUpdate(LocalDate startDate, LocalDate endDate){
+        safeGetData("a",startDate,endDate);
+        safeGetData("b",startDate,endDate);
+    }
+    private void safeGetData(String table,LocalDate startDate, LocalDate endDate){
+        try {
+            currencyUpdater.update(table, startDate, endDate);
+        }catch(FeignException e){
+            System.out.println(e.getMessage());
         }
     }
 

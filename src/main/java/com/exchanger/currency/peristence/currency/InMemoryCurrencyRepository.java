@@ -3,11 +3,7 @@ package com.exchanger.currency.peristence.currency;
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
-import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -29,13 +25,8 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
     }
 
     @Override
-    public Page<String> availableCodes(Pageable pageable){
-        long offset = pageable.getOffset();
-        long max = pageable.getOffset() + pageable.getPageSize();
-        List<String> result = currencies.stream().map(Currency::getCode).distinct().toList().subList(Math.toIntExact(
-                offset), Math.toIntExact(max));
-        int total = currencies.stream().map(Currency::getCode).distinct().toList().size();
-        return new PageImpl<>(result, pageable, total);
+    public List<String> availableCodes(){
+        return currencies.stream().map(Currency::getCode).distinct().toList();
     }
 
     @Override
@@ -54,20 +45,8 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
     }
 
     @Override
-    public Page<LocalDate> availableDates(Pageable pageable){
-        long offset = pageable.getOffset();
-        long max = pageable.getOffset() + pageable.getPageSize();
-        int total = currencies.stream().map(Currency::getDate).distinct().toList().size();
-        List<LocalDate> result;
-        if(currencies.size() < max){
-            result = currencies.stream().map(Currency::getDate).distinct().toList().subList(Math.toIntExact(
-                    offset), currencies.size());
-        }
-        else{
-            result = currencies.stream().map(Currency::getDate).distinct().toList().subList(Math.toIntExact(
-                    offset), Math.toIntExact(max));
-        }
-        return new PageImpl<>(result, pageable, total);
+    public List<LocalDate> availableDates(){
+        return currencies.stream().map(Currency::getDate).toList();
     }
 
     @Override
@@ -75,22 +54,6 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
         return new ArrayList<>(currencies);
     }
 
-    @Override
-    public Page<LocalDate> availableDatesForCurrency(String code, Pageable pageable){
-        int total = currencies.stream()
-                .filter(currency -> currency.getCode().equals(code))
-                .map(Currency::getDate)
-                .distinct()
-                .toList().size();
-        long offset = pageable.getOffset();
-        long max = pageable.getOffset() + pageable.getPageSize();
-        List<LocalDate> result = currencies.stream()
-                .filter(currency -> currency.getCode().equals(code))
-                .map(Currency::getDate)
-                .distinct()
-                .toList().subList(Math.toIntExact(offset), Math.toIntExact(max));
-        return new PageImpl<>(result, pageable, total);
-    }
 
     @Override
     public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code){
@@ -100,28 +63,6 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
                 .toList();
     }
 
-    @Override
-    public List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate,
-                                                                                     LocalDate endDate){
-        List<CurrencyFromStartDateAndEndDate> resultList = new ArrayList<>();
-
-        for(int i = 0; i < currencies.size(); i++){
-            Currency currencyStartDate = currencies.get(i);
-
-            if(currencyStartDate.getDate().isEqual(startDate)){
-                for(int j = i + 1; j < currencies.size(); j++){
-                    Currency currencyEndDate = currencies.get(j);
-
-                    if(currencyEndDate.getDate().isEqual(endDate) &&
-                            currencyStartDate.getCode().equals(currencyEndDate.getCode())){
-                        resultList.add(new CurrencyFromStartDateAndEndDate(currencyStartDate, currencyEndDate));
-                    }
-                }
-            }
-        }
-
-        return resultList;
-    }
 
     @Override
     public void deleteAll(){

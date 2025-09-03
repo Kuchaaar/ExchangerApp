@@ -3,7 +3,6 @@ package com.exchanger.currency.peristence.currency;
 import com.exchanger.currency.domain.currency.Currency;
 import com.exchanger.currency.domain.currency.CurrencyRepository;
 import com.exchanger.currency.integration.currency.CurrencyResponse;
-import com.exchanger.currency.services.currencychange.CurrencyFromStartDateAndEndDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Page;
@@ -35,8 +34,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository{
     }
 
     @Override
-    public Page<String> availableCodes(Pageable pageable){
-        return currencyRepositoryJPA.findDistinctByCode(pageable);
+    public List<String> availableCodes(){
+        return currencyRepositoryJPA.findDistinctByCode();
     }
 
     @Override
@@ -50,8 +49,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository{
     }
 
     @Override
-    public Page<LocalDate> availableDates(Pageable pageable){
-        return currencyRepositoryJPA.findDistinctByDate(pageable);
+    public List<LocalDate> availableDates(){
+        return currencyRepositoryJPA.findDistinctByDate();
     }
 
     @Override
@@ -59,9 +58,6 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository{
         return currencyRepositoryJPA.findAll();
     }
 
-    @Override public Page<LocalDate> availableDatesForCurrency(String code, Pageable pageable){
-        return currencyRepositoryJPA.findDistinctByDateByCode(code, pageable);
-    }
 
     @Override
     public List<Currency> findCurrencyByDates(LocalDate date1, LocalDate date2, String code){
@@ -69,13 +65,8 @@ public class DatabaseJPACurrencyRepository implements CurrencyRepository{
     }
 
     @Override
-    public List<CurrencyFromStartDateAndEndDate> findCurrencyFromStartDateAndEndDate(LocalDate startDate,
-                                                                                     LocalDate endDate){
-        return currencyRepositoryJPA.findCurrencyFromStartDateAndEndDate(startDate, endDate);
-    }
-
-    @Override
     public void deleteAll(){
         currencyRepositoryJPA.deleteAll();
     }
+
 }

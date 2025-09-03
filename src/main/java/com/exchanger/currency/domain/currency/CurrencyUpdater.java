@@ -28,6 +28,10 @@ public class CurrencyUpdater {
         final List<CurrencyResponse> currencyResponses = fetchCurrenciesResponse(table);
         currencyRepository.saveAll(currencyResponses);
     }
+    public void update(String table, LocalDate startDate, LocalDate endDate){
+        final List<CurrencyResponse> currencyResponses = fetchCurrenciesResponse(table,startDate,endDate);
+        currencyRepository.saveAll(currencyResponses);
+    }
 
     private List<CurrencyResponse> fetchCurrenciesResponse(String table, int topCount){
         return mapToCurrenciesResponse(currencyClient.getByTable(table, topCount));
@@ -35,6 +39,9 @@ public class CurrencyUpdater {
 
     private List<CurrencyResponse> fetchCurrenciesResponse(String table){
         return mapToCurrenciesResponse(currencyClient.getByTable(table));
+    }
+    private List<CurrencyResponse> fetchCurrenciesResponse(String table, LocalDate startDate, LocalDate endDate){
+        return mapToCurrenciesResponse(currencyClient.getByDates(table,startDate,endDate));
     }
 
     private List<CurrencyResponse> mapToCurrenciesResponse(List<CurrenciesResponse> currenciesResponses){

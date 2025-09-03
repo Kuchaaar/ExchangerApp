@@ -34,6 +34,23 @@ public class Scheduler {
         scheduledUpdated.holidaysUpdate();
     }
 
+    public void fetchFirstCurrencies(){
+        LocalDate today = LocalDate.now();
+        LocalDate twoYearsAgo = today.minusYears(2);
+
+        LocalDate start = twoYearsAgo;
+        LocalDate end = start.plusDays(90);
+
+        while (start.isBefore(today)) {
+            if (end.isAfter(today)) {
+                end = today.minusDays(1);
+            }
+            scheduledUpdated.currencyUpdate(start,end);
+            start = end.plusDays(1);
+            end = start.plusDays(90);
+        }
+    }
+
     private boolean isHoliday(LocalDate date){
         return holidaysRepository.findAllHolidays().stream()
                 .anyMatch(holidaysResponse -> {
@@ -43,4 +60,6 @@ public class Scheduler {
                             && holidayDate.getDayOfMonth() == date.getDayOfMonth();
                 });
     }
+
+
 }

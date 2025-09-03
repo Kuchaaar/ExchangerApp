@@ -38,9 +38,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Sql({"classpath:currency.sql"})
 class DatabaseJDBCCurrencyRepositoryTest{
     @Container
-    private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8"))
+    private static final MySQLContainer<?> MY_SQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql"))
             .withUsername("root")
-            .withPassword("root")
+            .withPassword("")
             .withNetworkAliases("mysql")
             .withDatabaseName("test");
     private static final LocalDate localDate = LocalDate.parse("2023-10-16");
@@ -108,7 +108,7 @@ class DatabaseJDBCCurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(List.of("ABC", "DEF", "GHI"), repository.availableCodes(pageable).getContent());
+        assertEquals(List.of("ABC", "DEF", "GHI"), repository.availableCodes());
     }
 
     @Test
@@ -135,7 +135,7 @@ class DatabaseJDBCCurrencyRepositoryTest{
         repository.saveAll(currencyResponses);
 
         // then
-        assertEquals(List.of(localDate), repository.availableDates(pageable).getContent());
+        assertEquals(List.of(localDate), repository.availableDates());
     }
 
     @Test
@@ -147,14 +147,6 @@ class DatabaseJDBCCurrencyRepositoryTest{
         assertEquals(currencies, repository.findAll());
     }
 
-    @Test
-    void availableDatesForCurrencyTest(){
-        // when
-        repository.saveAll(currencyResponses);
-
-        //then
-        assertEquals(List.of(localDate), repository.availableDatesForCurrency(code1, pageable).getContent());
-    }
 
     @Test
     void findCurrencyByDatesTest(){
@@ -166,12 +158,4 @@ class DatabaseJDBCCurrencyRepositoryTest{
                 repository.findCurrencyByDates(localDate, localDate, code1).size());
     }
 
-    @Test
-    void findCurrencyFromStartDateAndEndDateTest(){
-        // when
-        repository.saveAll(currencyResponses);
-
-        //then
-        assertEquals(List.of(), repository.findCurrencyFromStartDateAndEndDate(localDate, localDate));
-    }
 }
